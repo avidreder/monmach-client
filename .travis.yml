@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+- "node"
+before_install:
+- npm install
+script:
+- npm run test
+- npm run codecov
+env:
+  global:
+    secure: rwExP5BgtFtYX9sIDglhz7lM7F45OiR6xjgjQsTh2pRr3gs/yWPaXtjSmXI7Mt6Re4VwE13x+HudN3JVJZ19u+uUKdcamG+zMvtorIKZPaOI6l/RaMFnI1gXCA18XcvuR1+Qp9gAvkSeZFj/jLjRdQDzi+TIgokaMq+2SLygkKmosM24OEAwX3a7BDAsZ7L05FWoDqBPIqQZDCqtUONzGVdMMfwU70xt8l8VSjpAyAXsIPoLi/lmiokWQYaAzl/ipjtNW8QIDGe8aYGHkrWXQZqvDSa9eESkGiNHSxDP/hjMLKhrD+uGzrz3r8XMe77i8PEE+JlSpF7xXYGNHfSlpmUukiPx8qDAyRqXliSdlO8BIZ4jWEETLdQh6oevuSiyeh30ncgnDB1Qbzdfra64pPZb2FieQ8ReQ2DHFZEy5ZKuTx0o02UYKOvgfBStqYDhY1+fYtpH430nHWJRcow0A32KtVzV/P+A8Shf+IQt9SB+0/zWcHhS8MTPXmVbNauUEx6du5N4YhDhxL2sN3WdfkhXEkmCuMucWqZTB5vuHEaoTWJZRfPb4HiEPkrkiqAMYjnTmni25Z7vASrAxM6RosGxDGyy0J8Mvx1cJEE+WbVUeWTO9iNsExm+I7H/xvgfCc7t0nt4cTEWhcdejnbB6SUVdLufd1T+GW022PLzUmc=
