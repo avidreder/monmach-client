@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-// import * as actionCreators from '../action_creators'
+import * as actionCreators from 'store/coreActionCreators'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -25,13 +25,13 @@ import GenrePage from '../components/GenrePage'
 // })
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSetTrack: (track) => {
+  setTrack: (track) => {
+    dispatch(actionCreators.setTrack(track))
+  },
+  removeFromQueue: (track) => {
     return
   },
-  dispatchRemoveFromQueue: (track) => {
-    return
-  },
-  dispatchAddGenre: (track) => {
+  addGenre: (track) => {
     return
   }
 })

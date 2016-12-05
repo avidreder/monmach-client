@@ -25,7 +25,7 @@ export const GenrePage = (props) => (
             <CardText>
               <Row>
                 <Col md={12} sm={12} lg={12}>
-                  <TrackPlayer track={props.currentTrack} addGenre={props.dispatchAddGenre} />
+                  <TrackPlayer track={props.currentTrack} addGenre={props.addGenre} />
                 </Col>
               </Row>
               <Row>
@@ -52,9 +52,9 @@ export const GenrePage = (props) => (
           <Card>
             <CardTitle title='Queue' />
             <CardText>
-              <QueueContainer removeFromQueue={props.dispatchRemoveFromQueue}
-                setTrack={props.dispatchSetTrack}
-                addGenre={props.dispatchAddGenre} />
+              <QueueContainer removeFromQueue={props.removeFromQueue}
+                setTrack={props.setTrack}
+                addGenre={props.addGenre} />
             </CardText>
           </Card>
         </Col>

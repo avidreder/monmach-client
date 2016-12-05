@@ -1,6 +1,37 @@
 // ------------------------------------
 // Reducer
 // ------------------------------------
+
+export const SET_TEST_DATA = 'SET_TEST_DATA'
+
+export default function coreReducer (state = testState, action) {
+  console.log(action)
+  switch (action.type) {
+    case 'SET_CURRENT_TRACK':
+      return Object.assign({}, state, {
+        currentTrack: action.track
+      })
+      setTrack(state, action.track);
+    case 'REMOVE_FROM_QUEUE':
+      return removeFromQueue(state, action.track);
+    case 'ADD_TO_LISTENED':
+      return addToListened(state, action.track);
+    case 'ADD_GENRE':
+      return addGenre(state, action.track);
+// case 'REQUEST_SHOWS':
+//   return requestShows(state);
+// case 'RECEIVE_SHOWS_SUCCESS':
+//   return receiveShowsSuccess(state, action.shows);
+// case 'RECEIVE_SHOWS_ERROR':
+//   return receiveShowsError(state, action.error
+// );
+    case 'SET_STATE':
+      return state.merge(action.state);
+    default:
+      return state
+    }
+}
+
 const testState = {
   currentTrack: {
     ID: 1,
@@ -92,12 +123,4 @@ const testState = {
     TrackBlacklist: [],
     TrackWhitelist: []
   }
-}
-
-const SET_TEST_DATA = 'SET_TEST_DATA'
-
-export default function coreReducer (state = testState, action) {
-  return action.type === SET_TEST_DATA
-    ? action.payload
-    : state
 }
