@@ -1,3 +1,4 @@
+import { Map, fromJS } from 'immutable'
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -26,6 +27,6 @@ export const updateLocation = ({ dispatch }) => {
 const initialState = null
 export default function locationReducer (state = initialState, action) {
   return action.type === LOCATION_CHANGE
-    ? action.payload
-    : state
+    ? fromJS(action.payload)
+    : !Map.isMap(state) ? fromJS(state) : state
 }

@@ -21,7 +21,7 @@ Queue.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    queue: state.core.queue
+    queue: state.core.get('queue').toJS()
   }
 }
 

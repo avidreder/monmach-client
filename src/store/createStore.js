@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 import { browserHistory } from 'react-router'
 import makeRootReducer from './reducers'
 import { updateLocation } from './location'
+import { Map, fromJS } from 'immutable'
 
 export default (initialState = {}) => {
   // ======================================================

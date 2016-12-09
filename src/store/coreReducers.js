@@ -1,3 +1,6 @@
+import { fromJS, Map } from 'immutable'
+import * as _ from 'lodash'
+
 // ------------------------------------
 // Reducer
 // ------------------------------------
@@ -5,19 +8,26 @@
 export const SET_TEST_DATA = 'SET_TEST_DATA'
 
 export default function coreReducer (state = testState, action) {
-  console.log(action)
   switch (action.type) {
     case 'SET_CURRENT_TRACK':
-      return Object.assign({}, state, {
+      return fromJS(Object.assign({}, state.toJS(), {
         currentTrack: action.track
-      })
-      setTrack(state, action.track);
+      }))
     case 'REMOVE_FROM_QUEUE':
-      return removeFromQueue(state, action.track);
-    case 'ADD_TO_LISTENED':
-      return addToListened(state, action.track);
-    case 'ADD_GENRE':
-      return addGenre(state, action.track);
+      queue = state.get('queue').toJS()
+      queue.TrackQueue = _.reject(queue.TrackQueue, {ID: action.track.ID})
+      return fromJS(Object.assign({}, state.toJS(), {
+        queue: queue
+      }))
+    // case 'ADD_TO_LISTENED':
+    //   return Object.assign({}, state, {
+    //     queue: queue = state.queue.ListenedTracks.push(action.track.ID)
+    //   })
+    // case 'ADD_GENRE':
+    //   return Object.assign({}, state, {
+    //     action.track.Genres.push(state.genre.ID)
+    //     currentTrack: action.track
+    //   })
 // case 'REQUEST_SHOWS':
 //   return requestShows(state);
 // case 'RECEIVE_SHOWS_SUCCESS':
@@ -28,11 +38,24 @@ export default function coreReducer (state = testState, action) {
     case 'SET_STATE':
       return state.merge(action.state);
     default:
+      if (!Map.isMap(state)) {
+        state = state.fromJS()
+      }
       return state
     }
 }
+function addToListened(state, track) {
+    var queue = state.get('queue');
+    queue.set('ListenedTracks', queue.get('ListenedTracks').push(track.ID));
+    return state.set('queue', queue);
+}
 
-const testState = {
+function addGenre(state, track) {
+    track.Genres.push(state.get('genre').get('ID'))
+    return state.set('currentTrack', fromJS(track));
+}
+
+const testState = fromJS({
   currentTrack: {
     ID: 1,
     Name: 'Wish You Were Here',
@@ -123,4 +146,4 @@ const testState = {
     TrackBlacklist: [],
     TrackWhitelist: []
   }
-}
+})

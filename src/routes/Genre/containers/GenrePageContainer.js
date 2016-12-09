@@ -36,12 +36,15 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-const mapStateToProps = (state) => ({
-  currentTrack: state.core.currentTrack,
-  queue: state.core.queue,
-  genre: state.core.genre,
-  playlist: state.core.playlist
-})
+const mapStateToProps = (state) => {
+  console.log(state.core.toJS())
+  return {
+    currentTrack: state.core.get('currentTrack').toJS(),
+    queue: state.core.get('queue').toJS(),
+    genre: state.core.get('genre').toJS(),
+    playlist: state.core.get('playlist').toJS()
+  }
+}
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
 
