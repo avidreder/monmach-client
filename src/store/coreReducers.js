@@ -7,27 +7,49 @@ import * as _ from 'lodash'
 
 export const SET_TEST_DATA = 'SET_TEST_DATA'
 
+export function setTrack(state, track){
+  return fromJS(Object.assign({}, state.toJS(), {
+    currentTrack: track
+  }))
+}
+
+export function removeFromQueue(state, track){
+  queue = state.get('queue').toJS()
+  queue.TrackQueue = _.reject(queue.TrackQueue, {ID: track.ID})
+  return fromJS(Object.assign({}, state.toJS(), {
+    queue: queue
+  }))
+}
+
+export function addToListened(state, track){
+  let queue = state.get('queue').toJS()
+  console.log(queue)
+  queue.ListenedTracks.push(track.ID)
+  return fromJS(Object.assign({}, state.toJS(), {
+    queue: queue
+  }))
+}
+
+export function addToGenre(state, track) {
+  console.log(track)
+  const genre = state.get('genre').toJS()
+  track.Genres.push(genre.ID)
+  console.log(track)
+  return fromJS(Object.assign({}, state.toJS(), {
+    currentTrack: track
+  }))
+}
+
 export default function coreReducer (state = testState, action) {
   switch (action.type) {
     case 'SET_CURRENT_TRACK':
-      return fromJS(Object.assign({}, state.toJS(), {
-        currentTrack: action.track
-      }))
+      return setTrack(addToListened(state, action.track), action.track)
     case 'REMOVE_FROM_QUEUE':
-      queue = state.get('queue').toJS()
-      queue.TrackQueue = _.reject(queue.TrackQueue, {ID: action.track.ID})
-      return fromJS(Object.assign({}, state.toJS(), {
-        queue: queue
-      }))
-    // case 'ADD_TO_LISTENED':
-    //   return Object.assign({}, state, {
-    //     queue: queue = state.queue.ListenedTracks.push(action.track.ID)
-    //   })
-    // case 'ADD_GENRE':
-    //   return Object.assign({}, state, {
-    //     action.track.Genres.push(state.genre.ID)
-    //     currentTrack: action.track
-    //   })
+      return removeFromQueue(state, action.track)
+    case 'ADD_TO_LISTENED':
+      return addToListened(state, action.track)
+    case 'ADD_GENRE':
+      return addToGenre(state, action.track)
 // case 'REQUEST_SHOWS':
 //   return requestShows(state);
 // case 'RECEIVE_SHOWS_SUCCESS':
@@ -43,16 +65,6 @@ export default function coreReducer (state = testState, action) {
       }
       return state
     }
-}
-function addToListened(state, track) {
-    var queue = state.get('queue');
-    queue.set('ListenedTracks', queue.get('ListenedTracks').push(track.ID));
-    return state.set('queue', queue);
-}
-
-function addGenre(state, track) {
-    track.Genres.push(state.get('genre').get('ID'))
-    return state.set('currentTrack', fromJS(track));
 }
 
 const testState = fromJS({

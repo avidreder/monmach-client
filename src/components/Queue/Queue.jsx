@@ -8,6 +8,7 @@ export const Queue = (props) => (
       <QueueItem key={track.ID}
         removeFromQueue={props.removeFromQueue}
         setTrack={props.setTrack}
+        addGenre={props.addGenre}
         track={track} />
     )}
   </div>
