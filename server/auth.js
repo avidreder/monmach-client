@@ -7,10 +7,11 @@ module.exports = {
       console.log(req.url)
       console.log(req.headers.cookie)
       console.log(data)
-      // if (data.LoggedIn == false) {
-      //   res.redirect('http://localhost:3000')
-      // }
-      next()
+      if (data.LoggedIn == false) {
+        res.redirect('/login.html')
+      } else {
+        next()
+      }
     })
   }
 }
