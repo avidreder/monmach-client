@@ -6,12 +6,12 @@ import Paper from 'material-ui/Paper'
 export const TrackPlayer = (props) => (
   <div>
     <Card>
-      <CardTitle title={props.track.Name} subtitle={props.track.Artists} />
+      <CardTitle title={props.track.name} />
       <CardText>
         <Paper>
           <iframe id='externalPlayer'
             src={'https://embed.spotify.com/?uri=spotify:track:' +
-              props.track.SpotifyID}
+              props.track.id}
             width='100%' height='80'
             frameBorder='0'
             allowTransparency='true' />

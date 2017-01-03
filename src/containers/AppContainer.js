@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { deepOrange500 } from 'material-ui/styles/colors'
 import injectTapEventPlugin from 'react-tap-event-plugin'
+import * as actionCreators from 'store/coreActionCreators.js'
 
 injectTapEventPlugin()
 
@@ -26,7 +27,7 @@ class AppContainer extends Component {
 
   render () {
     const { routes, store } = this.props
-
+    store.dispatch(actionCreators.fetchQueue())
     return (
       <Provider store={store}>
         <MuiThemeProvider muiTheme={muiTheme}>

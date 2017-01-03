@@ -112,7 +112,12 @@ if (!__TEST__) {
     })
   )
 }
-
+webpackConfig.node = {
+  console: true,
+  fs: 'empty',
+  net: 'empty',
+  tls: 'empty'
+}
 // ------------------------------------
 // Loaders
 // ------------------------------------

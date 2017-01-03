@@ -12,7 +12,7 @@ export const TrackProfile = (props) => (
       </CardMedia>
       <CardText>
         <Paper size={100}>
-          Song BPM: { props.track.Features }
+          Song BPM: 100
         </Paper>
       </CardText>
     </Card>

@@ -1,5 +1,6 @@
-import fetch from 'isomorphic-fetch';
+var request = require('request')
 import _ from 'lodash';
+import { fromJS } from 'immutable'
 
 // export function openModal(modalType) {
 //   return {
@@ -43,25 +44,25 @@ export function addGenre(track) {
   };
 }
 
-// export function requestShows() {
-//   return {
-//     type: 'REQUEST_SHOWS'
-//   }
-// }
+export function requestQueue() {
+  return {
+    type: 'REQUEST_QUEUE'
+  }
+}
 
-// export function receiveShowsSuccess(shows) {
-//   return {
-//     type: 'RECEIVE_SHOWS_SUCCESS',
-//     shows: _.uniq(shows,'id')
-//   }
-// }
+export function receiveQueueSuccess(queue) {
+  return {
+    type: 'RECEIVE_QUEUE_SUCCESS',
+    queue: queue
+  }
+}
 
-// export function receiveShowsError(error) {
-//   return {
-//     type: 'RECEIVE_SHOWS_ERROR',
-//     error: error
-//   }
-// }
+export function receiveQueueError(error) {
+  return {
+    type: 'RECEIVE_QUEUE_ERROR',
+    error: error
+  }
+}
 
 // export function sendMultiple(shows, dispatch) {
 //   dispatch(receiveShowsSuccess(shows));
@@ -69,39 +70,58 @@ export function addGenre(track) {
 //   dispatch(updateDateList(shows));
 // }
 
-// function handleErrors(response) {
-//     if (!response.ok) {
-//         throw Error(response.statusText);
-//     }
-//     return response;
-// }
+function handleErrors(response) {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
+}
 
-// export function fetchShows() {
-//   let searchParameters = JSON.stringify({
-//     startDate : moment().format(),
-//     results: 10,
-//     longitude:-122.675628662109,
-//     latitude:45.511791229248
-//   });
-
+// export function fetchQueue() {
 //   return function (dispatch) {
-
-//     dispatch(requestShows())
-
-//     return fetch('http://localhost:3000/bitshows', {
+//
+//     dispatch(requestQueue())
+//
+//     return fetch('http://localhost:3000/queue', {
 //         method: 'get',
+//         credentials: 'include',
 //         headers: {
-//             "Content-type": "application/json"
+//             "Content-type": "application/json",
+//             "Cookie": "auth-session=MTQ4MzQ2MTg2MXxOd3dBTkZOUVVVbzBOMUpIV2s4M1RWQk1WVFJQTWtoQ1IwdFFUVFZaUnpSS1IwdFlRMHRGVTFwWFFVeFBTVFZLVkVORVNrRktUVkU9fI1AkY4MSStYJy3bEtDd06IHAb7bYwgh1t71L5FDPz8K"
 //         },
 //       })
 //       .then(handleErrors)
 //       .then(function(response){
+//         console.log(response);
 //         return response.json();
 //       })
 //       .then(function(json){
-//         sendMultiple(json,dispatch);
+//         dispatch(receiveQueueSuccess(json));
 //       }).catch(function(error){
+//         console.log(error);
 //         dispatch(receiveShowsError(error));
 //       })
 //   }
 // }
+export function fetchQueue() {
+  return function (dispatch) {
+    dispatch(requestQueue())
+    return new Promise(function(resolve, reject) {
+      var options = {
+        url: 'http://localhost:3000/queue',
+        headers: {
+          "Content-type": "application/json",
+          "Cookie": "auth-session=MTQ4MzQ2MTg2MXxOd3dBTkZOUVVVbzBOMUpIV2s4M1RWQk1WVFJQTWtoQ1IwdFFUVFZaUnpSS1IwdFlRMHRGVTFwWFFVeFBTVFZLVkVORVNrRktUVkU9fI1AkY4MSStYJy3bEtDd06IHAb7bYwgh1t71L5FDPz8K"
+        }
+      };
+      request(options, function(error, response, body) {
+        if (error) return reject(error)
+        resolve(body)
+      })
+    }).then(function(body){
+      dispatch(receiveQueueSuccess(fromJS(JSON.parse(body))))
+    }).catch(function(error){
+      dispatch(receiveQueueError(error))
+    })
+  }
+}

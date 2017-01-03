@@ -4,25 +4,25 @@ import { connect } from 'react-redux'
 
 export const Queue = (props) => (
   <div>
-    {props.queue.TrackQueue.map(track =>
-      <QueueItem key={track.ID}
+    {props.queue.map(item =>
+      <QueueItem key={item.track.id}
         removeFromQueue={props.removeFromQueue}
         setTrack={props.setTrack}
         addGenre={props.addGenre}
-        track={track} />
+        track={item.track} />
     )}
   </div>
 )
 
 Queue.propTypes = {
-  queue: React.PropTypes.object,
+  queue: React.PropTypes.array,
   setTrack: React.PropTypes.func,
   removeFromQueue: React.PropTypes.func
 }
 
 const mapStateToProps = (state) => {
   return {
-    queue: state.core.get('queue').toJS()
+    queue: state.core.getIn(['queue','TrackQueue']).toJS()
   }
 }
 

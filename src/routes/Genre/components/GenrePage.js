@@ -25,17 +25,17 @@ export const GenrePage = (props) => (
             <CardText>
               <Row>
                 <Col md={12} sm={12} lg={12}>
-                  <TrackPlayer track={props.currentTrack} addGenre={props.addGenre} />
+                  <TrackPlayer track={props.currentTrack.track} addGenre={props.addGenre} />
                 </Col>
               </Row>
               <Row>
                 <Col md={6} sm={6} lg={6}>
-                  <TrackProfile track={props.currentTrack} />
+                  <TrackProfile track={props.currentTrack.track} />
                 </Col>
                 <Col md={6} sm={6} lg={6}>
                   <Row>
                     <Col md={12} sm={12} lg={12}>
-                      <TrackGenres track={props.currentTrack} />
+                      <TrackGenres track={props.currentTrack.track} />
                     </Col>
                   </Row>
                   <Row>
