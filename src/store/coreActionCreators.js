@@ -1,6 +1,7 @@
 var request = require('request')
 import _ from 'lodash';
 import { fromJS } from 'immutable'
+import cookie from 'react-cookie';
 
 // export function openModal(modalType) {
 //   return {
@@ -106,12 +107,13 @@ function handleErrors(response) {
 export function fetchQueue() {
   return function (dispatch) {
     dispatch(requestQueue())
+    const authCookie = cookie.load("auth-session")
     return new Promise(function(resolve, reject) {
       var options = {
-        url: 'http://localhost:3000/queue',
+        url: 'http://localhost:3000/queue/user',
         headers: {
           "Content-type": "application/json",
-          "Cookie": "auth-session=MTQ4MzQ2MTg2MXxOd3dBTkZOUVVVbzBOMUpIV2s4M1RWQk1WVFJQTWtoQ1IwdFFUVFZaUnpSS1IwdFlRMHRGVTFwWFFVeFBTVFZLVkVORVNrRktUVkU9fI1AkY4MSStYJy3bEtDd06IHAb7bYwgh1t71L5FDPz8K"
+          "Cookie": "auth-session=" + authCookie
         }
       };
       request(options, function(error, response, body) {

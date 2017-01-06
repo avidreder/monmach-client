@@ -8,17 +8,18 @@ export const TrackGenres = (props) => (
     <Card>
       <CardHeader title='Track Genre' />
       <CardText>
-        <DropDownMenu value={props.track.artists} >
-          {props.track.artists.map(artist =>
-            <MenuItem key={artist.id} value={artist.name} primaryText={artist.name} />
-          )}
-        </DropDownMenu>
+
       </CardText>
     </Card>
   </div>
 )
 
 // <DropDownMenu value={props.track.Genres[0]} >
+// <DropDownMenu value={props.track.Genres} >
+//   {props.track.Genres.map(genre =>
+//     <MenuItem key={genre.id} value={genre.name} primaryText={genre.name} />
+//   )}
+// </DropDownMenu>
 
 TrackGenres.propTypes = {
   track: React.PropTypes.object

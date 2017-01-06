@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 
 export const Queue = (props) => (
   <div>
-    {props.queue.map(item =>
-      <QueueItem key={item.track.id}
+    {props.queue.map(track =>
+      <QueueItem key={track.SpotifyID}
         removeFromQueue={props.removeFromQueue}
         setTrack={props.setTrack}
         addGenre={props.addGenre}
-        track={item.track} />
+        track={track} />
     )}
   </div>
 )

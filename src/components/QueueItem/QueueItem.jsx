@@ -8,7 +8,7 @@ export const QueueItem = (props) => (
     <Paper>
       <Toolbar>
         <ToolbarGroup>
-          <ToolbarTitle text={props.track.name} />
+          <ToolbarTitle text={props.track.SpotifyTrack.name} />
         </ToolbarGroup>
         <ToolbarGroup>
           <FontIcon className='material-icons'
