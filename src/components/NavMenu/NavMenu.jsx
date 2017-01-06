@@ -17,6 +17,7 @@ export const NavMenu = () => (
           <li style={{ cursor: 'pointer' }} className='navbar-link'><Link to='/'>Home</Link></li>
           <li style={{ cursor: 'pointer' }} className='navbar-link'><Link to='/components'>Components</Link></li>
           <li style={{ cursor: 'pointer' }} className='navbar-link'><Link to='/genre'>Genre</Link></li>
+          <li style={{ cursor: 'pointer' }} className='navbar-link'><Link to='/playlists'>Playlists</Link></li>
         </ul>
       </div>
     </div>

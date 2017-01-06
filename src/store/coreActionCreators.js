@@ -65,6 +65,26 @@ export function receiveQueueError(error) {
   }
 }
 
+export function requestPlaylists() {
+  return {
+    type: 'REQUEST_PLAYLISTS'
+  }
+}
+
+export function receivePlaylistsSuccess(playlists) {
+  return {
+    type: 'RECEIVE_PLAYLISTS_SUCCESS',
+    playlists: playlists
+  }
+}
+
+export function receivePlaylistsError(error) {
+  return {
+    type: 'RECEIVE_PLAYLISTS_ERROR',
+    error: error
+  }
+}
+
 // export function sendMultiple(shows, dispatch) {
 //   dispatch(receiveShowsSuccess(shows));
 //   dispatch(updateVenueList(shows));
@@ -104,6 +124,30 @@ function handleErrors(response) {
 //       })
 //   }
 // }
+export function fetchPlaylists() {
+  return function (dispatch) {
+    dispatch(requestPlaylists())
+    const authCookie = cookie.load("auth-session")
+    return new Promise(function(resolve, reject) {
+      var options = {
+        url: 'http://localhost:3000/spotify/playlists',
+        headers: {
+          "Content-type": "application/json",
+          "Cookie": "auth-session=" + authCookie
+        }
+      };
+      request(options, function(error, response, body) {
+        if (error) return reject(error)
+        resolve(body)
+      })
+    }).then(function(body){
+      dispatch(receivePlaylistsSuccess(fromJS(JSON.parse(body).items)))
+    }).catch(function(error){
+      dispatch(receivePlaylistsError(error))
+    })
+  }
+}
+
 export function fetchQueue() {
   return function (dispatch) {
     dispatch(requestQueue())

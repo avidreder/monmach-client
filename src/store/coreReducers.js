@@ -55,6 +55,20 @@ export function receiveQueueError(state, error) {
   }))
 }
 
+export function receivePlaylistsSuccess(state, playlists) {
+  console.log("playlists: ", playlists)
+  return fromJS(Object.assign({}, state.toJS(), {
+    playlists: playlists
+  }))
+}
+
+export function receivePlaylistsError(state, error) {
+  return fromJS(Object.assign({}, state.toJS(), {
+    error: error
+  }))
+}
+
+
 export default function coreReducer (state = testState, action) {
   switch (action.type) {
     case 'SET_CURRENT_TRACK':
@@ -71,6 +85,13 @@ export default function coreReducer (state = testState, action) {
       return receiveQueueSuccess(state, action.queue);
     case 'RECEIVE_QUEUE_ERROR':
       return receiveQueueError(state, action.error
+    );
+    case 'REQUEST_PLAYLISTS':
+      return state;
+    case 'RECEIVE_PLAYLISTS_SUCCESS':
+      return receivePlaylistsSuccess(state, action.playlists);
+    case 'RECEIVE_PLAYLISTS_ERROR':
+      return receivePlaylistsError(state, action.error
     );
     case 'SET_STATE':
       return state.merge(action.state);
@@ -193,16 +214,45 @@ const testState = fromJS({
     "Created": "0001-01-01T00:00:00Z",
     "Updated": "0001-01-01T00:00:00Z"
   },
-  playlist: {
-    ID: 1,
-    Name: 'TestQueue',
-    UserID: 1,
-    SpotifyID: '',
-    Tracks:[],
-    ListenedTracks:[],
-    Created:0,
-    Updated:0
-  },
+  playlists: [
+    {
+      "collaborative": false,
+      "external_urls": {
+        "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZEVXcDZUvJ9OK3xY"
+      },
+      "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZEVXcDZUvJ9OK3xY",
+      "id": "37i9dQZEVXcDZUvJ9OK3xY",
+      "images": [
+        {
+          "height": 0,
+          "width": 0,
+          "url": "https://u.scdn.co/images/pl/default/0b868e7974bc7f99aafb8ef23a3eb2dba401c3dd"
+        }
+      ],
+      "name": "Discover Weekly",
+      "owner": {
+        "display_name": "",
+        "external_urls": {
+          "spotify": "http://open.spotify.com/user/spotify"
+        },
+        "followers": {
+          "total": 0,
+          "href": ""
+        },
+        "href": "https://api.spotify.com/v1/users/spotify",
+        "id": "spotify",
+        "images": null,
+        "uri": "spotify:user:spotify"
+      },
+      "public": false,
+      "snapshot_id": "tLE6sfOkzYniN6WXWsV2+XO9JUFhkLpESMAe9joX8dWkIOiZq8+Lo+14P7/yuo5aNdaY6iHEEns=",
+      "tracks": {
+        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZEVXcDZUvJ9OK3xY/tracks",
+        "total": 30
+      },
+      "uri": "spotify:user:spotify:playlist:37i9dQZEVXcDZUvJ9OK3xY"
+    },
+  ],
   genre: {
     ID: 1,
     UserID: 1,
