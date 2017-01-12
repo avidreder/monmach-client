@@ -40,7 +40,7 @@ const mapStateToProps = (state) => ({
   currentTrack: state.core.get('currentTrack').toJS(),
   queue: state.core.get('queue').toJS(),
   genre: state.core.get('genre').toJS(),
-  playlist: state.core.get('playlist').toJS()
+  playlists: state.core.get('playlists').toJS()
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

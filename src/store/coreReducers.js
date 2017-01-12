@@ -105,35 +105,61 @@ export default function coreReducer (state = testState, action) {
 
 const testState = fromJS({
   currentTrack: {
-    "track": {
-      "name": "Do You Think About Me",
-      "id": "389mjNKJ6oLactAPNaZplR",
-      "album": {
-        "images": [
+    Playlists: null,
+    Created: '0001-01-01T00:00:00Z',
+    Genres: null,
+    SpotifyTrack: {
+      name: 'What You Wanted',
+      id: '4OlUxUBwAvogyWVfsdKRkf',
+      album: {
+        images: [
           {
-            "height": 640,
-            "width": 640,
-            "url": "https://i.scdn.co/image/7ecff592e06f173b30f5fdf6e0a31c39663f641b"
+            height: 640,
+            width: 640,
+            url: 'https://i.scdn.co/image/778991b4d78f9028b82ba8f02945d8d92188aec2'
           },
           {
-            "height": 300,
-            "width": 300,
-            "url": "https://i.scdn.co/image/0ea68ef9acec33071a0028b6799e2d31be0b8c97"
+            height: 300,
+            width: 300,
+            url: 'https://i.scdn.co/image/500ee81f0fc53ff252c70f03d6cae982d4b927d8'
           },
           {
-            "height": 64,
-            "width": 64,
-            "url": "https://i.scdn.co/image/2a3c53fb0402b7fdf8236913cfc9d04b8551d522"
+            height: 64,
+            width: 64,
+            url: 'https://i.scdn.co/image/48dee53dab89a9d1cf435c04715589f449bf1783'
           }
         ]
       },
-      "artists": [
+      artists: [
         {
-          "name": "SMSHNG HRTS",
-          "id": "6qVFWwbNA5OPHpVpkrDqfY"
+          name: 'Betablock3r',
+          id: '1s5qarNhu9YkU9fFVSFcnk'
         }
-      ],
-    }
+      ]
+    },
+    SpotifyID: '4OlUxUBwAvogyWVfsdKRkf',
+    Updated: '0001-01-01T00:00:00Z',
+    ID: '',
+    Features: {
+      liveness: 0.102,
+      mode: 1,
+      time_signature: 4,
+      energy: 0.859,
+      loudness: -3.8,
+      instrumentalness: 0.00485,
+      uri: 'spotify:track:4OlUxUBwAvogyWVfsdKRkf',
+      valence: 0.647,
+      analysis_url: 'https://api.spotify.com/v1/audio-analysis/4OlUxUBwAvogyWVfsdKRkf',
+      duration_ms: 213939,
+      danceability: 0.779,
+      acousticness: 0.00407,
+      id: '4OlUxUBwAvogyWVfsdKRkf',
+      tempo: 119.989,
+      speechiness: 0.0314,
+      track_href: 'https://api.spotify.com/v1/tracks/4OlUxUBwAvogyWVfsdKRkf',
+      key: 2
+    },
+    Rating: 0
   },
   queue: {
     "ID": "586abdb166a62a280991a6d4",
@@ -142,70 +168,118 @@ const testState = fromJS({
     "MaxSize": 0,
     "TrackQueue": [
       {
-        "track": {
-          "name": "Do You Think About Me",
-          "id": "389mjNKJ6oLactAPNaZplR",
-          "album": {
-            "images": [
+        Playlists: null,
+        Created: '0001-01-01T00:00:00Z',
+        Genres: null,
+        SpotifyTrack: {
+          name: 'What You Wanted',
+          id: '4OlUxUBwAvogyWVfsdKRkf',
+          album: {
+            images: [
               {
-                "height": 640,
-                "width": 640,
-                "url": "https://i.scdn.co/image/7ecff592e06f173b30f5fdf6e0a31c39663f641b"
+                height: 640,
+                width: 640,
+                url: 'https://i.scdn.co/image/778991b4d78f9028b82ba8f02945d8d92188aec2'
               },
               {
-                "height": 300,
-                "width": 300,
-                "url": "https://i.scdn.co/image/0ea68ef9acec33071a0028b6799e2d31be0b8c97"
+                height: 300,
+                width: 300,
+                url: 'https://i.scdn.co/image/500ee81f0fc53ff252c70f03d6cae982d4b927d8'
               },
               {
-                "height": 64,
-                "width": 64,
-                "url": "https://i.scdn.co/image/2a3c53fb0402b7fdf8236913cfc9d04b8551d522"
+                height: 64,
+                width: 64,
+                url: 'https://i.scdn.co/image/48dee53dab89a9d1cf435c04715589f449bf1783'
               }
             ]
           },
-          "artists": [
+          artists: [
             {
-              "name": "SMSHNG HRTS",
-              "id": "6qVFWwbNA5OPHpVpkrDqfY"
-            }
-          ],
-        }
-      },
-      {
-        "track": {
-          "name": "Reforget (Milk N Cooks Remix)",
-          "id": "7mLyWGOqr7OHxg17Zkg5rc",
-          "album": {
-            "images": [
-              {
-                "height": 640,
-                "width": 640,
-                "url": "https://i.scdn.co/image/389f5a5a86348a594b427a332922f5d252123bae"
-              },
-              {
-                "height": 300,
-                "width": 300,
-                "url": "https://i.scdn.co/image/081fbb64999085016fc1f8efb3ec2844a9db1610"
-              },
-              {
-                "height": 64,
-                "width": 64,
-                "url": "https://i.scdn.co/image/7f0a9d57df6bf5bd92378f1829532f3997f12d55"
-              }
-            ]
-          },
-          "artists": [
-            {
-              "name": "Lauv",
-              "id": "5JZ7CnR6gTvEMKX4g70Amv"
-            },
-            {
-              "name": "Milk N Cooks",
-              "id": "1FMPHgOCUsUhtNBZMDwdhD"
+              name: 'Betablock3r',
+              id: '1s5qarNhu9YkU9fFVSFcnk'
             }
           ]
-        }
+        },
+        SpotifyID: '4OlUxUBwAvogyWVfsdKRkf',
+        Updated: '0001-01-01T00:00:00Z',
+        ID: '',
+        Features: {
+          liveness: 0.102,
+          mode: 1,
+          time_signature: 4,
+          energy: 0.859,
+          loudness: -3.8,
+          instrumentalness: 0.00485,
+          uri: 'spotify:track:4OlUxUBwAvogyWVfsdKRkf',
+          valence: 0.647,
+          analysis_url: 'https://api.spotify.com/v1/audio-analysis/4OlUxUBwAvogyWVfsdKRkf',
+          duration_ms: 213939,
+          danceability: 0.779,
+          acousticness: 0.00407,
+          id: '4OlUxUBwAvogyWVfsdKRkf',
+          tempo: 119.989,
+          speechiness: 0.0314,
+          track_href: 'https://api.spotify.com/v1/tracks/4OlUxUBwAvogyWVfsdKRkf',
+          key: 2
+        },
+        Rating: 0
+      },
+      {
+        Playlists: null,
+        Created: '0001-01-01T00:00:00Z',
+        Genres: null,
+        SpotifyTrack: {
+          name: 'I. Walk',
+          id: '4yOhGLL7kBAiaAteFfluC8',
+          album: {
+            images: [
+              {
+                height: 640,
+                width: 640,
+                url: 'https://i.scdn.co/image/1c72dfb5beba7771320b17f8fc0e6245a05c054a'
+              },
+              {
+                height: 300,
+                width: 300,
+                url: 'https://i.scdn.co/image/9fda984cb6d275d453697e74fbb69b0eed5cfd80'
+              },
+              {
+                height: 64,
+                width: 64,
+                url: 'https://i.scdn.co/image/54efcee5c385913326bf68afadc07f62b2c94d65'
+              }
+            ]
+          },
+          artists: [
+            {
+              name: 'Owen Thiele x Zack Sekoff',
+              id: '3HtzVA7P6FAoqOSfvdVYC4'
+            }
+          ]
+        },
+        SpotifyID: '4yOhGLL7kBAiaAteFfluC8',
+        Updated: '0001-01-01T00:00:00Z',
+        ID: '',
+        Features: {
+          liveness: 0.162,
+          mode: 1,
+          time_signature: 4,
+          energy: 0.604,
+          loudness: -8.157,
+          instrumentalness: 0.00000644,
+          uri: 'spotify:track:4yOhGLL7kBAiaAteFfluC8',
+          valence: 0.861,
+          analysis_url: 'https://api.spotify.com/v1/audio-analysis/4yOhGLL7kBAiaAteFfluC8',
+          duration_ms: 217033,
+          danceability: 0.769,
+          acousticness: 0.0517,
+          id: '4yOhGLL7kBAiaAteFfluC8',
+          tempo: 123.97,
+          speechiness: 0.042,
+          track_href: 'https://api.spotify.com/v1/tracks/4yOhGLL7kBAiaAteFfluC8',
+          key: 0
+        },
+        Rating: 0
       }
     ],
     "SeedArtists": null,
