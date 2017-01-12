@@ -15,7 +15,7 @@ export const TrackProfile = (props) => (
           <ul>
           { Object.keys(props.track.Features).map((key) => {
             return ['id','uri','track_href','analysis_url'].indexOf(key) === -1 &&
-            <li>{ key.toString().charAt(0).toUpperCase() + key.toString().slice(1) }: {props.track.Features[key]}</li>
+            <li key={ key }>{ key.toString().charAt(0).toUpperCase() + key.toString().slice(1) }: {props.track.Features[key]}</li>
           })}
         </ul>
         </Paper>

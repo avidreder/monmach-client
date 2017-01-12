@@ -16,7 +16,7 @@ export const TrackPlayer = (props) => (
             frameBorder='0'
             allowTransparency='true' />
         </Paper>
-        <TrackActions track={props.track} addGenre={props.addGenre} />
+        <TrackActions track={props.track} addGenre={props.addGenre} addRating={ props.addRating }/>
       </CardText>
     </Card>
   </div>
@@ -24,7 +24,8 @@ export const TrackPlayer = (props) => (
 
 TrackPlayer.propTypes = {
   track: React.PropTypes.object,
-  addGenre: React.PropTypes.func
+  addGenre: React.PropTypes.func,
+  addRating: React.PropTypes.func,
 }
 
 export default TrackPlayer

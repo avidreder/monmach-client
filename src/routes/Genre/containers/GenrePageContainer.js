@@ -12,18 +12,6 @@ import GenrePage from '../components/GenrePage'
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
-// const mapDispatchToProps = (dispatch) => ({
-//   dispatchSetTrack: (track) => {
-//     dispatch(actionCreators.setTrack(track))
-//   },
-//   dispatchRemoveFromQueue: (track) => {
-//     dispatch(actionCreators.removeFromQueue(track))
-//   },
-//   dispatchAddGenre: (track) => {
-//     dispatch(actionCreators.addGenre(track))
-//   }
-// })
-
 const mapDispatchToProps = (dispatch) => ({
   setTrack: (track) => {
     dispatch(actionCreators.setTrack(track))
@@ -33,6 +21,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   addGenre: (track) => {
     dispatch(actionCreators.addGenre(track))
+  },
+  addRating: (value) => {
+    dispatch(actionCreators.addRating(value))
   }
 })
 

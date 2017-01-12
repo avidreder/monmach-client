@@ -45,6 +45,13 @@ export function addGenre(track) {
   };
 }
 
+export function addRating(value) {
+  return {
+    type: 'ADD_RATING',
+    value
+  };
+}
+
 export function requestQueue() {
   return {
     type: 'REQUEST_QUEUE'
@@ -85,12 +92,6 @@ export function receivePlaylistsError(error) {
   }
 }
 
-// export function sendMultiple(shows, dispatch) {
-//   dispatch(receiveShowsSuccess(shows));
-//   dispatch(updateVenueList(shows));
-//   dispatch(updateDateList(shows));
-// }
-
 function handleErrors(response) {
     if (!response.ok) {
         throw Error(response.statusText);
@@ -98,32 +99,6 @@ function handleErrors(response) {
     return response;
 }
 
-// export function fetchQueue() {
-//   return function (dispatch) {
-//
-//     dispatch(requestQueue())
-//
-//     return fetch('http://localhost:3000/queue', {
-//         method: 'get',
-//         credentials: 'include',
-//         headers: {
-//             "Content-type": "application/json",
-//             "Cookie": "auth-session=MTQ4MzQ2MTg2MXxOd3dBTkZOUVVVbzBOMUpIV2s4M1RWQk1WVFJQTWtoQ1IwdFFUVFZaUnpSS1IwdFlRMHRGVTFwWFFVeFBTVFZLVkVORVNrRktUVkU9fI1AkY4MSStYJy3bEtDd06IHAb7bYwgh1t71L5FDPz8K"
-//         },
-//       })
-//       .then(handleErrors)
-//       .then(function(response){
-//         console.log(response);
-//         return response.json();
-//       })
-//       .then(function(json){
-//         dispatch(receiveQueueSuccess(json));
-//       }).catch(function(error){
-//         console.log(error);
-//         dispatch(receiveShowsError(error));
-//       })
-//   }
-// }
 export function fetchPlaylists() {
   return function (dispatch) {
     dispatch(requestPlaylists())

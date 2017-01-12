@@ -42,6 +42,14 @@ export function addToGenre(state, track) {
   }))
 }
 
+export function addRating(state, value) {
+  const currentTrack = state.get('currentTrack').toJS()
+  currentTrack.Rating = value
+  return fromJS(Object.assign({}, state.toJS(), {
+    currentTrack: currentTrack
+  }))
+}
+
 export function receiveQueueSuccess(state, queue) {
   console.log("queue: ", queue)
   return fromJS(Object.assign({}, state.toJS(), {
@@ -79,13 +87,14 @@ export default function coreReducer (state = testState, action) {
       return addToListened(state, action.track)
     case 'ADD_GENRE':
       return addToGenre(state, action.track)
+    case 'ADD_RATING':
+      return addRating(state, action.value)
     case 'REQUEST_QUEUE':
-      return state;
+      return state
     case 'RECEIVE_QUEUE_SUCCESS':
-      return receiveQueueSuccess(state, action.queue);
+      return receiveQueueSuccess(state, action.queue)
     case 'RECEIVE_QUEUE_ERROR':
-      return receiveQueueError(state, action.error
-    );
+      return receiveQueueError(state, action.error)
     case 'REQUEST_PLAYLISTS':
       return state;
     case 'RECEIVE_PLAYLISTS_SUCCESS':
