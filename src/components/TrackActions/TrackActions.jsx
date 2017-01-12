@@ -15,7 +15,7 @@ export const TrackActions = (props) => (
             return <FontIcon key={ value } className='material-icons' color={ amber500 } onClick={() => props.addRating(value)}>star</FontIcon>
           })}
           { _.range(props.track.Rating + 1, 6).map((value) => {
-            return <FontIcon className='material-icons' hoverColor={ amber500 } onClick={() => props.addRating(value)}>star_border</FontIcon>
+            return <FontIcon key={ value } className='material-icons' hoverColor={ amber500 } onClick={() => props.addRating(value)}>star_border</FontIcon>
           })}
         </ToolbarGroup>
         <ToolbarGroup>

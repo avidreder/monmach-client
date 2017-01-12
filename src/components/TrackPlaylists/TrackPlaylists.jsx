@@ -1,20 +1,30 @@
 import React from 'react'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 import DropDownMenu from 'material-ui/DropDownMenu'
+import Checkbox from 'material-ui/Checkbox'
 import MenuItem from 'material-ui/MenuItem'
+import * as _ from 'lodash'
 
-export const TrackPlaylists = () => (
+export const TrackPlaylists = (props) => (
   <div>
     <Card>
       <CardHeader title='Track Playlists' />
       <CardText>
-        <DropDownMenu value={1} >
-          <MenuItem value={1} primaryText='Playlist 1' />
-          <MenuItem value={2} primaryText='Playlist 2' />
-        </DropDownMenu>
+        {props.playlists.map(playlist =>
+          <Checkbox
+            key={ playlist.id }
+            label={ playlist.name }
+            checked={ _.includes(props.track.Playlists, playlist.id)}
+          />
+        )}
       </CardText>
     </Card>
   </div>
 )
+
+TrackPlaylists.propTypes = {
+  track: React.PropTypes.object,
+  playlists: React.PropTypes.array,
+}
 
 export default TrackPlaylists

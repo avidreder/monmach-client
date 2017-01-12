@@ -9,9 +9,7 @@ export const SET_TEST_DATA = 'SET_TEST_DATA'
 
 export function setTrack(state, track){
   return fromJS(Object.assign({}, state.toJS(), {
-    currentTrack: {
-      track: track
-    }
+    currentTrack: track
   }))
 }
 
@@ -51,9 +49,11 @@ export function addRating(state, value) {
 }
 
 export function receiveQueueSuccess(state, queue) {
-  console.log("queue: ", queue)
+  const spotifyGenres = _.uniq(_.filter(_.flatten(_.map(queue.toJS().TrackQueue, 'Genres')), null))
+  console.log(spotifyGenres)
   return fromJS(Object.assign({}, state.toJS(), {
-    queue: queue
+    queue,
+    spotifyGenres,
   }))
 }
 
@@ -64,7 +64,7 @@ export function receiveQueueError(state, error) {
 }
 
 export function receivePlaylistsSuccess(state, playlists) {
-  console.log("playlists: ", playlists)
+  console.log('playlists: ', playlists)
   return fromJS(Object.assign({}, state.toJS(), {
     playlists: playlists
   }))
@@ -114,9 +114,10 @@ export default function coreReducer (state = testState, action) {
 
 const testState = fromJS({
   currentTrack: {
-    Playlists: null,
+    Playlists: [],
     Created: '0001-01-01T00:00:00Z',
-    Genres: null,
+    Genres: ['cool genre'],
+    CustomGenres: [],
     SpotifyTrack: {
       name: 'What You Wanted',
       id: '4OlUxUBwAvogyWVfsdKRkf',
@@ -171,15 +172,16 @@ const testState = fromJS({
     Rating: 0
   },
   queue: {
-    "ID": "586abdb166a62a280991a6d4",
-    "UserID": "586abdb166a62a280991a6d3",
-    "Name": "",
-    "MaxSize": 0,
-    "TrackQueue": [
+    'ID': '586abdb166a62a280991a6d4',
+    'UserID': '586abdb166a62a280991a6d3',
+    'Name': '',
+    'MaxSize': 0,
+    'TrackQueue': [
       {
-        Playlists: null,
+        Playlists: [],
         Created: '0001-01-01T00:00:00Z',
-        Genres: null,
+        Genres: ['some genre'],
+        CustomGenres: [],
         SpotifyTrack: {
           name: 'What You Wanted',
           id: '4OlUxUBwAvogyWVfsdKRkf',
@@ -234,9 +236,10 @@ const testState = fromJS({
         Rating: 0
       },
       {
-        Playlists: null,
+        Playlists: [],
         Created: '0001-01-01T00:00:00Z',
-        Genres: null,
+        Genres: [],
+        CustomGenres: [],
         SpotifyTrack: {
           name: 'I. Walk',
           id: '4yOhGLL7kBAiaAteFfluC8',
@@ -291,64 +294,97 @@ const testState = fromJS({
         Rating: 0
       }
     ],
-    "SeedArtists": null,
-    "SeedTracks": null,
-    "ListenedTracks": null,
-    "Created": "0001-01-01T00:00:00Z",
-    "Updated": "0001-01-01T00:00:00Z"
+    'SeedArtists': [],
+    'SeedTracks': [],
+    'ListenedTracks': [],
+    'Created': '0001-01-01T00:00:00Z',
+    'Updated': '0001-01-01T00:00:00Z'
   },
   playlists: [
     {
-      "collaborative": false,
-      "external_urls": {
-        "spotify": "http://open.spotify.com/user/spotify/playlist/37i9dQZEVXcDZUvJ9OK3xY"
+      'collaborative': false,
+      'external_urls': {
+        'spotify': 'http://open.spotify.com/user/spotify/playlist/37i9dQZEVXcDZUvJ9OK3xY'
       },
-      "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZEVXcDZUvJ9OK3xY",
-      "id": "37i9dQZEVXcDZUvJ9OK3xY",
-      "images": [
+      'href': 'https://api.spotify.com/v1/users/spotify/playlists/37i9dQZEVXcDZUvJ9OK3xY',
+      'id': '37i9dQZEVXcDZUvJ9OK3xY',
+      'images': [
         {
-          "height": 0,
-          "width": 0,
-          "url": "https://u.scdn.co/images/pl/default/0b868e7974bc7f99aafb8ef23a3eb2dba401c3dd"
+          'height': 0,
+          'width': 0,
+          'url': 'https://u.scdn.co/images/pl/default/0b868e7974bc7f99aafb8ef23a3eb2dba401c3dd'
         }
       ],
-      "name": "Discover Weekly",
-      "owner": {
-        "display_name": "",
-        "external_urls": {
-          "spotify": "http://open.spotify.com/user/spotify"
+      'name': 'Discover Weekly',
+      'owner': {
+        'display_name': '',
+        'external_urls': {
+          'spotify': 'http://open.spotify.com/user/spotify'
         },
-        "followers": {
-          "total": 0,
-          "href": ""
+        'followers': {
+          'total': 0,
+          'href': ''
         },
-        "href": "https://api.spotify.com/v1/users/spotify",
-        "id": "spotify",
-        "images": null,
-        "uri": "spotify:user:spotify"
+        'href': 'https://api.spotify.com/v1/users/spotify',
+        'id': 'spotify',
+        'images': [],
+        'uri': 'spotify:user:spotify'
       },
-      "public": false,
-      "snapshot_id": "tLE6sfOkzYniN6WXWsV2+XO9JUFhkLpESMAe9joX8dWkIOiZq8+Lo+14P7/yuo5aNdaY6iHEEns=",
-      "tracks": {
-        "href": "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZEVXcDZUvJ9OK3xY/tracks",
-        "total": 30
+      'public': false,
+      'snapshot_id': 'tLE6sfOkzYniN6WXWsV2+XO9JUFhkLpESMAe9joX8dWkIOiZq8+Lo+14P7/yuo5aNdaY6iHEEns=',
+      'tracks': {
+        'href': 'https://api.spotify.com/v1/users/spotify/playlists/37i9dQZEVXcDZUvJ9OK3xY/tracks',
+        'total': 30
       },
-      "uri": "spotify:user:spotify:playlist:37i9dQZEVXcDZUvJ9OK3xY"
+      'uri': 'spotify:user:spotify:playlist:37i9dQZEVXcDZUvJ9OK3xY'
     },
   ],
-  genre: {
-    ID: 1,
-    UserID: 1,
-    QueueID: 1,
-    Name: 'Great Music',
-    Description: 'My favorite songs',
-    SeedArtists: [],
-    SeedTracks:[],
-    SeedPlaylists:[],
-    AvatarURL: '',
-    Created:0,
-    Updated:0,
-    TrackBlacklist: [],
-    TrackWhitelist: []
-  }
+  spotifyGenres: ['cool music'],
+  genres: [
+    {
+      ID: '1',
+      UserID: '586abdb166a62a280991a6d3',
+      QueueID: 1,
+      Name: 'RnB',
+      Description: 'Downtempo rap and rnb',
+      SeedArtists: [],
+      SeedTracks:[],
+      SeedPlaylists:[],
+      AvatarURL: '',
+      Created:0,
+      Updated:0,
+      TrackBlacklist: [],
+      TrackWhitelist: []
+    },
+    {
+      ID: '2',
+      UserID: '586abdb166a62a280991a6d3',
+      QueueID: 1,
+      Name: 'Coding Music',
+      Description: 'Ambient Electronica for focused work',
+      SeedArtists: [],
+      SeedTracks:[],
+      SeedPlaylists:[],
+      AvatarURL: '',
+      Created:0,
+      Updated:0,
+      TrackBlacklist: [],
+      TrackWhitelist: []
+    },
+    {
+      ID: '3',
+      UserID: '586abdb166a62a280991a6d3',
+      QueueID: 1,
+      Name: 'Rock',
+      Description: 'Guitar based music',
+      SeedArtists: [],
+      SeedTracks:[],
+      SeedPlaylists:[],
+      AvatarURL: '',
+      Created:0,
+      Updated:0,
+      TrackBlacklist: [],
+      TrackWhitelist: []
+    },
+  ]
 })

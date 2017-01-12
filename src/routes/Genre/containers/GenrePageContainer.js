@@ -30,7 +30,8 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   currentTrack: state.core.get('currentTrack').toJS(),
   queue: state.core.get('queue').toJS(),
-  genre: state.core.get('genre').toJS(),
+  genres: state.core.get('genres').toJS(),
+  spotifyGenres: state.core.get('spotifyGenres').toJS(),
   playlists: state.core.get('playlists').toJS()
 })
 
