@@ -14,8 +14,8 @@ export function setTrack(state, track){
 }
 
 export function removeFromQueue(state, track){
-  queue = state.get('queue').toJS()
-  queue.TrackQueue = _.reject(queue.TrackQueue, {ID: track.ID})
+  let queue = state.get('queue').toJS()
+  queue.TrackQueue = _.reject(queue.TrackQueue, {SpotifyID: track.SpotifyID})
   return fromJS(Object.assign({}, state.toJS(), {
     queue: queue
   }))

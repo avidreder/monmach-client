@@ -15,9 +15,7 @@ import GenrePage from '../components/GenrePage'
 const mapDispatchToProps = (dispatch) => ({
   setTrack: (track) => {
     dispatch(actionCreators.setTrack(track))
-  },
-  removeFromQueue: (track) => {
-    return
+    dispatch(actionCreators.removeFromQueue(track))
   },
   addGenre: (track) => {
     dispatch(actionCreators.addGenre(track))
