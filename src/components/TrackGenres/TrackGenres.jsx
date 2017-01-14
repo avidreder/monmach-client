@@ -1,45 +1,110 @@
-import React from 'react'
+import React, { Component } from 'react'
+import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardHeader, CardText } from 'material-ui/Card'
-import DropDownMenu from 'material-ui/DropDownMenu'
+import Popover from 'material-ui/Popover'
 import Checkbox from 'material-ui/Checkbox';
 import MenuItem from 'material-ui/MenuItem'
 import * as _ from 'lodash'
 
-export const TrackGenres = (props) => (
-  <div>
-    <Card>
-      <CardHeader title='Track Spotify Genres' />
-      <CardText>
-        {props.spotifyGenres.map(genre =>
-          <Checkbox
-            key={ genre }
-            label={ genre }
-            checked={ _.includes(props.track.Genres, genre)}
-          />
-        )}
-      </CardText>
-    </Card>
-    <Card>
-      <CardHeader title='Track Custom Genres' />
-      <CardText>
-        {props.genres.map(genre =>
-          <Checkbox
-            key={ genre.ID }
-            label={ genre.Name }
-            checked={ _.includes(props.track.CustomGenres, genre)}
-          />
-        )}
-      </CardText>
-    </Card>
-  </div>
-)
+export default class TrackGenres extends Component {
+  constructor(props){
+    super(props)
+    this.state = { genreOpen: false, customGenreOpen: false }
+  }
+  static propTypes = {
+    track: React.PropTypes.object,
+    genres: React.PropTypes.array,
+    spotifyGenres: React.PropTypes.array,
+  }
+  handleGenreTouchTap = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
 
-// <DropDownMenu value={props.track.Genres[0]} >
+    this.setState({
+      genreOpen: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+  handleCustomGenreTouchTap = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
 
-TrackGenres.propTypes = {
-  track: React.PropTypes.object,
-  genres: React.PropTypes.array,
-  spotifyGenres: React.PropTypes.array,
+    this.setState({
+      customGenreOpen: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({
+      genreOpen: false,
+      customGenreOpen: false,
+    });
+  };
+  render() {
+    const { genreOpen, customGenreOpen, anchorEl } = this.state;
+    const { track, spotifyGenres, genres } = this.props;
+    return (
+      <div>
+        <Card>
+          <CardHeader title='Track Spotify Genres' />
+          <CardText>
+            { spotifyGenres.map(genre =>
+              _.includes(track.Genres, genre) && <Checkbox
+                key={ genre }
+                label={ genre }
+                checked
+              />
+            ) }
+            <RaisedButton
+              onTouchTap={this.handleGenreTouchTap}
+              label="Add..."
+            />
+            <Popover open={ genreOpen }
+              anchorEl={ anchorEl }
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}
+              onRequestClose={this.handleRequestClose}>
+              { _.reject(spotifyGenres, (o) => (_.includes(track.Genres, o))).map(genre =>
+                <Checkbox
+                  key={ genre }
+                  label={ genre }
+                  checked={ false }
+                />
+              ) }
+            </Popover>
+          </CardText>
+        </Card>
+        <Card>
+          <CardHeader title='Track Custom Genres' />
+          <CardText>
+            { genres.map(genre =>
+              _.includes(track.CustomGenres, genre) && <Checkbox
+                key={ genre.ID }
+                label={ genre.Name }
+                checked
+              />
+            ) }
+            <RaisedButton
+              onTouchTap={this.handleCustomGenreTouchTap}
+              label="Add..."
+            />
+            <Popover open={ customGenreOpen }
+              anchorEl={ anchorEl }
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}
+              onRequestClose={this.handleRequestClose}>
+              { _.reject(genres, (o) => (_.includes(track.CustomGenres, o))).map(genre =>
+                <Checkbox
+                  key={ genre.ID }
+                  label={ genre.Name }
+                  checked={ false }
+                />
+              ) }
+            </Popover>
+          </CardText>
+        </Card>
+      </div>
+    )
+  }
 }
-
-export default TrackGenres
