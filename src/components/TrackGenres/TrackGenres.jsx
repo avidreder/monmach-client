@@ -43,7 +43,7 @@ export default class TrackGenres extends Component {
   };
   render() {
     const { genreOpen, customGenreOpen, anchorEl } = this.state;
-    const { track, spotifyGenres, genres } = this.props;
+    const { track, spotifyGenres, genres, addSpotifyGenre, removeSpotifyGenre, addCustomGenre, removeCustomGenre } = this.props;
     return (
       <div>
         <Card>
@@ -54,6 +54,7 @@ export default class TrackGenres extends Component {
                 key={ genre }
                 label={ genre }
                 checked
+                onCheck={ () => removeSpotifyGenre(genre) }
               />
             ) }
             <RaisedButton
@@ -70,6 +71,7 @@ export default class TrackGenres extends Component {
                   key={ genre }
                   label={ genre }
                   checked={ false }
+                  onCheck={ () => addSpotifyGenre(genre) }
                 />
               ) }
             </Popover>
@@ -78,12 +80,13 @@ export default class TrackGenres extends Component {
         <Card>
           <CardHeader title='Track Custom Genres' />
           <CardText>
-            { genres.map(genre =>
-              _.includes(track.CustomGenres, genre) && <Checkbox
+            { _.filter(genres, (o) => (_.some(track.CustomGenres, {'Name': o.Name}))).map(genre => (
+              <Checkbox
                 key={ genre.ID }
                 label={ genre.Name }
                 checked
-              />
+                onCheck={ () => removeCustomGenre(genre) } />
+              )
             ) }
             <RaisedButton
               onTouchTap={this.handleCustomGenreTouchTap}
@@ -94,11 +97,12 @@ export default class TrackGenres extends Component {
               anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
               targetOrigin={{horizontal: 'left', vertical: 'top'}}
               onRequestClose={this.handleRequestClose}>
-              { _.reject(genres, (o) => (_.includes(track.CustomGenres, o))).map(genre =>
+              { _.reject(genres, (o) => (_.some(track.CustomGenres, {'Name': o.Name}))).map(genre =>
                 <Checkbox
                   key={ genre.ID }
                   label={ genre.Name }
                   checked={ false }
+                  onCheck={ () => addCustomGenre(genre) }
                 />
               ) }
             </Popover>

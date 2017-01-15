@@ -25,7 +25,7 @@ export const GenrePage = (props) => (
             <CardText>
               <Row>
                 <Col md={12} sm={12} lg={12}>
-                  <TrackPlayer track={ props.currentTrack } addGenre={ props.addGenre } addRating={ props.addRating } />
+                  <TrackPlayer track={ props.currentTrack } addRating={ props.addRating } />
                 </Col>
               </Row>
               <Row>
@@ -35,7 +35,13 @@ export const GenrePage = (props) => (
                 <Col md={6} sm={6} lg={6}>
                   <Row>
                     <Col md={12} sm={12} lg={12}>
-                      <TrackGenres genres={ props.genres } track={ props.currentTrack } spotifyGenres={ props.spotifyGenres } />
+                      <TrackGenres genres={ props.genres }
+                        track={ props.currentTrack }
+                        spotifyGenres={ props.spotifyGenres }
+                        addSpotifyGenre={ props.addSpotifyGenre }
+                        removeSpotifyGenre={ props.removeSpotifyGenre }
+                        addCustomGenre={ props.addCustomGenre }
+                        removeCustomGenre={ props.removeCustomGenre }/>
                     </Col>
                   </Row>
                   <Row>

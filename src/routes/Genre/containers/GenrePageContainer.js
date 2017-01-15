@@ -17,8 +17,17 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(actionCreators.setTrack(track))
     dispatch(actionCreators.removeFromQueue(track))
   },
-  addGenre: (track) => {
-    dispatch(actionCreators.addGenre(track))
+  addSpotifyGenre: (genre) => {
+    dispatch(actionCreators.addSpotifyGenre(genre))
+  },
+  removeSpotifyGenre: (genre) => {
+    dispatch(actionCreators.removeSpotifyGenre(genre))
+  },
+  addCustomGenre: (genre) => {
+    dispatch(actionCreators.addCustomGenre(genre))
+  },
+  removeCustomGenre: (genre) => {
+    dispatch(actionCreators.removeCustomGenre(genre))
   },
   addRating: (value) => {
     dispatch(actionCreators.addRating(value))

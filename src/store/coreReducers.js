@@ -21,22 +21,46 @@ export function removeFromQueue(state, track){
   }))
 }
 
+export function addSpotifyGenre(state, genre) {
+  let currentTrack = state.get('currentTrack').toJS()
+  currentTrack.Genres.push(genre)
+  return fromJS(Object.assign({}, state.toJS(), {
+    currentTrack
+  }))
+}
+
+export function removeSpotifyGenre(state, genre){
+  let currentTrack = state.get('currentTrack').toJS()
+  currentTrack.Genres = _.without(currentTrack.Genres, genre)
+  return fromJS(Object.assign({}, state.toJS(), {
+    currentTrack
+  }))
+}
+
+export function addCustomGenre(state, genre) {
+  let currentTrack = state.get('currentTrack').toJS()
+  currentTrack.CustomGenres.push(genre)
+  return fromJS(Object.assign({}, state.toJS(), {
+    currentTrack
+  }))
+}
+
+export function removeCustomGenre(state, genre){
+  let currentTrack = state.get('currentTrack').toJS()
+  currentTrack.CustomGenres = _.reject(currentTrack.CustomGenres, (o) => (
+    _.some(currentTrack.CustomGenres, {'Name': genre.Name}))
+  )
+  return fromJS(Object.assign({}, state.toJS(), {
+    currentTrack
+  }))
+}
+
 export function addToListened(state, track){
   let queue = state.get('queue').toJS()
   console.log(queue)
   queue.ListenedTracks.push(track.ID)
   return fromJS(Object.assign({}, state.toJS(), {
     queue: queue
-  }))
-}
-
-export function addToGenre(state, track) {
-  console.log(track)
-  const genre = state.get('genre').toJS()
-  track.Genres.push(genre.ID)
-  console.log(track)
-  return fromJS(Object.assign({}, state.toJS(), {
-    currentTrack: track
   }))
 }
 
@@ -76,7 +100,6 @@ export function receivePlaylistsError(state, error) {
   }))
 }
 
-
 export default function coreReducer (state = testState, action) {
   switch (action.type) {
     case 'SET_CURRENT_TRACK':
@@ -85,8 +108,14 @@ export default function coreReducer (state = testState, action) {
       return removeFromQueue(state, action.track)
     case 'ADD_TO_LISTENED':
       return addToListened(state, action.track)
-    case 'ADD_GENRE':
-      return addToGenre(state, action.track)
+    case 'ADD_SPOTIFY_GENRE':
+      return addSpotifyGenre(state, action.genre)
+    case 'REMOVE_SPOTIFY_GENRE':
+      return removeSpotifyGenre(state, action.genre)
+    case 'ADD_CUSTOM_GENRE':
+      return addCustomGenre(state, action.genre)
+    case 'REMOVE_CUSTOM_GENRE':
+      return removeCustomGenre(state, action.genre)
     case 'ADD_RATING':
       return addRating(state, action.value)
     case 'REQUEST_QUEUE':

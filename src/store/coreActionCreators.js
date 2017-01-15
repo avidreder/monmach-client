@@ -38,6 +38,34 @@ export function removeFromQueue(track) {
   };
 }
 
+export function addSpotifyGenre(genre) {
+  return {
+    type: 'ADD_SPOTIFY_GENRE',
+    genre
+  };
+}
+
+export function removeSpotifyGenre(genre) {
+  return {
+    type: 'REMOVE_SPOTIFY_GENRE',
+    genre
+  };
+}
+
+export function addCustomGenre(genre) {
+  return {
+    type: 'ADD_CUSTOM_GENRE',
+    genre
+  };
+}
+
+export function removeCustomGenre(genre) {
+  return {
+    type: 'REMOVE_CUSTOM_GENRE',
+    genre
+  };
+}
+
 export function addGenre(track) {
   return {
     type: 'ADD_GENRE',
