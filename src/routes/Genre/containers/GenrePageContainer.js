@@ -29,6 +29,12 @@ const mapDispatchToProps = (dispatch) => ({
   removeCustomGenre: (genre) => {
     dispatch(actionCreators.removeCustomGenre(genre))
   },
+  addPlaylist: (playlist) => {
+    dispatch(actionCreators.addPlaylist(playlist))
+  },
+  removePlaylist: (playlist) => {
+    dispatch(actionCreators.removePlaylist(playlist))
+  },
   addRating: (value) => {
     dispatch(actionCreators.addRating(value))
   }

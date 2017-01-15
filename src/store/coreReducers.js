@@ -55,6 +55,22 @@ export function removeCustomGenre(state, genre){
   }))
 }
 
+export function addPlaylist(state, playlist) {
+  let currentTrack = state.get('currentTrack').toJS()
+  currentTrack.Playlists.push(playlist.id)
+  return fromJS(Object.assign({}, state.toJS(), {
+    currentTrack
+  }))
+}
+
+export function removePlaylist(state, playlist){
+  let currentTrack = state.get('currentTrack').toJS()
+  currentTrack.Playlists = _.without(currentTrack.Playlists, playlist.id)
+  return fromJS(Object.assign({}, state.toJS(), {
+    currentTrack
+  }))
+}
+
 export function addToListened(state, track){
   let queue = state.get('queue').toJS()
   console.log(queue)
@@ -116,6 +132,10 @@ export default function coreReducer (state = testState, action) {
       return addCustomGenre(state, action.genre)
     case 'REMOVE_CUSTOM_GENRE':
       return removeCustomGenre(state, action.genre)
+    case 'ADD_PLAYLIST':
+      return addPlaylist(state, action.playlist)
+    case 'REMOVE_PLAYLIST':
+      return removePlaylist(state, action.playlist)
     case 'ADD_RATING':
       return addRating(state, action.value)
     case 'REQUEST_QUEUE':

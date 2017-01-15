@@ -14,6 +14,8 @@ export default class TrackPlaylists extends Component {
   static propTypes = {
     track: React.PropTypes.object,
     playlists: React.PropTypes.array,
+    addPlaylist: React.PropTypes.func,
+    removePlaylist: React.PropTypes.func,
   }
   handleTouchTap = (event) => {
     // This prevents ghost click.
@@ -32,7 +34,7 @@ export default class TrackPlaylists extends Component {
   };
   render() {
     const { open } = this.state;
-    const { track, playlists } = this.props;
+    const { track, playlists, addPlaylist, removePlaylist } = this.props;
     return (
       <div>
         <Card>
@@ -43,6 +45,7 @@ export default class TrackPlaylists extends Component {
                 key={ playlist.id }
                 label={ playlist.name }
                 checked
+                onCheck={ () => removePlaylist(playlist) }
               />
             ) }
             <RaisedButton
@@ -59,6 +62,7 @@ export default class TrackPlaylists extends Component {
                   key={ playlist.id }
                   label={ playlist.name }
                   checked={ false }
+                  onCheck={ () => addPlaylist(playlist) }
                 />
               ) }
             </Popover>

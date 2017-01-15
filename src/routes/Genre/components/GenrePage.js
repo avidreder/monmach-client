@@ -41,12 +41,15 @@ export const GenrePage = (props) => (
                         addSpotifyGenre={ props.addSpotifyGenre }
                         removeSpotifyGenre={ props.removeSpotifyGenre }
                         addCustomGenre={ props.addCustomGenre }
-                        removeCustomGenre={ props.removeCustomGenre }/>
+                        removeCustomGenre={ props.removeCustomGenre } />
                     </Col>
                   </Row>
                   <Row>
                     <Col md={12} sm={12} lg={12}>
-                      <TrackPlaylists track={ props.currentTrack } playlists={ props.playlists }/>
+                      <TrackPlaylists track={ props.currentTrack }
+                        playlists={ props.playlists }
+                        addPlaylist={ props.addPlaylist }
+                        removePlaylist={ props.removePlaylist } />
                     </Col>
                   </Row>
                 </Col>
@@ -77,6 +80,12 @@ GenrePage.propTypes = {
   currentTrack: React.PropTypes.object,
   genres: React.PropTypes.array,
   spotifyGenres: React.PropTypes.array,
+  addGenre: React.PropTypes.func,
+  removeGenre: React.PropTypes.func,
+  addCustomGenre: React.PropTypes.func,
+  removeCustomGenre: React.PropTypes.func,
+  addPlaylist: React.PropTypes.func,
+  removePlaylist: React.PropTypes.func,
 }
 
 export default GenrePage

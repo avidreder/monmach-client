@@ -66,6 +66,20 @@ export function removeCustomGenre(genre) {
   };
 }
 
+export function addPlaylist(playlist) {
+  return {
+    type: 'ADD_PLAYLIST',
+    playlist
+  };
+}
+
+export function removePlaylist(playlist) {
+  return {
+    type: 'REMOVE_PLAYLIST',
+    playlist
+  };
+}
+
 export function addGenre(track) {
   return {
     type: 'ADD_GENRE',

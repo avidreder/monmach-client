@@ -15,6 +15,10 @@ export default class TrackGenres extends Component {
     track: React.PropTypes.object,
     genres: React.PropTypes.array,
     spotifyGenres: React.PropTypes.array,
+    addGenre: React.PropTypes.func,
+    removeGenre: React.PropTypes.func,
+    addCustomGenre: React.PropTypes.func,
+    removeCustomGenre: React.PropTypes.func,
   }
   handleGenreTouchTap = (event) => {
     // This prevents ghost click.
