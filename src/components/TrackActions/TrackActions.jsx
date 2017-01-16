@@ -21,14 +21,13 @@ export const TrackActions = (props) => (
         <ToolbarGroup>
           <FloatingActionButton mini>
             <FontIcon className='material-icons'
-              onClick={() => props.addGenre(props.track)}>
-              playlist_add</FontIcon>
+              onClick={() => props.saveTrack(props.track)}>
+              save</FontIcon>
           </FloatingActionButton>
           <FloatingActionButton mini>
-            <FontIcon className='material-icons'>not_interested</FontIcon>
-          </FloatingActionButton>
-          <FloatingActionButton mini>
-            <FontIcon className='material-icons'>menu</FontIcon>
+            <FontIcon className='material-icons'
+              onClick={() => props.discardTrack(props.track)} >
+              not_interested</FontIcon>
           </FloatingActionButton>
         </ToolbarGroup>
       </Toolbar>
@@ -38,8 +37,9 @@ export const TrackActions = (props) => (
 
 TrackActions.propTypes = {
   track: React.PropTypes.object,
-  addGenre: React.PropTypes.func,
   addRating: React.PropTypes.func,
+  saveTrack: React.PropTypes.func,
+  discardTrack: React.PropTypes.func,
 }
 
 export default TrackActions

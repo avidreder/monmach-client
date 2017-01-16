@@ -94,6 +94,34 @@ export function addRating(value) {
   };
 }
 
+export function requestTrackSave(track) {
+  return {
+    type: 'SAVE_TRACK',
+    track
+  };
+}
+
+export function trackSaveSuccess(track) {
+  return {
+    type: 'SAVE_TRACK_SUCCESS',
+    track
+  };
+}
+
+export function trackSaveError(error) {
+  return {
+    type: 'SAVE_TRACK_ERROR',
+    error
+  };
+}
+
+export function discardTrack(track) {
+  return {
+    type: 'DISCARD_TRACK',
+    track
+  };
+}
+
 export function requestQueue() {
   return {
     type: 'REQUEST_QUEUE'
@@ -185,6 +213,44 @@ export function fetchQueue() {
       dispatch(receiveQueueSuccess(fromJS(JSON.parse(body))))
     }).catch(function(error){
       dispatch(receiveQueueError(error))
+    })
+  }
+}
+
+export function saveTrack(track) {
+  return function (dispatch) {
+    dispatch(requestTrackSave(track))
+    const authCookie = cookie.load("auth-session")
+    return new Promise(function(resolve, reject) {
+      console.log(track);
+      let form = {};
+      form.Created = track.Created
+      form.Updated = track.Updated
+      form.CustomGenres = JSON.stringify(track.CustomGenres)
+      form.Features = JSON.stringify(track.Features)
+      form.Genres = JSON.stringify(track.Genres)
+      form.Playlists = JSON.stringify(track.Playlists)
+      form.SpotifyTrack = JSON.stringify(track.SpotifyTrack)
+      form.SpotifyID = track.SpotifyID
+      form.Rating = track.Rating
+      const options = {
+        url: 'http://localhost:3000/crud/tracks/new',
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded",
+          "Cookie": "auth-session=" + authCookie
+        },
+        method: 'POST',
+        form: form,
+      }
+      request(options, function(error, response, body) {
+        if (error) return reject(error)
+        resolve(body)
+      })
+    }).then(function(body){
+      console.log(body)
+      dispatch(trackSaveSuccess(fromJS({ message: body})))
+    }).catch(function(error){
+      dispatch(trackSaveError(error))
     })
   }
 }

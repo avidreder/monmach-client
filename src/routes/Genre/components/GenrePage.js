@@ -25,7 +25,10 @@ export const GenrePage = (props) => (
             <CardText>
               <Row>
                 <Col md={12} sm={12} lg={12}>
-                  <TrackPlayer track={ props.currentTrack } addRating={ props.addRating } />
+                  <TrackPlayer track={ props.currentTrack }
+                    addRating={ props.addRating }
+                    saveTrack={ props.saveTrack }
+                    discardTrack={ props.discardTrack } />
                 </Col>
               </Row>
               <Row>
@@ -77,6 +80,8 @@ GenrePage.propTypes = {
   removeFromQueue: React.PropTypes.func,
   setTrack: React.PropTypes.func,
   addRating: React.PropTypes.func,
+  saveTrack: React.PropTypes.func,
+  discardTrack: React.PropTypes.func,
   currentTrack: React.PropTypes.object,
   genres: React.PropTypes.array,
   spotifyGenres: React.PropTypes.array,

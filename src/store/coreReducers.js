@@ -73,7 +73,6 @@ export function removePlaylist(state, playlist){
 
 export function addToListened(state, track){
   let queue = state.get('queue').toJS()
-  console.log(queue)
   queue.ListenedTracks.push(track.ID)
   return fromJS(Object.assign({}, state.toJS(), {
     queue: queue
@@ -88,9 +87,32 @@ export function addRating(state, value) {
   }))
 }
 
+export function saveTrack(state, track) {
+  console.log('Saving: ')
+  console.log(track)
+  return state
+}
+
+export function saveTrackSuccess(state, track) {
+  console.log('Saved: ')
+  console.log(track)
+  return state
+}
+
+export function saveTrackError(state, error) {
+  console.log('Saving error: ')
+  console.log(error)
+  return state
+}
+
+export function discardTrack(state, track) {
+  const queue = state.get('queue').toJS()
+  const nextState = removeFromQueue(setTrack(state, queue.TrackQueue[0]), queue.TrackQueue[0])
+  return fromJS(Object.assign({}, nextState.toJS()))
+}
+
 export function receiveQueueSuccess(state, queue) {
   const spotifyGenres = _.uniq(_.filter(_.flatten(_.map(queue.toJS().TrackQueue, 'Genres')), null))
-  console.log(spotifyGenres)
   return fromJS(Object.assign({}, state.toJS(), {
     queue,
     spotifyGenres,
@@ -104,7 +126,6 @@ export function receiveQueueError(state, error) {
 }
 
 export function receivePlaylistsSuccess(state, playlists) {
-  console.log('playlists: ', playlists)
   return fromJS(Object.assign({}, state.toJS(), {
     playlists: playlists
   }))
@@ -136,6 +157,16 @@ export default function coreReducer (state = testState, action) {
       return addPlaylist(state, action.playlist)
     case 'REMOVE_PLAYLIST':
       return removePlaylist(state, action.playlist)
+    case 'ADD_RATING':
+      return addRating(state, action.value)
+    case 'SAVE_TRACK':
+      return saveTrack(state, action.track)
+    case 'SAVE_TRACK_SUCCESS':
+      return saveTrackSuccess(state, action.track)
+    case 'SAVE_TRACK_ERROR':
+      return saveTrackError(state, action.error)
+    case 'DISCARD_TRACK':
+      return discardTrack(state, action.track)
     case 'ADD_RATING':
       return addRating(state, action.value)
     case 'REQUEST_QUEUE':

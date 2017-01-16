@@ -37,6 +37,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   addRating: (value) => {
     dispatch(actionCreators.addRating(value))
+  },
+  saveTrack: (value) => {
+    dispatch(actionCreators.saveTrack(value))
+  },
+  discardTrack: (value) => {
+    dispatch(actionCreators.discardTrack(value))
   }
 })
 
