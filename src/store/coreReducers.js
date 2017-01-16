@@ -119,6 +119,8 @@ export function receiveQueueSuccess(state, queue) {
 }
 
 export function receiveQueueError(state, error) {
+  console.log('Queue error: ')
+  console.log(error)
   return fromJS(Object.assign({}, state.toJS(), {
     error: error
   }))
@@ -131,6 +133,8 @@ export function receivePlaylistsSuccess(state, playlists) {
 }
 
 export function receivePlaylistsError(state, error) {
+  console.log('Playlists error: ')
+  console.log(error)
   return fromJS(Object.assign({}, state.toJS(), {
     error: error
   }))

@@ -13,6 +13,23 @@ module.exports = {
         next()
       }
     })
+  },
+  getData: function(req) {
+    return new Promise(function(resolve, reject) {
+      var options = {
+        url: req.query.url,
+        headers: {
+          'Cookie': req.query.auth,
+          'Content-type': 'application/json',
+        }
+      };
+      request(options, function(error, response, body) {
+        if (error) return reject(error)
+        resolve(body)
+      })
+    }).then(function(body){
+      return body
+    })
   }
 }
 

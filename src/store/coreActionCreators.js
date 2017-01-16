@@ -1,4 +1,6 @@
 var request = require('request')
+var axios = require('axios')
+request = request.defaults({jar: true})
 import _ from 'lodash';
 import { fromJS } from 'immutable'
 import cookie from 'react-cookie';
@@ -172,55 +174,54 @@ function handleErrors(response) {
 export function fetchPlaylists() {
   return function (dispatch) {
     dispatch(requestPlaylists())
-    const authCookie = cookie.load("auth-session")
-    return new Promise(function(resolve, reject) {
-      var options = {
+    const authCookie = cookie.load('auth-session')
+    var options = {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      params: {
+        auth: 'auth-session=' + authCookie,
         url: 'http://localhost:3000/spotify/playlists',
-        headers: {
-          "Content-type": "application/json",
-          "Cookie": "auth-session=" + authCookie
-        }
-      };
-      request(options, function(error, response, body) {
-        if (error) return reject(error)
-        resolve(body)
+      }
+    };
+    axios.get('http://localhost:8080/api/data', options)
+      .then(function(body){
+        dispatch(receivePlaylistsSuccess(fromJS(body.data.items)))
       })
-    }).then(function(body){
-      dispatch(receivePlaylistsSuccess(fromJS(JSON.parse(body).items)))
-    }).catch(function(error){
-      dispatch(receivePlaylistsError(error))
-    })
+      .catch(function(error){
+        dispatch(receivePlaylistsError(fromJS(error)))
+      })
   }
 }
 
 export function fetchQueue() {
   return function (dispatch) {
     dispatch(requestQueue())
-    const authCookie = cookie.load("auth-session")
-    return new Promise(function(resolve, reject) {
-      var options = {
+    const authCookie = cookie.load('auth-session')
+    console.log(authCookie)
+    var options = {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      params: {
+        auth: 'auth-session=' + authCookie,
         url: 'http://localhost:3000/queue/user',
-        headers: {
-          "Content-type": "application/json",
-          "Cookie": "auth-session=" + authCookie
-        }
-      };
-      request(options, function(error, response, body) {
-        if (error) return reject(error)
-        resolve(body)
+      }
+    };
+    axios.get('http://localhost:8080/api/data', options)
+      .then(function(body){
+        dispatch(receiveQueueSuccess(fromJS(body.data)))
       })
-    }).then(function(body){
-      dispatch(receiveQueueSuccess(fromJS(JSON.parse(body))))
-    }).catch(function(error){
-      dispatch(receiveQueueError(error))
-    })
+      .catch(function(error){
+        dispatch(receiveQueueError(fromJS(error)))
+      })
   }
 }
 
 export function saveTrack(track) {
   return function (dispatch) {
     dispatch(requestTrackSave(track))
-    const authCookie = cookie.load("auth-session")
+    const authCookie = cookie.load('auth-session')
     return new Promise(function(resolve, reject) {
       console.log(track);
       let form = {};
@@ -236,8 +237,8 @@ export function saveTrack(track) {
       const options = {
         url: 'http://localhost:3000/crud/tracks/new',
         headers: {
-          "Content-type": "application/x-www-form-urlencoded",
-          "Cookie": "auth-session=" + authCookie
+          'Content-type': 'application/x-www-form-urlencoded',
+          'Cookie': 'auth-session=' + authCookie
         },
         method: 'POST',
         form: form,
@@ -248,7 +249,14 @@ export function saveTrack(track) {
       })
     }).then(function(body){
       console.log(body)
-      dispatch(trackSaveSuccess(fromJS({ message: body})))
+      let result = {}
+      try {
+        result = JSON.parse(body)
+      } catch (e) {
+        result = { error: body }
+      } finally {
+        dispatch(trackSaveSuccess(fromJS(result)))
+      }
     }).catch(function(error){
       dispatch(trackSaveError(error))
     })

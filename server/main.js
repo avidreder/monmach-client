@@ -15,6 +15,15 @@ app.use(require('connect-history-api-fallback')())
 
 // Apply gzip compression
 app.use(compress())
+app.get('/api/data', (req, res) => {
+  auth.getData(req)
+  .then(function(body){
+    res.send(body)
+  })
+  .catch(function(err){
+    res.send(err)
+  })
+})
 app.all('*/index.html', auth.checkAuth)
 // ------------------------------------
 // Apply Webpack HMR Middleware
