@@ -84,7 +84,7 @@ export default class TrackGenres extends Component {
         <Card>
           <CardHeader title='Track Custom Genres' />
           <CardText>
-            { _.filter(genres, (o) => (_.some(track.CustomGenres, {'Name': o.Name}))).map(genre => (
+            { _.filter(genres, (o) => (_.includes(track.CustomGenres, o.ID))).map(genre => (
               <Checkbox
                 key={ genre.ID }
                 label={ genre.Name }
@@ -101,7 +101,7 @@ export default class TrackGenres extends Component {
               anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
               targetOrigin={{horizontal: 'left', vertical: 'top'}}
               onRequestClose={this.handleRequestClose}>
-              { _.reject(genres, (o) => (_.some(track.CustomGenres, {'Name': o.Name}))).map(genre =>
+              { _.reject(genres, (o) => (_.includes(track.CustomGenres, o.ID))).map(genre =>
                 <Checkbox
                   key={ genre.ID }
                   label={ genre.Name }
