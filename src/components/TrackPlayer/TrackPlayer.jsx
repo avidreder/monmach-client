@@ -1,36 +1,52 @@
-import React from 'react'
+import React, { Component } from 'react'
 import TrackActions from 'components/TrackActions'
 import { Card, CardTitle, CardText } from 'material-ui/Card'
 import Paper from 'material-ui/Paper'
 
-export const TrackPlayer = (props) => (
-  <div>
-    <Card>
-      <CardTitle title={props.track.SpotifyTrack.name} />
-      <CardText>
-        <Paper>
-          <iframe id='externalPlayer'
-            src={'https://embed.spotify.com/?uri=spotify:track:' +
-              props.track.SpotifyID}
-            width='100%' height='80'
-            frameBorder='0'
-            allowTransparency='true' />
-        </Paper>
-        <TrackActions track={props.track}
-          addRating={ props.addRating }
-          saveTrack={ props.saveTrack }
-          discardTrack={ props.discardTrack } />
-      </CardText>
-    </Card>
-  </div>
-)
-
-TrackPlayer.propTypes = {
-  track: React.PropTypes.object,
-  addGenre: React.PropTypes.func,
-  addRating: React.PropTypes.func,
-  saveTrack: React.PropTypes.func,
-  discardTrack: React.PropTypes.func,
+export default class TrackPlayer extends Component {
+  static propTypes = {
+    track: React.PropTypes.object,
+    addGenre: React.PropTypes.func,
+    addRating: React.PropTypes.func,
+    saveTrack: React.PropTypes.func,
+    discardTrack: React.PropTypes.func,
+  }
+  constructor(props) {
+    super(props)
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    const { track } = this.props;
+    console.log(track, nextProps.track)
+    if (track.SpotifyID != nextProps.track.SpotifyID) {
+      return true
+    }
+    return false
+  }
+  render(){
+    const {
+      track,
+      addRating,
+      saveTrack,
+      discardTrack,
+    } = this.props;
+    return(<div>
+      <Card>
+        <CardTitle title={track.SpotifyTrack.name} />
+        <CardText>
+          <Paper>
+            <iframe id='externalPlayer'
+              src={'https://embed.spotify.com/?uri=spotify:track:' +
+                track.SpotifyID}
+              width='100%' height='80'
+              frameBorder='0'
+              allowTransparency='true' />
+          </Paper>
+          <TrackActions track={ track }
+            addRating={ addRating }
+            saveTrack={ saveTrack }
+            discardTrack={ discardTrack } />
+        </CardText>
+      </Card>
+    </div>)
+  }
 }
-
-export default TrackPlayer
