@@ -181,7 +181,7 @@ export function fetchPlaylists() {
       },
       params: {
         auth: 'auth-session=' + authCookie,
-        url: 'http://localhost:3000/spotify/playlists',
+        endpoint: 'spotify/playlists',
       }
     };
     axios.get('http://localhost:8080/api/data', options)
@@ -205,7 +205,7 @@ export function fetchQueue() {
       },
       params: {
         auth: 'auth-session=' + authCookie,
-        url: 'http://localhost:3000/queue/user',
+        endpoint: 'queue/user',
       }
     };
     axios.get('http://localhost:8080/api/data', options)

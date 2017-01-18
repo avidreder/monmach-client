@@ -1,4 +1,5 @@
 var request = require('request')
+const project = require('../config/project.config')
 
 module.exports = {
   checkAuth: function(req, res, next) {
@@ -17,7 +18,7 @@ module.exports = {
   getData: function(req) {
     return new Promise(function(resolve, reject) {
       var options = {
-        url: req.query.url,
+        url: `${project.api_server_address}${req.query.endpoint}`,
         headers: {
           'Cookie': req.query.auth,
           'Content-type': 'application/json',
@@ -36,7 +37,7 @@ module.exports = {
 function contactServer(req) {
   return new Promise(function(resolve, reject) {
     var options = {
-      url: 'http://localhost:3000/getuser',
+      url: `${project.api_server_address}getuser`,
       headers: {
         'Cookie': req.headers.cookie
       }
