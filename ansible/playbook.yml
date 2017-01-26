@@ -1,0 +1,88 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install apt packages
+      ignore_errors: yes
+      tags:
+        - server_setup
+      apt: name={{ item }} update_cache=yes state=installed
+      with_items:
+        - nodejs-legacy
+        - build-essential
+        - npm
+        - git
+
+    - name: Install n globally
+      npm: name=n global=yes
+
+    - name: Use latest node
+      command: n stable
+
+    - name: Update npm
+      npm: name=npm global=yes
+
+    - name: Create node symlink
+      command: ln -sf /usr/local/n/versions/node/6.8.0/bin/node /usr/bin/node
+
+    - name: Install pm2
+      npm: name=pm2 global=yes
+
+    - name: Install bower
+      npm: name=bower global=yes
+
+    - name: Install webpack globally
+      npm: name=webpack path=/srv/monmach-client global=yes
+
+    - name: Clone repo
+      git: repo=https://github.com/avidreder/monmach-client.git dest=/srv/monmach-client version=master force=yes
+      ignore_errors: yes
+
+    - name: Install website deps
+      npm: path=/srv/monmach-client
+      ignore_errors: yes
+
+    # - name: Create monmach-api rundir for runit
+    #   tags:
+    #     - runit_setup
+    #   ignore_errors: yes
+    #   file:
+    #     path: /etc/sv/monmach-api
+    #     state: directory
+    #     mode: 0755
+    #
+    # - name: Install monmach runfile for runit
+    #   tags:
+    #     - runit_setup
+    #   ignore_errors: yes
+    #   copy:
+    #     src: runit_monmach_api.run
+    #     dest: /etc/sv/monmach-api/run
+    #     mode: 0751
+
+    # - name: fix owner/group
+    #   ignore_errors: yes
+    #   file:
+    #     path: /srv/monmach-api/monmach-api
+    #     owner: root
+    #     group: root
+
+    - name: fix owner/group
+      ignore_errors: yes
+      file:
+        path: /srv/monmach-client/
+        owner: root
+        group: root
+
+    - name: Run monmach-client
+      command: pm2 start npm --name "monmach-client" -- run start chdir=/srv/monmach-client
+      ignore_errors: yes
+
+    # - name: Activate monmach-api in runit
+    #   tags:
+    #     - runit_setup
+    #   ignore_errors: yes
+    #   file:
+    #     path: /etc/service/monmach-api
+    #     src: /etc/sv/monmach-api
+    #     state: link

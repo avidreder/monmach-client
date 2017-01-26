@@ -20,6 +20,7 @@ const config = {
   dir_public : 'public',
   dir_server : 'server',
   dir_test   : 'tests',
+  dir_config : 'config',
 
   // ----------------------------------
   // Server Configuration
@@ -83,7 +84,8 @@ config.globals = {
   '__PROD__'     : config.env === 'production',
   '__TEST__'     : config.env === 'test',
   '__COVERAGE__' : !argv.watch && config.env === 'test',
-  '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
+  '__BASENAME__' : JSON.stringify(process.env.BASENAME || ''),
+  'HOSTNAME': 'http://localhost:8080'
 }
 
 // ------------------------------------
@@ -114,7 +116,8 @@ config.paths = {
   base   : base,
   client : base.bind(null, config.dir_client),
   public : base.bind(null, config.dir_public),
-  dist   : base.bind(null, config.dir_dist)
+  dist   : base.bind(null, config.dir_dist),
+  config : './config',
 }
 
 // ========================================================

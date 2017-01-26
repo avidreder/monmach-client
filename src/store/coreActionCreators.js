@@ -198,7 +198,7 @@ export function fetchQueue() {
   return function (dispatch) {
     dispatch(requestQueue())
     const authCookie = cookie.load('auth-session')
-    console.log(authCookie)
+    console.log(HOSTNAME)
     var options = {
       headers: {
         'Content-type': 'application/json',
@@ -208,7 +208,7 @@ export function fetchQueue() {
         endpoint: 'queue/user',
       }
     };
-    axios.get('http://localhost:8080/api/data', options)
+    axios.get(`${HOSTNAME}api/data`, options)
       .then(function(body){
         dispatch(receiveQueueSuccess(fromJS(body.data)))
       })

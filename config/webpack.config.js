@@ -1,6 +1,7 @@
 const argv = require('yargs').argv
 const webpack = require('webpack')
 const cssnano = require('cssnano')
+const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const project = require('./project.config')
@@ -11,12 +12,16 @@ const __PROD__ = project.globals.__PROD__
 const __TEST__ = project.globals.__TEST__
 
 debug('Creating configuration.')
+console.log(project.paths.client(), project.paths.config)
 const webpackConfig = {
   name    : 'client',
   target  : 'web',
   devtool : project.compiler_devtool,
   resolve : {
     root       : project.paths.client(),
+    alias: {
+      config: project.paths.config
+    },
     extensions : ['', '.js', '.jsx', '.json']
   },
   module : {}
