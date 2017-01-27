@@ -1,6 +1,9 @@
 ---
 - hosts: all
   become: yes
+  pre_tasks:
+    - name: 'install python2'
+      raw: sudo apt-get -y install python-simplejson
   tasks:
     - name: Install apt packages
       ignore_errors: yes
@@ -17,7 +20,7 @@
       npm: name=n global=yes
 
     - name: Use latest node
-      command: n stable
+      command: n 6.8.0
 
     - name: Update npm
       npm: name=npm global=yes
@@ -35,7 +38,7 @@
       npm: name=webpack path=/srv/monmach-client global=yes
 
     - name: Clone repo
-      git: repo=https://github.com/avidreder/monmach-client.git dest=/srv/monmach-client version=master force=yes
+      git: repo=git://github.com/avidreder/monmach-client.git dest=/srv/monmach-client version=master force=yes accept_hostkey=yes
       ignore_errors: yes
 
     - name: Install website deps
