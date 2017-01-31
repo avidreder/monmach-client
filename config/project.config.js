@@ -9,7 +9,7 @@ debug('Creating default configuration.')
 // Default Configuration
 // ========================================================
 const config = {
-  env : process.env.NODE_ENV || 'development',
+  env : process.env.NODE_ENV || 'localhost',
 
   // ----------------------------------
   // Project Structure
@@ -25,7 +25,7 @@ const config = {
   // ----------------------------------
   // Server Configuration
   // ----------------------------------
-  server_host : 'localhost', //ip.address(), // use string 'localhost' to prevent exposure on local network
+  server_host : 'localhost',//process.env.SERVER_HOST || ip.address(),// use string 'localhost' to prevent exposure on local network
   server_port : process.env.PORT || 8080,
 
   // ----------------------------------
@@ -84,8 +84,7 @@ config.globals = {
   '__PROD__'     : config.env === 'production',
   '__TEST__'     : config.env === 'test',
   '__COVERAGE__' : !argv.watch && config.env === 'test',
-  '__BASENAME__' : JSON.stringify(process.env.BASENAME || ''),
-  'HOSTNAME': 'http://localhost:8080'
+  '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
 }
 
 // ------------------------------------

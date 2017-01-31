@@ -28,7 +28,7 @@ app.all('*/index.html', auth.checkAuth)
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------
-if (project.env === 'development') {
+if (project.env === 'vagrant' || project.env ==='development') {
   const compiler = webpack(webpackConfig)
 
   debug('Enabling webpack dev and HMR middleware')

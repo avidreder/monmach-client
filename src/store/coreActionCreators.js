@@ -184,7 +184,7 @@ export function fetchPlaylists() {
         endpoint: 'spotify/playlists',
       }
     };
-    axios.get('http://localhost:8080/api/data', options)
+    axios.get('http://localhost:8081/api/data', options)
       .then(function(body){
         dispatch(receivePlaylistsSuccess(fromJS(body.data.items)))
       })
@@ -198,7 +198,6 @@ export function fetchQueue() {
   return function (dispatch) {
     dispatch(requestQueue())
     const authCookie = cookie.load('auth-session')
-    console.log(HOSTNAME)
     var options = {
       headers: {
         'Content-type': 'application/json',
@@ -208,7 +207,7 @@ export function fetchQueue() {
         endpoint: 'queue/user',
       }
     };
-    axios.get(`${HOSTNAME}api/data`, options)
+    axios.get(`http://localhost:8081/api/data`, options)
       .then(function(body){
         dispatch(receiveQueueSuccess(fromJS(body.data)))
       })

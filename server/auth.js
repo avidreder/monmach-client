@@ -18,7 +18,7 @@ module.exports = {
   getData: function(req) {
     return new Promise(function(resolve, reject) {
       var options = {
-        url: `${project.api_server_address}${req.query.endpoint}`,
+        url: `${project.server_api_path}${req.query.endpoint}`,
         headers: {
           'Cookie': req.query.auth,
           'Content-type': 'application/json',
@@ -37,7 +37,7 @@ module.exports = {
 function contactServer(req) {
   return new Promise(function(resolve, reject) {
     var options = {
-      url: `${project.api_server_address}getuser`,
+      url: `${project.server_api_path}getuser`,
       headers: {
         'Cookie': req.headers.cookie
       }

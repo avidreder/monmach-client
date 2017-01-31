@@ -13,6 +13,7 @@
     "lint": "eslint bin build config server src tests",
     "lint:fix": "npm run lint -- --fix",
     "start": "better-npm-run start",
+    "local": "better-npm-run local",
     "dev": "better-npm-run dev",
     "test": "better-npm-run test",
     "test:dev": "npm run test -- --watch",
@@ -28,7 +29,23 @@
         "DEBUG": "app:*"
       }
     },
-    "dev": {
+    "local": {
+      "command": "nodemon bin/dev-server --ignore dist --ignore coverage --ignore tests --ignore src",
+      "env": {
+        "NODE_ENV": "localhost",
+        "DEBUG": "app:*",
+        "PORT": "8080",
+        "SERVER_HOST": "localhost"
+      }
+    },
+    "vagrant": {
+      "command": "nodemon bin/dev-server --ignore dist --ignore coverage --ignore tests --ignore src",
+      "env": {
+        "NODE_ENV": "vagrant",
+        "DEBUG": "app:*"
+      }
+    },
+    "development": {
       "command": "nodemon bin/dev-server --ignore dist --ignore coverage --ignore tests --ignore src",
       "env": {
         "NODE_ENV": "development",

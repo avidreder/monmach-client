@@ -45,31 +45,6 @@
       npm: path=/srv/monmach-client
       ignore_errors: yes
 
-    # - name: Create monmach-api rundir for runit
-    #   tags:
-    #     - runit_setup
-    #   ignore_errors: yes
-    #   file:
-    #     path: /etc/sv/monmach-api
-    #     state: directory
-    #     mode: 0755
-    #
-    # - name: Install monmach runfile for runit
-    #   tags:
-    #     - runit_setup
-    #   ignore_errors: yes
-    #   copy:
-    #     src: runit_monmach_api.run
-    #     dest: /etc/sv/monmach-api/run
-    #     mode: 0751
-
-    # - name: fix owner/group
-    #   ignore_errors: yes
-    #   file:
-    #     path: /srv/monmach-api/monmach-api
-    #     owner: root
-    #     group: root
-
     - name: fix owner/group
       ignore_errors: yes
       file:
@@ -80,12 +55,3 @@
     - name: Run monmach-client
       command: pm2 start npm --name "monmach-client" -- run start chdir=/srv/monmach-client
       ignore_errors: yes
-
-    # - name: Activate monmach-api in runit
-    #   tags:
-    #     - runit_setup
-    #   ignore_errors: yes
-    #   file:
-    #     path: /etc/service/monmach-api
-    #     src: /etc/sv/monmach-api
-    #     state: link
