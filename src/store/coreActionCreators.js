@@ -183,7 +183,7 @@ export function fetchPlaylists() {
       },
       params: {
         auth: 'auth-session=' + authCookie,
-        endpoint: 'spotify/playlists',
+        endpoint: '/spotify/playlists',
       }
     };
     axios.get(`${config.browser_client_path}/api/data`, options)
@@ -206,7 +206,7 @@ export function fetchQueue() {
       },
       params: {
         auth: 'auth-session=' + authCookie,
-        endpoint: 'queue/user',
+        endpoint: '/queue/user',
       }
     };
     axios.get(`${config.browser_client_path}/api/data`, options)
