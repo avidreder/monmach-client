@@ -1,10 +1,12 @@
 var request = require('request')
 var axios = require('axios')
+
 request = request.defaults({jar: true})
 import _ from 'lodash';
 import { fromJS } from 'immutable'
 import cookie from 'react-cookie';
 
+console.log(config)
 // export function openModal(modalType) {
 //   return {
 //     type: 'OPEN_MODAL',
@@ -184,7 +186,7 @@ export function fetchPlaylists() {
         endpoint: 'spotify/playlists',
       }
     };
-    axios.get('http://localhost:8081/api/data', options)
+    axios.get(`http://${config.browser_client_path}/api/data`, options)
       .then(function(body){
         dispatch(receivePlaylistsSuccess(fromJS(body.data.items)))
       })
@@ -207,7 +209,7 @@ export function fetchQueue() {
         endpoint: 'queue/user',
       }
     };
-    axios.get(`http://localhost:8081/api/data`, options)
+    axios.get(`http://${config.browser_client_path}/api/data`, options)
       .then(function(body){
         dispatch(receiveQueueSuccess(fromJS(body.data)))
       })

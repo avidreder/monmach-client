@@ -2,6 +2,7 @@ const argv = require('yargs').argv
 const webpack = require('webpack')
 const cssnano = require('cssnano')
 const path = require('path')
+const pathsConfig = require('./paths.config.js')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const project = require('./project.config')
@@ -19,9 +20,6 @@ const webpackConfig = {
   devtool : project.compiler_devtool,
   resolve : {
     root       : project.paths.client(),
-    alias: {
-      config: project.paths.config
-    },
     extensions : ['', '.js', '.jsx', '.json']
   },
   module : {}
@@ -58,7 +56,10 @@ webpackConfig.externals['react/addons'] = true
 // ------------------------------------
 // Plugins
 // ------------------------------------
+console.log(process.env.NODE_ENV)
+console.log(pathsConfig[process.env.NODE_ENV])
 webpackConfig.plugins = [
+  new webpack.DefinePlugin({ config: JSON.stringify(pathsConfig[process.env.NODE_ENV]) }),
   new webpack.DefinePlugin(project.globals),
   new HtmlWebpackPlugin({
     template : project.paths.client('index.html'),
