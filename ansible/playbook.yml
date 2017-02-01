@@ -58,3 +58,10 @@
     - name: Run monmach-client
       command: pm2 start npm --name "monmach-client" -- run vagrant chdir=/srv/monmach-client
       ignore_errors: yes
+
+- hosts: development
+  become: yes
+  tasks:
+    - name: Run monmach-client
+      command: pm2 start npm --name "monmach-client" -- run development chdir=/srv/monmach-client
+      ignore_errors: yes
