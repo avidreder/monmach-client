@@ -52,6 +52,9 @@
         owner: root
         group: root
 
+- hosts: vagrant
+  become: yes
+  tasks:
     - name: Run monmach-client
-      command: pm2 start npm --name "monmach-client" -- run start chdir=/srv/monmach-client
+      command: pm2 start npm --name "monmach-client" -- run vagrant chdir=/srv/monmach-client
       ignore_errors: yes

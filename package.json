@@ -14,7 +14,8 @@
     "lint:fix": "npm run lint -- --fix",
     "start": "better-npm-run start",
     "local": "better-npm-run local",
-    "dev": "better-npm-run dev",
+    "dev": "better-npm-run development",
+    "vagrant": "better-npm-run vagrant",
     "test": "better-npm-run test",
     "test:dev": "npm run test -- --watch",
     "deploy": "better-npm-run deploy",
@@ -42,7 +43,9 @@
       "command": "nodemon bin/dev-server --ignore dist --ignore coverage --ignore tests --ignore src",
       "env": {
         "NODE_ENV": "vagrant",
-        "DEBUG": "app:*"
+        "DEBUG": "app:*",
+        "PORT": "8080",
+        "SERVER_HOST": "localhost"
       }
     },
     "development": {
