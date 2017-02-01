@@ -186,7 +186,7 @@ export function fetchPlaylists() {
         endpoint: 'spotify/playlists',
       }
     };
-    axios.get(`http://${config.browser_client_path}/api/data`, options)
+    axios.get(`${config.browser_client_path}/api/data`, options)
       .then(function(body){
         dispatch(receivePlaylistsSuccess(fromJS(body.data.items)))
       })
@@ -209,7 +209,7 @@ export function fetchQueue() {
         endpoint: 'queue/user',
       }
     };
-    axios.get(`http://${config.browser_client_path}/api/data`, options)
+    axios.get(`${config.browser_client_path}/api/data`, options)
       .then(function(body){
         dispatch(receiveQueueSuccess(fromJS(body.data)))
       })
