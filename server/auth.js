@@ -9,7 +9,8 @@ module.exports = {
       console.log(req.headers.cookie)
       console.log(data)
       if (data.LoggedIn == false) {
-        res.redirect('/login.html')
+        res.(401).send(<h1>Login</h1>
+          <button><a href=`${browser_client_path}/auth/spotify`>Spotify</a></button>)
       } else {
         next()
       }
