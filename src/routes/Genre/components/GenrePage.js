@@ -8,7 +8,7 @@ import { Card, CardTitle, CardText } from 'material-ui/Card'
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 import './GenrePage.scss'
 
-const genreName = 'testGenre'
+const genreName = 'My Custom Genre'
 
 export const GenrePage = (props) => (
   <div>
@@ -76,6 +76,7 @@ export const GenrePage = (props) => (
 )
 
 GenrePage.propTypes = {
+  currentGenre: React.PropTypes.string,
   addGenre: React.PropTypes.func,
   removeFromQueue: React.PropTypes.func,
   setTrack: React.PropTypes.func,

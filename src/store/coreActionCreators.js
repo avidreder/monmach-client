@@ -166,6 +166,26 @@ export function receivePlaylistsError(error) {
   }
 }
 
+export function requestPlaylistToQueue() {
+  return {
+    type: 'REQUEST_PLAYLIST_TO_QUEUE'
+  }
+}
+
+export function receivePlaylistToQueueSuccess(queue) {
+  return {
+    type: 'RECEIVE_PLAYLIST_TO_QUEUE_SUCCESS',
+    queue: queue
+  }
+}
+
+export function receivePlaylistToQueueError(error) {
+  return {
+    type: 'RECEIVE_PLAYLIST_TO_QUEUE_ERROR',
+    error: error
+  }
+}
+
 function handleErrors(response) {
     if (!response.ok) {
         throw Error(response.statusText);
@@ -215,6 +235,29 @@ export function fetchQueue() {
       })
       .catch(function(error){
         dispatch(receiveQueueError(fromJS(error)))
+      })
+  }
+}
+
+export function playlistToQueue(id) {
+  return function (dispatch) {
+    dispatch(requestPlaylistToQueue())
+    const authCookie = cookie.load('auth-session')
+    var options = {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      params: {
+        auth: 'auth-session=' + authCookie,
+        endpoint: `/queue/${id}`,
+      }
+    };
+    axios.get(`${config.browser_client_path}/api/data`, options)
+      .then(function(body){
+        dispatch(receivePlaylistToQueueSuccess(fromJS(body.data.items)))
+      })
+      .catch(function(error){
+        dispatch(receivePlaylistsError(fromJS(error)))
       })
   }
 }

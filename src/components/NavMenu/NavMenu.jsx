@@ -10,7 +10,7 @@ export const NavMenu = () => (
         <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
           <span className='icon-bar' />
         </button>
-        <Link style={{ cursor: 'pointer' }} to='/' className='navbar-brand'>Avidreder.net</Link>
+        <Link style={{ cursor: 'pointer' }} to='/' className='navbar-brand'>Monster Machine</Link>
       </div>
       <div className='collapse navbar-collapse'>
         <ul className='nav navbar-nav'>

@@ -140,6 +140,22 @@ export function receivePlaylistsError(state, error) {
   }))
 }
 
+export function receivePlaylistToQueueSuccess(state, queue) {
+  const spotifyGenres = _.uniq(_.filter(_.flatten(_.map(queue.toJS().TrackQueue, 'Genres')), null))
+  return fromJS(Object.assign({}, state.toJS(), {
+    queue,
+    spotifyGenres,
+  }))
+}
+
+export function receivePlaylistToQueueError(state, error) {
+  console.log('Playlistto queue error: ')
+  console.log(error)
+  return fromJS(Object.assign({}, state.toJS(), {
+    error: error
+  }))
+}
+
 export default function coreReducer (state = testState, action) {
   switch (action.type) {
     case 'SET_CURRENT_TRACK':
@@ -184,6 +200,13 @@ export default function coreReducer (state = testState, action) {
       return receivePlaylistsSuccess(state, action.playlists);
     case 'RECEIVE_PLAYLISTS_ERROR':
       return receivePlaylistsError(state, action.error
+    );
+    case 'REQUEST_PLAYLIST_TO_QUEUE':
+      return state;
+    case 'RECEIVE_PLAYLIST_TO_QUEUE_SUCCESS':
+      return receivePlaylistToQueueSuccess(state, action.playlists);
+    case 'RECEIVE_PLAYLISTS_TO_QUEUE_ERROR':
+      return receivePlaylistToQueueError(state, action.error
     );
     case 'SET_STATE':
       return state.merge(action.state);
