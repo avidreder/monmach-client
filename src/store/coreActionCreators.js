@@ -6,7 +6,6 @@ import _ from 'lodash';
 import { fromJS } from 'immutable'
 import cookie from 'react-cookie';
 
-console.log(config)
 // export function openModal(modalType) {
 //   return {
 //     type: 'OPEN_MODAL',
@@ -211,6 +210,7 @@ export function fetchPlaylists() {
         dispatch(receivePlaylistsSuccess(fromJS(body.data.items)))
       })
       .catch(function(error){
+        console.log(error)
         dispatch(receivePlaylistsError(fromJS(error)))
       })
   }

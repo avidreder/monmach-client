@@ -133,8 +133,6 @@ export function receivePlaylistsSuccess(state, playlists) {
 }
 
 export function receivePlaylistsError(state, error) {
-  console.log('Playlists error: ')
-  console.log(error)
   return fromJS(Object.assign({}, state.toJS(), {
     error: error
   }))
@@ -149,7 +147,7 @@ export function receivePlaylistToQueueSuccess(state, queue) {
 }
 
 export function receivePlaylistToQueueError(state, error) {
-  console.log('Playlistto queue error: ')
+  console.log('Playlist to queue error: ')
   console.log(error)
   return fromJS(Object.assign({}, state.toJS(), {
     error: error
@@ -199,15 +197,13 @@ export default function coreReducer (state = testState, action) {
     case 'RECEIVE_PLAYLISTS_SUCCESS':
       return receivePlaylistsSuccess(state, action.playlists);
     case 'RECEIVE_PLAYLISTS_ERROR':
-      return receivePlaylistsError(state, action.error
-    );
+      return receivePlaylistsError(state, action.error);
     case 'REQUEST_PLAYLIST_TO_QUEUE':
       return state;
     case 'RECEIVE_PLAYLIST_TO_QUEUE_SUCCESS':
       return receivePlaylistToQueueSuccess(state, action.playlists);
     case 'RECEIVE_PLAYLISTS_TO_QUEUE_ERROR':
-      return receivePlaylistToQueueError(state, action.error
-    );
+      return receivePlaylistToQueueError(state, action.error);
     case 'SET_STATE':
       return state.merge(action.state);
     default:
