@@ -17,6 +17,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(actionCreators.setTrack(track))
     dispatch(actionCreators.removeFromQueue(track))
   },
+  setCurrentCustomGenre: (genre) => {
+    dispatch(actionCreators.setCurrentCustomGenre(genre))
+  },
   addSpotifyGenre: (genre) => {
     dispatch(actionCreators.addSpotifyGenre(genre))
   },
@@ -47,6 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => ({
+  currentCustomGenre: state.core.get('currentCustomGenre').toJS(),
   currentTrack: state.core.get('currentTrack').toJS(),
   queue: state.core.get('queue').toJS(),
   genres: state.core.get('genres').toJS(),

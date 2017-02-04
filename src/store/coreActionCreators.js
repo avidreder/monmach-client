@@ -34,6 +34,13 @@ export function setTrack(track) {
   };
 }
 
+export function setCurrentCustomGenre(genre) {
+  return {
+    type: 'SET_CURRENT_CUSTOM_GENRE',
+    genre
+  };
+}
+
 export function removeFromQueue(track) {
   return {
     type: 'REMOVE_FROM_QUEUE',

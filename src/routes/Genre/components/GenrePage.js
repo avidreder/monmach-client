@@ -4,6 +4,7 @@ import TrackProfile from 'components/TrackProfile'
 import TrackGenres from 'components/TrackGenres'
 import TrackPlaylists from 'components/TrackPlaylists'
 import TrackPlayer from 'components/TrackPlayer'
+import CustomGenres from 'components/CustomGenres'
 import { Card, CardTitle, CardText } from 'material-ui/Card'
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 import './GenrePage.scss'
@@ -15,7 +16,9 @@ export const GenrePage = (props) => (
     <Grid fluid>
       <Row>
         <Col md={12} sm={12} lg={12}>
-          <h1>{ genreName }</h1>
+          <CustomGenres customGenres={ props.genres }
+            setCurrentCustomGenre={ props.setCurrentCustomGenre }
+            currentCustomGenre={ props.currentCustomGenre } />
         </Col>
       </Row>
       <Row>

@@ -14,6 +14,12 @@ export function setTrack(state, track){
   }))
 }
 
+export function setCurrentCustomGenre(state, genre){
+  return fromJS(Object.assign({}, state.toJS(), {
+    currentCustomGenre: genre
+  }))
+}
+
 export function removeFromQueue(state, track){
   let queue = state.get('queue').toJS()
   queue.TrackQueue = _.reject(queue.TrackQueue, {SpotifyID: track.SpotifyID})
@@ -159,6 +165,8 @@ export default function coreReducer (state = testState, action) {
   switch (action.type) {
     case 'SET_CURRENT_TRACK':
       return setTrack(state, action.track)
+    case 'SET_CURRENT_CUSTOM_GENRE':
+      return setCurrentCustomGenre(state, action.genre)
     case 'REMOVE_FROM_QUEUE':
       return removeFromQueue(state, action.track)
     case 'ADD_TO_LISTENED':

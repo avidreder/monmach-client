@@ -274,7 +274,22 @@ const testState = fromJS({
       TrackBlacklist: [],
       TrackWhitelist: []
     },
-  ]
+  ],
+  currentCustomGenre: {
+    ID: '2',
+    UserID: '586abdb166a62a280991a6d3',
+    QueueID: 1,
+    Name: 'Coding Music',
+    Description: 'Ambient Electronica for focused work',
+    SeedArtists: [],
+    SeedTracks:[],
+    SeedPlaylists:[],
+    AvatarURL: '',
+    Created:0,
+    Updated:0,
+    TrackBlacklist: [],
+    TrackWhitelist: []
+  }
 })
 
 export default testState
