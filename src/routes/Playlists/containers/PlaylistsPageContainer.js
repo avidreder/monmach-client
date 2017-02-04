@@ -8,6 +8,12 @@ import * as actionCreators from 'store/coreActionCreators'
 
 import PlaylistsPage from '../components/PlaylistsPage'
 
+const mapDispatchToProps = (dispatch) => ({
+  playlistToQueue: (playlist) => {
+    dispatch(actionCreators.playlistToQueue(playlist.id))
+  }
+})
+
 /*  Object of action creators (can also be function that returns object).
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
@@ -30,4 +36,4 @@ const mapStateToProps = (state) => ({
     Selectors are composable. They can be used as input to other selectors.
     https://github.com/reactjs/reselect    */
 
-export default connect(mapStateToProps)(PlaylistsPage)
+export default connect(mapStateToProps, mapDispatchToProps)(PlaylistsPage)

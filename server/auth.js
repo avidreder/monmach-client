@@ -29,6 +29,7 @@ module.exports = {
         resolve(body)
       })
     }).then(function(body){
+      console.log(body)
       return body
     })
   }

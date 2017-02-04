@@ -1,5 +1,5 @@
 import React from 'react'
-import PlaylistsContainer from 'components/Playlists'
+import Playlists from 'components/Playlists'
 import { Card, CardTitle, CardText } from 'material-ui/Card'
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 import './PlaylistsPage.scss'
@@ -17,7 +17,8 @@ export const PlaylistsPage = (props) => (
           <Card>
             <CardTitle title='Queue' />
             <CardText>
-              <PlaylistsContainer />
+              <Playlists playlists={ props.playlists }
+                playlistToQueue={ props.playlistToQueue } />
             </CardText>
           </Card>
         </Col>
@@ -30,6 +31,7 @@ PlaylistsPage.propTypes = {
   dispatchAddGenre: React.PropTypes.func,
   dispatchRemoveFromQueue: React.PropTypes.func,
   dispatchSetTrack: React.PropTypes.func,
+  playlistToQueue: React.PropTypes.func,
   currentTrack: React.PropTypes.object
 }
 

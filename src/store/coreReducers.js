@@ -139,6 +139,7 @@ export function receivePlaylistsError(state, error) {
 }
 
 export function receivePlaylistToQueueSuccess(state, queue) {
+  console.log("queue",queue)
   const spotifyGenres = _.uniq(_.filter(_.flatten(_.map(queue.toJS().TrackQueue, 'Genres')), null))
   return fromJS(Object.assign({}, state.toJS(), {
     queue,
@@ -201,7 +202,7 @@ export default function coreReducer (state = testState, action) {
     case 'REQUEST_PLAYLIST_TO_QUEUE':
       return state;
     case 'RECEIVE_PLAYLIST_TO_QUEUE_SUCCESS':
-      return receivePlaylistToQueueSuccess(state, action.playlists);
+      return receivePlaylistToQueueSuccess(state, action.queue);
     case 'RECEIVE_PLAYLISTS_TO_QUEUE_ERROR':
       return receivePlaylistToQueueError(state, action.error);
     case 'SET_STATE':

@@ -207,11 +207,8 @@ export function fetchPlaylists() {
     };
     axios.get(`${config.browser_client_path}/api/data`, options)
       .then(function(body){
+        console.log(body)
         dispatch(receivePlaylistsSuccess(fromJS(body.data.items)))
-      })
-      .catch(function(error){
-        console.log(error)
-        dispatch(receivePlaylistsError(fromJS(error)))
       })
   }
 }
@@ -254,7 +251,8 @@ export function playlistToQueue(id) {
     };
     axios.get(`${config.browser_client_path}/api/data`, options)
       .then(function(body){
-        dispatch(receivePlaylistToQueueSuccess(fromJS(body.data.items)))
+        console.log(body.data)
+        dispatch(receivePlaylistToQueueSuccess(fromJS(body.data)))
       })
       .catch(function(error){
         dispatch(receivePlaylistsError(fromJS(error)))
