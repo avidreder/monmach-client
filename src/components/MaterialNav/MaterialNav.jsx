@@ -22,7 +22,7 @@ export default class MaterialNav extends React.Component {
 
   render = () => (
     <div>
-      <AppBar title={'Monster Machine'}
+      <AppBar title={'Monster Machinesss'}
         onTitleTouchTap={this.handleToggle}
         onLeftIconButtonTouchTap={this.handleToggle}
         iconElementRight={
