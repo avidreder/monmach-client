@@ -10,7 +10,7 @@ export const Playlists = (props) => {
     <div>
       {props.playlists.map(playlist =>
         <PlaylistItem key={playlist.id}
-          playlistToQueue={ props.playlistToQueue }
+          tracksFromPlaylist={ props.tracksFromPlaylist }
           playlist={playlist} />
       )}
     </div>
@@ -18,7 +18,7 @@ export const Playlists = (props) => {
 }
 Playlists.propTypes = {
   playlists: React.PropTypes.array,
-  playlistToQueue: React.PropTypes.func,
+  tracksFromPlaylist: React.PropTypes.func,
 }
 
 export default Playlists

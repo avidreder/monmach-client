@@ -9,8 +9,8 @@ import * as actionCreators from 'store/coreActionCreators'
 import PlaylistsPage from '../components/PlaylistsPage'
 
 const mapDispatchToProps = (dispatch) => ({
-  playlistToQueue: (playlist) => {
-    dispatch(actionCreators.playlistToQueue(playlist.id))
+  tracksFromPlaylist: (playlist) => {
+    dispatch(actionCreators.tracksFromPlaylist(playlist.id))
   }
 })
 

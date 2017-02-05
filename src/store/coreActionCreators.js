@@ -172,22 +172,22 @@ export function receivePlaylistsError(error) {
   }
 }
 
-export function requestPlaylistToQueue() {
+export function requestTracksFromPlaylist() {
   return {
-    type: 'REQUEST_PLAYLIST_TO_QUEUE'
+    type: 'REQUEST_TRACKS_FROM_PLAYLIST'
   }
 }
 
-export function receivePlaylistToQueueSuccess(queue) {
+export function receiveTracksFromPlaylistSuccess(tracks) {
   return {
-    type: 'RECEIVE_PLAYLIST_TO_QUEUE_SUCCESS',
-    queue: queue
+    type: 'RECEIVE_TRACKS_FROM_PLAYLIST_SUCCESS',
+    tracks: tracks
   }
 }
 
-export function receivePlaylistToQueueError(error) {
+export function receiveTracksFromPlaylistError(error) {
   return {
-    type: 'RECEIVE_PLAYLIST_TO_QUEUE_ERROR',
+    type: 'RECEIVE_TRACKS_FROM_PLAYLIST_ERROR',
     error: error
   }
 }
@@ -243,9 +243,9 @@ export function fetchQueue() {
   }
 }
 
-export function playlistToQueue(id) {
+export function tracksFromPlaylist(id) {
   return function (dispatch) {
-    dispatch(requestPlaylistToQueue())
+    dispatch(requestTracksFromPlaylist())
     const authCookie = cookie.load('auth-session')
     var options = {
       headers: {
@@ -253,16 +253,16 @@ export function playlistToQueue(id) {
       },
       params: {
         auth: 'auth-session=' + authCookie,
-        endpoint: `/queue/${id}`,
+        endpoint: `/playlist/${id}`,
       }
     };
     axios.get(`${config.browser_client_path}/api/data`, options)
       .then(function(body){
         console.log(body.data)
-        dispatch(receivePlaylistToQueueSuccess(fromJS(body.data)))
+        dispatch(receiveTracksFromPlaylistSuccess(fromJS(body.data)))
       })
       .catch(function(error){
-        dispatch(receivePlaylistsError(fromJS(error)))
+        dispatch(receiveTracksFromPlaylistError(fromJS(error)))
       })
   }
 }

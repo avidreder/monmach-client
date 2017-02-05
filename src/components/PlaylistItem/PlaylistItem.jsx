@@ -17,7 +17,7 @@ export const PlaylistItem = (props) => (
           <FontIcon className='material-icons'>
             not_interested</FontIcon>
           <FontIcon className='material-icons'
-            onClick={() => props.playlistToQueue(props.playlist)} >
+            onClick={() => props.tracksFromPlaylist(props.playlist)} >
             playlist_add</FontIcon>
         </ToolbarGroup>
       </Toolbar>
@@ -27,7 +27,7 @@ export const PlaylistItem = (props) => (
 
 PlaylistItem.propTypes = {
   playlist: React.PropTypes.object,
-  playlistToQueue: React.PropTypes.func,
+  tracksFromPlaylist: React.PropTypes.func,
 }
 
 export default PlaylistItem

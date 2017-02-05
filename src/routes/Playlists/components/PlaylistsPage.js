@@ -18,7 +18,7 @@ export const PlaylistsPage = (props) => (
             <CardTitle title='Queue' />
             <CardText>
               <Playlists playlists={ props.playlists }
-                playlistToQueue={ props.playlistToQueue } />
+                tracksFromPlaylist={ props.tracksFromPlaylist } />
             </CardText>
           </Card>
         </Col>
@@ -31,7 +31,7 @@ PlaylistsPage.propTypes = {
   dispatchAddGenre: React.PropTypes.func,
   dispatchRemoveFromQueue: React.PropTypes.func,
   dispatchSetTrack: React.PropTypes.func,
-  playlistToQueue: React.PropTypes.func,
+  tracksFromPlaylist: React.PropTypes.func,
   currentTrack: React.PropTypes.object
 }
 

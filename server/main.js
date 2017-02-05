@@ -5,6 +5,7 @@ const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
 const compress = require('compression')
 const auth = require('./auth.js')
+const data = require('./data.js')
 
 const app = express()
 
@@ -16,7 +17,7 @@ app.use(require('connect-history-api-fallback')())
 // Apply gzip compression
 app.use(compress())
 app.get('/api/data', (req, res) => {
-  auth.getData(req)
+  data.getData(req)
   .then(function(body){
     res.send(body)
   })
