@@ -46,6 +46,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   discardTrack: (value) => {
     dispatch(actionCreators.discardTrack(value))
+  },
+  tracksFromPlaylist: (playlist) => {
+    dispatch(actionCreators.tracksFromPlaylist(playlist.id))
   }
 })
 
