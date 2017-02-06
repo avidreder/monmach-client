@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const debug = require('debug')('app:server')
 const webpack = require('webpack')
 const webpackConfig = require('../config/webpack.config')
@@ -16,13 +17,25 @@ app.use(require('connect-history-api-fallback')())
 
 // Apply gzip compression
 app.use(compress())
-app.get('/api/data', (req, res) => {
+app.use(bodyParser.urlencoded({extended: true}))
+app.get('/api/getData', (req, res) => {
   data.getData(req)
   .then(function(body){
-    res.send(body)
+    res.status(200).send(body)
   })
   .catch(function(err){
-    res.send(err)
+    console.log(err)
+    res.status(500).send(err)
+  })
+})
+app.post('/api/postData', (req, res) => {
+  data.postData(req)
+  .then(function(body){
+    res.status(200).send(body)
+  })
+  .catch(function(err){
+    console.log(err)
+    res.status(500).send(err)
   })
 })
 app.all('*/index.html', auth.checkAuth)

@@ -245,7 +245,7 @@ const testState = fromJS({
       TrackWhitelist: []
     },
     {
-      ID: '2',
+      ID: '58977d2efe10074d384efa49',
       UserID: '586abdb166a62a280991a6d3',
       QueueID: 1,
       Name: 'Coding Music',
@@ -276,7 +276,7 @@ const testState = fromJS({
     },
   ],
   currentCustomGenre: {
-    ID: '2',
+    ID: '58977d2efe10074d384efa49',
     UserID: '586abdb166a62a280991a6d3',
     QueueID: 1,
     Name: 'Coding Music',

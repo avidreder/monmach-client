@@ -32,7 +32,7 @@ export const GenrePage = (props) => (
             <CardText>
               <TrackPlayer track={ props.currentTrack }
                 addRating={ props.addRating }
-                saveTrack={ props.saveTrack }
+                saveTrack={ (track) => props.saveTrack(props.currentCustomGenre.ID, track) }
                 discardTrack={ props.discardTrack } />
             </CardText>
           </Card>

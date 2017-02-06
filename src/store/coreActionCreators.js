@@ -1,5 +1,6 @@
 var request = require('request')
 var axios = require('axios')
+const querystring = require('querystring')
 
 request = request.defaults({jar: true})
 import _ from 'lodash';
@@ -212,10 +213,13 @@ export function fetchPlaylists() {
         endpoint: '/spotify/playlists',
       }
     };
-    axios.get(`${config.browser_client_path}/api/data`, options)
+    axios.get(`${config.browser_client_path}/api/getData`, options)
       .then(function(body){
         console.log(body)
         dispatch(receivePlaylistsSuccess(fromJS(body.data.items)))
+      })
+      .catch(function(error){
+        dispatch(receiveQueueError(fromJS(error.response.data)))
       })
   }
 }
@@ -233,12 +237,12 @@ export function fetchQueue() {
         endpoint: '/queue/user',
       }
     };
-    axios.get(`${config.browser_client_path}/api/data`, options)
+    axios.get(`${config.browser_client_path}/api/getData`, options)
       .then(function(body){
         dispatch(receiveQueueSuccess(fromJS(body.data)))
       })
       .catch(function(error){
-        dispatch(receiveQueueError(fromJS(error)))
+        dispatch(receiveQueueError(fromJS(error.response.data)))
       })
   }
 }
@@ -256,58 +260,55 @@ export function tracksFromPlaylist(id) {
         endpoint: `/playlist/${id}`,
       }
     };
-    axios.get(`${config.browser_client_path}/api/data`, options)
+    axios.get(`${config.browser_client_path}/api/getData`, options)
       .then(function(body){
         console.log(body.data)
         dispatch(receiveTracksFromPlaylistSuccess(fromJS(body.data)))
       })
       .catch(function(error){
-        dispatch(receiveTracksFromPlaylistError(fromJS(error)))
+        dispatch(receiveTracksFromPlaylistError(fromJS(error.response.data)))
       })
   }
 }
 
-export function saveTrack(track) {
+export function saveTrack(genreId, track) {
   return function (dispatch) {
     dispatch(requestTrackSave(track))
     const authCookie = cookie.load('auth-session')
-    return new Promise(function(resolve, reject) {
-      console.log(track);
-      let form = {};
-      form.Created = track.Created
-      form.Updated = track.Updated
-      form.CustomGenres = JSON.stringify(track.CustomGenres)
-      form.Features = JSON.stringify(track.Features)
-      form.Genres = JSON.stringify(track.Genres)
-      form.Playlists = JSON.stringify(track.Playlists)
-      form.SpotifyTrack = JSON.stringify(track.SpotifyTrack)
-      form.SpotifyID = track.SpotifyID
-      form.Rating = track.Rating
-      const options = {
-        url: 'http://localhost:3000/crud/tracks/new',
-        headers: {
-          'Content-type': 'application/x-www-form-urlencoded',
-          'Cookie': 'auth-session=' + authCookie
-        },
-        method: 'POST',
-        form: form,
-      }
-      request(options, function(error, response, body) {
-        if (error) return reject(error)
-        resolve(body)
+    let form = {};
+    form.payload = JSON.stringify(track)
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/${genreId}/seed`
+    const data = querystring.stringify(form)
+    axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+      .then(function(body){
+        dispatch(trackSaveSuccess(fromJS(body)))
       })
-    }).then(function(body){
-      console.log(body)
-      let result = {}
-      try {
-        result = JSON.parse(body)
-      } catch (e) {
-        result = { error: body }
-      } finally {
-        dispatch(trackSaveSuccess(fromJS(result)))
-      }
-    }).catch(function(error){
-      dispatch(trackSaveError(error))
-    })
+      .catch(function(error){
+        dispatch(trackSaveError(fromJS(error.response.data)))
+      })
+  }
+}
+
+export function addTrackToListened(genreId, track) {
+  return function (dispatch) {
+    dispatch(requestTrackSave(track))
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = JSON.stringify(track)
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/${genreId}/listened`
+    const data = querystring.stringify(form)
+    axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+      .then(function(body){
+        dispatch(trackSaveSuccess(fromJS(body)))
+      })
+      .catch(function(error){
+        dispatch(trackSaveError(fromJS(error.response.data)))
+      })
   }
 }

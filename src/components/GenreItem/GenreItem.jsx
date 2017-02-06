@@ -24,7 +24,7 @@ export const GenreItem = (props) => (
 )
 
 GenreItem.propTypes = {
-  genre: React.PropTypes.object,
+  genre: React.PropTypes.string,
 }
 
 export default GenreItem

@@ -14,14 +14,6 @@ export default class TrackPlayer extends Component {
   constructor(props) {
     super(props)
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    const { track } = this.props;
-    console.log(track, nextProps.track)
-    if (track.SpotifyID != nextProps.track.SpotifyID) {
-      return true
-    }
-    return false
-  }
   render(){
     const {
       track,

@@ -145,9 +145,7 @@ export function receivePlaylistsError(state, error) {
 }
 
 export function receiveTracksFromPlaylistSuccess(state, tracks) {
-  console.log("tracks: ",tracks)
   let newQueue = state.get('queue').toJS()
-  console.log(newQueue)
   const trackQueue = state.getIn(['queue','TrackQueue']).toJS()
   newQueue.TrackQueue = trackQueue.concat(tracks.toJS())
   const spotifyGenres = _.uniq(_.filter(_.flatten(_.map(newQueue.TrackQueue, 'Genres')), null))
