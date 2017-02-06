@@ -16,11 +16,8 @@ export const QueueItem = (props) => (
             play_circle_outline
           </FontIcon>
           <FontIcon className='material-icons'
-            onClick={() => props.removeFromQueue(props.track)}>
+            onClick={() => props.discardTrackFromQueue(props.track)}>
             not_interested</FontIcon>
-          <FontIcon className='material-icons'
-            onClick={() => props.addGenre(props.track)}>
-            playlist_add</FontIcon>
         </ToolbarGroup>
       </Toolbar>
     </Paper>
@@ -30,7 +27,7 @@ export const QueueItem = (props) => (
 QueueItem.propTypes = {
   track: React.PropTypes.object,
   setTrack: React.PropTypes.func,
-  removeFromQueue: React.PropTypes.func,
+  discardTrackFromQueue: React.PropTypes.func,
   addGenre: React.PropTypes.func,
 }
 

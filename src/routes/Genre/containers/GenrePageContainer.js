@@ -41,14 +41,20 @@ const mapDispatchToProps = (dispatch) => ({
   addRating: (value) => {
     dispatch(actionCreators.addRating(value))
   },
-  saveTrack: (genreId, track) => {
-    dispatch(actionCreators.saveTrack(genreId, track))
+  addTrackToGenre: (genreId, track) => {
+    dispatch(actionCreators.addTrackToGenre(genreId, track))
   },
-  discardTrack: (value) => {
-    dispatch(actionCreators.discardTrack(value))
+  discardTrackFromPlayer: (genreId, track) => {
+    dispatch(actionCreators.discardTrackFromPlayerThunk(genreId, track))
+  },
+  discardTrackFromQueue: (genreId, track) => {
+    dispatch(actionCreators.discardTrackFromQueueThunk(genreId, track))
   },
   tracksFromPlaylist: (playlist) => {
     dispatch(actionCreators.tracksFromPlaylist(playlist.id))
+  },
+  removeFromQueue: (track) => {
+    dispatch(actionCreators.removeFromQueue(track))
   }
 })
 

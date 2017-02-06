@@ -8,8 +8,8 @@ export default class TrackPlayer extends Component {
     track: React.PropTypes.object,
     addGenre: React.PropTypes.func,
     addRating: React.PropTypes.func,
-    saveTrack: React.PropTypes.func,
-    discardTrack: React.PropTypes.func,
+    addTrackToGenre: React.PropTypes.func,
+    discardTrackFromPlayer: React.PropTypes.func,
   }
   constructor(props) {
     super(props)
@@ -18,8 +18,8 @@ export default class TrackPlayer extends Component {
     const {
       track,
       addRating,
-      saveTrack,
-      discardTrack,
+      addTrackToGenre,
+      discardTrackFromPlayer,
     } = this.props;
     return(<div>
       <Card>
@@ -35,8 +35,8 @@ export default class TrackPlayer extends Component {
           </Paper>
           <TrackActions track={ track }
             addRating={ addRating }
-            saveTrack={ saveTrack }
-            discardTrack={ discardTrack } />
+            addTrackToGenre={ addTrackToGenre }
+            discardTrackFromPlayer={ discardTrackFromPlayer } />
         </CardText>
       </Card>
     </div>)

@@ -11,11 +11,6 @@ export const PlaylistItem = (props) => (
           <ToolbarTitle text={props.playlist.name} />
         </ToolbarGroup>
         <ToolbarGroup>
-          <FontIcon className='material-icons'>
-            play_circle_outline
-          </FontIcon>
-          <FontIcon className='material-icons'>
-            not_interested</FontIcon>
           <FontIcon className='material-icons'
             onClick={() => props.tracksFromPlaylist(props.playlist)} >
             playlist_add</FontIcon>

@@ -92,25 +92,31 @@ export function addRating(state, value) {
   }))
 }
 
-export function saveTrack(state, track) {
+export function addTrackToGenre(state, track) {
   console.log('Saving: ')
   console.log(track)
   return state
 }
 
-export function saveTrackSuccess(state, track) {
+export function addTrackToGenreSuccess(state, track) {
   console.log('Saved: ')
   console.log(track)
   return state
 }
 
-export function saveTrackError(state, error) {
+export function addTrackToGenreError(state, error) {
   console.log('Saving error: ')
   console.log(error)
   return state
 }
 
-export function discardTrack(state, track) {
+export function discardTrackFromQueue(state, track) {
+  const queue = state.get('queue').toJS()
+  const nextState = removeFromQueue(state, track)
+  return fromJS(Object.assign({}, nextState.toJS()))
+}
+
+export function discardTrackFromPlayer(state, track) {
   const queue = state.get('queue').toJS()
   const nextState = removeFromQueue(setTrack(state, queue.TrackQueue[0]), queue.TrackQueue[0])
   return fromJS(Object.assign({}, nextState.toJS()))
@@ -188,13 +194,15 @@ export default function coreReducer (state = testState, action) {
     case 'ADD_RATING':
       return addRating(state, action.value)
     case 'SAVE_TRACK':
-      return saveTrack(state, action.track)
+      return addTrackToGenre(state, action.track)
     case 'SAVE_TRACK_SUCCESS':
-      return saveTrackSuccess(state, action.track)
+      return addTrackToGenreSuccess(state, action.track)
     case 'SAVE_TRACK_ERROR':
-      return saveTrackError(state, action.error)
-    case 'DISCARD_TRACK':
-      return discardTrack(state, action.track)
+      return addTrackToGenreError(state, action.error)
+    case 'DISCARD_TRACK_FROM_QUEUE':
+      return discardTrackFromQueue(state, action.track)
+    case 'DISCARD_TRACK_FROM_PLAYER':
+      return discardTrackFromPlayer(state, action.track)
     case 'ADD_RATING':
       return addRating(state, action.value)
     case 'REQUEST_QUEUE':

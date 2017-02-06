@@ -32,8 +32,8 @@ export const GenrePage = (props) => (
             <CardText>
               <TrackPlayer track={ props.currentTrack }
                 addRating={ props.addRating }
-                saveTrack={ (track) => props.saveTrack(props.currentCustomGenre.ID, track) }
-                discardTrack={ props.discardTrack } />
+                addTrackToGenre={ (track) => props.addTrackToGenre(props.currentCustomGenre.ID, track) }
+                discardTrackFromPlayer={ (track) => props.discardTrackFromPlayer(props.currentCustomGenre.ID, track) } />
             </CardText>
           </Card>
         </Col>
@@ -105,6 +105,7 @@ export const GenrePage = (props) => (
                     <CardText>
                       <QueueContainer removeFromQueue={props.removeFromQueue}
                         setTrack={props.setTrack}
+                        discardTrackFromQueue={ (track) => props.discardTrackFromQueue(props.currentCustomGenre.ID, track) }
                         addGenre={props.addGenre} />
                     </CardText>
                   </Card>
@@ -122,13 +123,15 @@ export const GenrePage = (props) => (
 
 
 GenrePage.propTypes = {
-  currentGenre: React.PropTypes.string,
+  currentCustomGenre: React.PropTypes.object,
   addGenre: React.PropTypes.func,
   removeFromQueue: React.PropTypes.func,
   setTrack: React.PropTypes.func,
   addRating: React.PropTypes.func,
-  saveTrack: React.PropTypes.func,
-  discardTrack: React.PropTypes.func,
+  addTrackToGenre: React.PropTypes.func,
+  addTrackToGenre: React.PropTypes.func,
+  discardTrackFromQueue: React.PropTypes.func,
+  discardTrackFromPlayer: React.PropTypes.func,
   currentTrack: React.PropTypes.object,
   genres: React.PropTypes.array,
   spotifyGenres: React.PropTypes.array,

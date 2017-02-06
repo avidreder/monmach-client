@@ -9,6 +9,7 @@ export const Queue = (props) => (
         removeFromQueue={props.removeFromQueue}
         setTrack={props.setTrack}
         addGenre={props.addGenre}
+        discardTrackFromQueue={ props.discardTrackFromQueue }
         track={track} />
     )}
   </div>
@@ -17,7 +18,8 @@ export const Queue = (props) => (
 Queue.propTypes = {
   queue: React.PropTypes.array,
   setTrack: React.PropTypes.func,
-  removeFromQueue: React.PropTypes.func
+  removeFromQueue: React.PropTypes.func,
+  discardTrackFromQueue: React.PropTypes.func,
 }
 
 const mapStateToProps = (state) => {

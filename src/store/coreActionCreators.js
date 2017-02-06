@@ -126,9 +126,16 @@ export function trackSaveError(error) {
   };
 }
 
-export function discardTrack(track) {
+export function discardTrackFromPlayer(track) {
   return {
-    type: 'DISCARD_TRACK',
+    type: 'DISCARD_TRACK_FROM_PLAYER',
+    track
+  };
+}
+
+export function discardTrackFromQueue(track) {
+  return {
+    type: 'DISCARD_TRACK_FROM_QUEUE',
     track
   };
 }
@@ -271,7 +278,7 @@ export function tracksFromPlaylist(id) {
   }
 }
 
-export function saveTrack(genreId, track) {
+export function addTrackToGenre(genreId, track) {
   return function (dispatch) {
     dispatch(requestTrackSave(track))
     const authCookie = cookie.load('auth-session')
@@ -292,9 +299,9 @@ export function saveTrack(genreId, track) {
   }
 }
 
-export function addTrackToListened(genreId, track) {
+export function discardTrackFromPlayerThunk(genreId, track) {
   return function (dispatch) {
-    dispatch(requestTrackSave(track))
+    dispatch(discardTrackFromPlayer(track))
     const authCookie = cookie.load('auth-session')
     let form = {};
     form.payload = JSON.stringify(track)
@@ -304,11 +311,20 @@ export function addTrackToListened(genreId, track) {
     axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     }})
-      .then(function(body){
-        dispatch(trackSaveSuccess(fromJS(body)))
-      })
-      .catch(function(error){
-        dispatch(trackSaveError(fromJS(error.response.data)))
-      })
+  }
+}
+
+export function discardTrackFromQueueThunk(genreId, track) {
+  return function (dispatch) {
+    dispatch(discardTrackFromQueue(track))
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = JSON.stringify(track)
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/${genreId}/listened`
+    const data = querystring.stringify(form)
+    axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
   }
 }
