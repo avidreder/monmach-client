@@ -138,6 +138,20 @@ export function receiveQueueError(state, error) {
   }))
 }
 
+export function receiveGenresSuccess(state, genres) {
+  return fromJS(Object.assign({}, state.toJS(), {
+    genres: genres.toJS()
+  }))
+}
+
+export function receiveGenresError(state, error) {
+  console.log('Fetch genres error: ')
+  console.log(error)
+  return fromJS(Object.assign({}, state.toJS(), {
+    error: error
+  }))
+}
+
 export function receivePlaylistsSuccess(state, playlists) {
   return fromJS(Object.assign({}, state.toJS(), {
     playlists: playlists
@@ -211,6 +225,12 @@ export default function coreReducer (state = testState, action) {
       return receiveQueueSuccess(state, action.queue)
     case 'RECEIVE_QUEUE_ERROR':
       return receiveQueueError(state, action.error)
+    case 'REQUEST_GENRES':
+      return state
+    case 'RECEIVE_GENRES_SUCCESS':
+      return receiveGenresSuccess(state, action.genres)
+    case 'RECEIVE_GENRES_ERROR':
+      return receiveGenresError(state, action.error)
     case 'REQUEST_PLAYLISTS':
       return state;
     case 'RECEIVE_PLAYLISTS_SUCCESS':

@@ -29,6 +29,7 @@ class AppContainer extends Component {
     const { routes, store } = this.props
     store.dispatch(actionCreators.fetchQueue())
     store.dispatch(actionCreators.fetchPlaylists())
+    store.dispatch(actionCreators.fetchGenres())
     return (
       <Provider store={store}>
         <MuiThemeProvider muiTheme={muiTheme}>

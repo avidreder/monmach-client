@@ -160,6 +160,26 @@ export function receiveQueueError(error) {
   }
 }
 
+export function requestGenres() {
+  return {
+    type: 'REQUEST_GENRES'
+  }
+}
+
+export function receiveGenresSuccess(genres) {
+  return {
+    type: 'RECEIVE_GENRES_SUCCESS',
+    genres: genres
+  }
+}
+
+export function receiveGenresError(error) {
+  return {
+    type: 'RECEIVE_GENRES_ERROR',
+    error: error
+  }
+}
+
 export function requestPlaylists() {
   return {
     type: 'REQUEST_PLAYLISTS'
@@ -253,6 +273,30 @@ export function fetchQueue() {
       })
   }
 }
+
+export function fetchGenres() {
+  return function (dispatch) {
+    dispatch(requestGenres())
+    const authCookie = cookie.load('auth-session')
+    var options = {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      params: {
+        auth: 'auth-session=' + authCookie,
+        endpoint: '/genre/user',
+      }
+    };
+    axios.get(`${config.browser_client_path}/api/getData`, options)
+      .then(function(body){
+        dispatch(receiveGenresSuccess(fromJS(body.data)))
+      })
+      .catch(function(error){
+        dispatch(receiveGenresError(fromJS(error.response.data)))
+      })
+  }
+}
+
 
 export function tracksFromPlaylist(id) {
   return function (dispatch) {

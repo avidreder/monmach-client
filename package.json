@@ -54,7 +54,7 @@
         "NODE_ENV": "development",
         "DEBUG": "app:*",
         "PORT": "8080",
-        "SERVER_HOST": "104.236.177.72"
+        "SERVER_HOST": "104.236.139.204"
       }
     },
     "deploy": {
