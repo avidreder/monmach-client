@@ -122,65 +122,90 @@ export function discardTrackFromPlayer(state, track) {
   return fromJS(Object.assign({}, nextState.toJS()))
 }
 
-export function receiveQueueSuccess(state, queue) {
+export function setLoading(state, endpoint) {
+  return state.setIn(['data', endpoint,'loading'], true)
+}
+
+export function unSetLoading(state, endpoint) {
+  return state.setIn(['data', endpoint,'loading'], false)
+}
+
+export function setResponse(state, endpoint, response) {
+  return state.setIn(['data', endpoint, 'response'], response)
+}
+
+export function unSetResponse(state, endpoint) {
+  return state.deleteIn(['data', endpoint, 'response'])
+}
+
+export function setError(state, endpoint, error) {
+  return state.setIn(['data', endpoint, 'error'], error)
+}
+
+export function unSetError(state, endpoint) {
+  return state.deleteIn(['data', endpoint, 'error'])
+}
+
+export function receiveQueueSuccess(state, response) {
+  const queue = fromJS(response.data)
   const spotifyGenres = _.uniq(_.filter(_.flatten(_.map(queue.toJS().TrackQueue, 'Genres')), null))
-  return fromJS(Object.assign({}, state.toJS(), {
+  const newState = fromJS(Object.assign({}, state.toJS(), {
     queue,
     spotifyGenres,
   }))
+  return unSetLoading(setResponse(newState, 'queue', fromJS(response)), 'queue')
 }
 
 export function receiveQueueError(state, error) {
-  console.log('Queue error: ')
-  console.log(error)
-  return fromJS(Object.assign({}, state.toJS(), {
-    error: error
-  }))
+  const newState = fromJS(Object.assign({}, state.toJS()))
+  return setError(unSetResponse(newState, 'queue'), 'queue', fromJS(error))
 }
 
-export function receiveGenresSuccess(state, genres) {
-  return fromJS(Object.assign({}, state.toJS(), {
+export function receiveGenresSuccess(state, response) {
+  const genres = fromJS(response.data)
+  const newState = fromJS(Object.assign({}, state.toJS(), {
     genres: genres.toJS()
   }))
+  return unSetLoading(setResponse(newState, 'genres', fromJS(response)), 'genres')
 }
 
 export function receiveGenresError(state, error) {
-  console.log('Fetch genres error: ')
-  console.log(error)
-  return fromJS(Object.assign({}, state.toJS(), {
-    error: error
-  }))
+  console.log('receiveGenresError')
+  const newState = fromJS(Object.assign({}, state.toJS()))
+  return setError(unSetResponse(newState, 'genres'), 'genres', fromJS(error))
 }
 
-export function receivePlaylistsSuccess(state, playlists) {
-  return fromJS(Object.assign({}, state.toJS(), {
-    playlists: playlists
+export function receivePlaylistsSuccess(state, response) {
+  const playlists = fromJS(response.data.items)
+  const newState = fromJS(Object.assign({}, state.toJS(), {
+    playlists: playlists.toJS()
   }))
+  return unSetLoading(setResponse(newState, 'playlists', fromJS(response)), 'playlists')
 }
 
 export function receivePlaylistsError(state, error) {
-  return fromJS(Object.assign({}, state.toJS(), {
-    error: error
-  }))
+  console.log('receivePlaylistsError')
+  const newState = fromJS(Object.assign({}, state.toJS()))
+  return setError(unSetResponse(newState, 'playlists'), 'playlists', fromJS(error))
 }
 
-export function receiveTracksFromPlaylistSuccess(state, tracks) {
+export function receiveTracksFromPlaylistSuccess(state, response) {
   let newQueue = state.get('queue').toJS()
+  const tracks = fromJS(response.data)
   const trackQueue = state.getIn(['queue','TrackQueue']).toJS()
   newQueue.TrackQueue = trackQueue.concat(tracks.toJS())
   const spotifyGenres = _.uniq(_.filter(_.flatten(_.map(newQueue.TrackQueue, 'Genres')), null))
-  return fromJS(Object.assign({}, state.toJS(), {
+  const newState = fromJS(Object.assign({}, state.toJS(), {
     queue: newQueue,
     spotifyGenres,
   }))
+  return unSetLoading(setResponse(newState, 'tracks', fromJS(response)), 'tracks')
 }
 
 export function receiveTracksFromPlaylistError(state, error) {
-  console.log('Playlist to queue error: ')
-  console.log(error)
-  return fromJS(Object.assign({}, state.toJS(), {
-    error: error
-  }))
+  console.log('receiveTracksFromPlaylistError')
+  const newState = fromJS(Object.assign({}, state.toJS()))
+  return setError(unSetResponse(newState, 'tracks'), 'tracks', fromJS(error))
 }
 
 export default function coreReducer (state = testState, action) {
@@ -220,27 +245,27 @@ export default function coreReducer (state = testState, action) {
     case 'ADD_RATING':
       return addRating(state, action.value)
     case 'REQUEST_QUEUE':
-      return state
+      return setLoading(state, 'queue')
     case 'RECEIVE_QUEUE_SUCCESS':
-      return receiveQueueSuccess(state, action.queue)
+      return receiveQueueSuccess(state, action.response)
     case 'RECEIVE_QUEUE_ERROR':
       return receiveQueueError(state, action.error)
     case 'REQUEST_GENRES':
-      return state
+      return setLoading(state, 'genres')
     case 'RECEIVE_GENRES_SUCCESS':
-      return receiveGenresSuccess(state, action.genres)
+      return receiveGenresSuccess(state, action.response)
     case 'RECEIVE_GENRES_ERROR':
       return receiveGenresError(state, action.error)
     case 'REQUEST_PLAYLISTS':
-      return state;
+      return setLoading(state, 'playlists')
     case 'RECEIVE_PLAYLISTS_SUCCESS':
-      return receivePlaylistsSuccess(state, action.playlists);
+      return receivePlaylistsSuccess(state, action.response);
     case 'RECEIVE_PLAYLISTS_ERROR':
       return receivePlaylistsError(state, action.error);
     case 'REQUEST_TRACKS_FROM_PLAYLIST':
-      return state;
+      return setLoading(state, 'tracks')
     case 'RECEIVE_TRACKS_FROM_PLAYLIST_SUCCESS':
-      return receiveTracksFromPlaylistSuccess(state, action.tracks);
+      return receiveTracksFromPlaylistSuccess(state, action.response);
     case 'RECEIVE_TRACKS_FROM_PLAYLIST_ERROR':
       return receiveTracksFromPlaylistError(state, action.error);
     case 'SET_STATE':

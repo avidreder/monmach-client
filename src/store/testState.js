@@ -1,6 +1,20 @@
 import { fromJS } from 'immutable'
 
 const testState = fromJS({
+  data: {
+    playlists: {
+      loading: false,
+    },
+    queue: {
+      loading: false,
+    },
+    genres: {
+      loading: false,
+    },
+    tracks: {
+      loading: false,
+    },
+  },
   currentTrack: {
     Playlists: [],
     Created: '0001-01-01T00:00:00Z',

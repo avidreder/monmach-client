@@ -146,10 +146,10 @@ export function requestQueue() {
   }
 }
 
-export function receiveQueueSuccess(queue) {
+export function receiveQueueSuccess(response) {
   return {
     type: 'RECEIVE_QUEUE_SUCCESS',
-    queue: queue
+    response: response
   }
 }
 
@@ -166,10 +166,10 @@ export function requestGenres() {
   }
 }
 
-export function receiveGenresSuccess(genres) {
+export function receiveGenresSuccess(response) {
   return {
     type: 'RECEIVE_GENRES_SUCCESS',
-    genres: genres
+    response: response
   }
 }
 
@@ -186,10 +186,10 @@ export function requestPlaylists() {
   }
 }
 
-export function receivePlaylistsSuccess(playlists) {
+export function receivePlaylistsSuccess(response) {
   return {
     type: 'RECEIVE_PLAYLISTS_SUCCESS',
-    playlists: playlists
+    response: response
   }
 }
 
@@ -206,10 +206,10 @@ export function requestTracksFromPlaylist() {
   }
 }
 
-export function receiveTracksFromPlaylistSuccess(tracks) {
+export function receiveTracksFromPlaylistSuccess(response) {
   return {
     type: 'RECEIVE_TRACKS_FROM_PLAYLIST_SUCCESS',
-    tracks: tracks
+    response: response
   }
 }
 
@@ -242,11 +242,10 @@ export function fetchPlaylists() {
     };
     axios.get(`${config.browser_client_path}/api/getData`, options)
       .then(function(body){
-        console.log(body)
-        dispatch(receivePlaylistsSuccess(fromJS(body.data.items)))
+        dispatch(receivePlaylistsSuccess(body))
       })
       .catch(function(error){
-        dispatch(receiveQueueError(fromJS(error.response.data)))
+        dispatch(receiveQueueError(error))
       })
   }
 }
@@ -266,10 +265,10 @@ export function fetchQueue() {
     };
     axios.get(`${config.browser_client_path}/api/getData`, options)
       .then(function(body){
-        dispatch(receiveQueueSuccess(fromJS(body.data)))
+        dispatch(receiveQueueSuccess(body))
       })
       .catch(function(error){
-        dispatch(receiveQueueError(fromJS(error.response.data)))
+        dispatch(receiveQueueError(error))
       })
   }
 }
@@ -289,10 +288,10 @@ export function fetchGenres() {
     };
     axios.get(`${config.browser_client_path}/api/getData`, options)
       .then(function(body){
-        dispatch(receiveGenresSuccess(fromJS(body.data)))
+        dispatch(receiveGenresSuccess(body))
       })
       .catch(function(error){
-        dispatch(receiveGenresError(fromJS(error.response.data)))
+        dispatch(receiveGenresError(error))
       })
   }
 }
@@ -312,12 +311,11 @@ export function tracksFromPlaylist(id) {
       }
     };
     axios.get(`${config.browser_client_path}/api/getData`, options)
-      .then(function(body){
-        console.log(body.data)
-        dispatch(receiveTracksFromPlaylistSuccess(fromJS(body.data)))
+      .then(function(response){
+        dispatch(receiveTracksFromPlaylistSuccess(response))
       })
       .catch(function(error){
-        dispatch(receiveTracksFromPlaylistError(fromJS(error.response.data)))
+        dispatch(receiveTracksFromPlaylistError(error))
       })
   }
 }
