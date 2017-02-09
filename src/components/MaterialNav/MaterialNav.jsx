@@ -22,19 +22,9 @@ export default class MaterialNav extends React.Component {
 
   render = () => (
     <div>
-      <AppBar title={'Monster Machinesss'}
+      <AppBar title={'Monster Machines'}
         onTitleTouchTap={this.handleToggle}
-        onLeftIconButtonTouchTap={this.handleToggle}
-        iconElementRight={
-          <div>
-            <Avatar src={GridLogo}
-              size={40}
-              onTouchTap={this.handleToggle} />
-            <Avatar src={HawkLogo}
-              size={40}
-              onTouchTap={this.handleToggle} />
-            <Avatar size={40} onTouchTap={this.handleToggle}>M</Avatar>
-          </div>} />
+        onLeftIconButtonTouchTap={this.handleToggle} />
       <Drawer
         docked={false}
         width={200}
@@ -44,21 +34,12 @@ export default class MaterialNav extends React.Component {
           <ListItem leftAvatar={<Avatar src={GridLogo}
             size={40} onTouchTap={this.handleToggle} />}
             onTouchTap={this.handleClose}>
-            <Link to='/'>Monster Machine</Link>
+            <Link to='/genres'>Monster Machine</Link>
           </ListItem>
-          <ListItem onTouchTap={this.handleClose}
-            leftAvatar={
-              <Avatar src={HawkLogo} size={40}
-                onTouchTap={this.handleToggle} />
-            }>
-            <Link to='/components'>ShowHawk</Link>
-          </ListItem>
-          <ListItem onTouchTap={this.handleClose}
-            leftAvatar={
-              <Avatar size={40}
-                onTouchTap={this.handleToggle}>M</Avatar>
-            }>
-            <Link to='/'>MonsterMachine</Link>
+          <ListItem leftAvatar={<Avatar src={GridLogo}
+            size={40} onTouchTap={this.handleToggle} />}
+            onTouchTap={this.handleClose}>
+            <Link to='/playlists'>Monster Machine</Link>
           </ListItem>
         </List>
       </Drawer>
