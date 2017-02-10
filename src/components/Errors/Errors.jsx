@@ -26,8 +26,7 @@ class ErrorsContainer extends Component {
   }
 
   buildMessage(props) {
-    const { data } = this.props
-    console.log('data: ', data)
+    const { data } = props
     let messages = []
     _.forOwn(data, (value, key) => {
       let errorObject = {};
@@ -45,7 +44,6 @@ class ErrorsContainer extends Component {
   componentWillReceiveProps(nextProps) {
     const { message } = this.state
     const newMessage = this.buildMessage(nextProps)
-    console.log('old message: ', message, 'new message: ',newMessage)
     if (!_.isEqual(message, newMessage)) {
       this.setState({
         message: newMessage,
