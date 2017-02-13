@@ -14,50 +14,69 @@ class GenreFormContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      values: {
-        name: null,
-        description: null,
-      }
+      name: '',
+      description: '',
     }
   }
 
   handleActionTouchTap = () => {
-    this.setState({
-      open: false,
-    });
-  };
+    const { submitForm } = this.props
+    const { name, description } = this.state
+    if (name != '' && description != '') {
+      submitForm(name, description)
+    }
+  }
 
   handleRequestClose = () => {
+    const { closeModal } = this.props
+    closeModal()
+  }
+
+  handleNameChange = (e) => {
     this.setState({
-      open: false,
-    });
-  };
+      name: e.target.value,
+    })
+  }
+
+  handleDescriptionChange = (e) => {
+    this.setState({
+      description: e.target.value,
+    })
+  }
 
   render() {
-    const { message } = this.state
+    const { name, description } = this.state
+    const { newGenreFormOpen } = this.props
     const actions = [
       <FlatButton
         label="Ok"
         primary={true}
-        onTouchTap={this.handleRequestClose}
+        onTouchTap={this.handleActionTouchTap}
       />,
     ];
     return (
       <div>
-        <Dialog open={this.state.open}
+        <Dialog open={ newGenreFormOpen }
           actions={ actions }
           onActionTouchTap={this.handleActionTouchTap}
           onRequestClose={this.handleRequestClose} >
           <div>
-          { message && message.map((item) => (
-            <ul key={ item }>
-              <li>{ item.name }</li>
-              <li>{ item.statusCode }</li>
-              <li>{ item.statusText }</li>
-              <li>{ item.message }</li>
-            </ul>
-          ))}
-        </div>
+            <TextField
+              floatingLabelText="Name"
+              floatingLabelFixed={true}
+              id="name-text-field"
+              value={name}
+              onChange={this.handleNameChange}
+            />
+            <br />
+            <TextField
+              floatingLabelText="Description"
+              floatingLabelFixed={true}
+              id="description-text-field"
+              value={description}
+              onChange={this.handleDescriptionChange}
+            />
+          </div>
         </Dialog>
       </div>
     );
@@ -66,7 +85,7 @@ class GenreFormContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    newGenreFormOpen: state.core.get('newGenreFormOpen').toJS()
+    newGenreFormOpen: state.core.get('newGenreFormOpen')
   }
 }
 
@@ -75,6 +94,9 @@ const mapDispatchToProps = (dispatch) => {
     submitForm: (name, description) => {
       dispatch(actionCreators.createNewGenreThunk(name, description))
     },
+    closeModal: () => {
+      dispatch(actionCreators.hideNewGenreForm())
+    }
   }
 }
 

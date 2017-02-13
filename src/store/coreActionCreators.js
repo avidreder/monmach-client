@@ -386,14 +386,15 @@ export function discardTrackFromQueueThunk(genreId, track) {
 export function createNewGenreThunk(name, description) {
   return function (dispatch) {
     dispatch(hideNewGenreForm())
-    const authCookie = cookie.load('auth-session')
-    let form = {};
-    form.payload = JSON.stringify({ name: name, description: description })
-    form.auth = 'auth-session=' + authCookie,
-    form.endpoint = `/genre/user/new`
-    const data = querystring.stringify(form)
-    axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    }})
+    console.log('ready to post: ', name, description)
+    // const authCookie = cookie.load('auth-session')
+    // let form = {};
+    // form.payload = JSON.stringify({ name: name, description: description })
+    // form.auth = 'auth-session=' + authCookie,
+    // form.endpoint = `/genre/user/new`
+    // const data = querystring.stringify(form)
+    // axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
+    //   'Content-Type': 'application/x-www-form-urlencoded',
+    // }})
   }
 }

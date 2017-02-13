@@ -22,7 +22,8 @@ export const GenrePage = (props) => (
         <Col md={12} sm={12} lg={12}>
           <CustomGenres customGenres={ props.genres }
             setCurrentCustomGenre={ props.setCurrentCustomGenre }
-            currentCustomGenre={ props.currentCustomGenre } />
+            currentCustomGenre={ props.currentCustomGenre }
+            showNewGenreForm={ props.showNewGenreForm } />
         </Col>
       </Row>
       <Row>

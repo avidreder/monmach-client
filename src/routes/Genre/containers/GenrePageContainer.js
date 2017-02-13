@@ -13,6 +13,9 @@ import GenrePage from '../components/GenrePage'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = (dispatch) => ({
+  showNewGenreForm: () => {
+    dispatch(actionCreators.showNewGenreForm())
+  },
   setTrack: (track) => {
     dispatch(actionCreators.setTrack(track))
     dispatch(actionCreators.removeFromQueue(track))

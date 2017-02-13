@@ -17,6 +17,7 @@ export default class CustomGenres extends Component {
     currentCustomGenre: React.PropTypes.object,
     customGenres: React.PropTypes.array,
     setCurrentCustomGenre: React.PropTypes.func,
+    showNewGenreForm: React.PropTypes.func,
   }
   handleCustomGenreTouchTap = (event) => {
     // This prevents ghost click.
@@ -38,7 +39,7 @@ export default class CustomGenres extends Component {
   };
   render() {
     const { customGenreOpen, anchorEl } = this.state;
-    const { customGenres, currentCustomGenre } = this.props;
+    const { customGenres, currentCustomGenre, showNewGenreForm } = this.props;
     return (
       <div>
         <Card>
@@ -48,7 +49,7 @@ export default class CustomGenres extends Component {
               onTouchTap={this.handleCustomGenreTouchTap}
               label="Change genre..."
             />
-            <FloatingActionButton onClick= { () => showNewGenreForm() }>
+            <FloatingActionButton onClick= { showNewGenreForm }>
               <ContentAdd />
             </FloatingActionButton>
           <Popover open={ customGenreOpen }
