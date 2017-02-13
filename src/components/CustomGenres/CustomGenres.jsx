@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardHeader, CardText } from 'material-ui/Card'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import Popover from 'material-ui/Popover'
 import Checkbox from 'material-ui/Checkbox';
 import MenuItem from 'material-ui/MenuItem'
@@ -46,6 +48,9 @@ export default class CustomGenres extends Component {
               onTouchTap={this.handleCustomGenreTouchTap}
               label="Change genre..."
             />
+            <FloatingActionButton onClick= { () => showNewGenreForm() }>
+              <ContentAdd />
+            </FloatingActionButton>
           <Popover open={ customGenreOpen }
               anchorEl={ anchorEl }
               anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}

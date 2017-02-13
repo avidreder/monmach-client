@@ -220,6 +220,18 @@ export function receiveTracksFromPlaylistError(error) {
   }
 }
 
+export function hideNewGenreForm() {
+  return {
+    type: 'HIDE_NEW_GENRE_FORM',
+  }
+}
+
+export function showNewGenreForm() {
+  return {
+    type: 'SHOW_NEW_GENRE_FORM',
+  }
+}
+
 function handleErrors(response) {
     if (!response.ok) {
         throw Error(response.statusText);
@@ -364,6 +376,21 @@ export function discardTrackFromQueueThunk(genreId, track) {
     form.payload = JSON.stringify(track)
     form.auth = 'auth-session=' + authCookie,
     form.endpoint = `/genre/${genreId}/listened`
+    const data = querystring.stringify(form)
+    axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+  }
+}
+
+export function createNewGenreThunk(name, description) {
+  return function (dispatch) {
+    dispatch(hideNewGenreForm())
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = JSON.stringify({ name: name, description: description })
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/user/new`
     const data = querystring.stringify(form)
     axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',

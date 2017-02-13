@@ -208,6 +208,18 @@ export function receiveTracksFromPlaylistError(state, error) {
   return setError(unSetResponse(newState, 'tracks'), 'tracks', fromJS(error))
 }
 
+export function showNewGenreForm(state) {
+  return fromJS(Object.assign({}, state.toJS(), {
+    newGenreFormOpen: true,
+  }))
+}
+
+export function hideNewGenreForm(state) {
+  return fromJS(Object.assign({}, state.toJS(), {
+    newGenreFormOpen: false,
+  }))
+}
+
 export default function coreReducer (state = testState, action) {
   switch (action.type) {
     case 'SET_CURRENT_TRACK':
@@ -268,6 +280,10 @@ export default function coreReducer (state = testState, action) {
       return receiveTracksFromPlaylistSuccess(state, action.response);
     case 'RECEIVE_TRACKS_FROM_PLAYLIST_ERROR':
       return receiveTracksFromPlaylistError(state, action.error);
+    case 'SHOW_NEW_GENRE_FORM':
+      return showNewGenreForm(state)
+    case 'HIDE_NEW_GENRE_FORM':
+      return hideNewGenreForm(state)
     case 'SET_STATE':
       return state.merge(action.state);
     default:

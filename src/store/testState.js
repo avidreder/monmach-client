@@ -1,6 +1,7 @@
 import { fromJS } from 'immutable'
 
 const testState = fromJS({
+  newGenreFormOpen: false,
   data: {
     playlists: {
       loading: false,
