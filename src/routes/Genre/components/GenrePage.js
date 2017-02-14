@@ -5,6 +5,7 @@ import TrackGenres from 'components/TrackGenres'
 import GenreItem from 'components/GenreItem'
 import TrackPlaylists from 'components/TrackPlaylists'
 import TrackPlayer from 'components/TrackPlayer'
+import Badge from 'material-ui/Badge'
 import Playlists from 'components/Playlists'
 import CustomGenres from 'components/CustomGenres'
 import { Card, CardTitle, CardText, CardHeader } from 'material-ui/Card'
@@ -19,15 +20,13 @@ export const GenrePage = (props) => (
   <div>
     <Grid fluid>
       <Row>
-        <Col md={12} sm={12} lg={12}>
+        <Col md={6} sm={6} lg={6}>
           <CustomGenres customGenres={ props.genres }
             setCurrentCustomGenre={ props.setCurrentCustomGenre }
             currentCustomGenre={ props.currentCustomGenre }
             showNewGenreForm={ props.showNewGenreForm } />
         </Col>
-      </Row>
-      <Row>
-        <Col md={12} sm={12} lg={12}>
+        <Col md={6} sm={6} lg={6}>
           <Card>
             <CardTitle title='Currently Playing' />
             <CardText>
@@ -44,12 +43,10 @@ export const GenrePage = (props) => (
           <Tabs>
             <Tab label="Track" >
               <Row>
-                <Col md={12} sm={12} lg={12}>
-                  <TrackProfile track={ props.currentTrack } />
+                <Col md={6} sm={6} lg={6}>
+                  <TrackProfile chartData={ props.chartData } track={ props.currentTrack } />
                 </Col>
-              </Row>
-              <Row>
-                <Col md={12} sm={12} lg={12}>
+                <Col md={6} sm={6} lg={6}>
                   <Card>
                     <CardText>
                       <TrackGenres genres={ props.genres }
@@ -59,16 +56,12 @@ export const GenrePage = (props) => (
                         removeSpotifyGenre={ props.removeSpotifyGenre }
                         addCustomGenre={ props.addCustomGenre }
                         removeCustomGenre={ props.removeCustomGenre } />
+                      <TrackPlaylists track={ props.currentTrack }
+                        playlists={ props.playlists }
+                        addPlaylist={ props.addPlaylist }
+                        removePlaylist={ props.removePlaylist } />
                     </CardText>
                   </Card>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={12} sm={12} lg={12}>
-                  <TrackPlaylists track={ props.currentTrack }
-                    playlists={ props.playlists }
-                    addPlaylist={ props.addPlaylist }
-                    removePlaylist={ props.removePlaylist } />
                 </Col>
               </Row>
             </Tab>
@@ -120,9 +113,6 @@ export const GenrePage = (props) => (
   </div>
 )
 
-
-
-
 GenrePage.propTypes = {
   currentCustomGenre: React.PropTypes.object,
   addGenre: React.PropTypes.func,
@@ -144,6 +134,7 @@ GenrePage.propTypes = {
   addPlaylist: React.PropTypes.func,
   removePlaylist: React.PropTypes.func,
   playlists: React.PropTypes.array,
+  chartData: React.PropTypes.array,
 }
 
 export default GenrePage

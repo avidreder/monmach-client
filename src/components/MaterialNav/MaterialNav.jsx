@@ -22,7 +22,7 @@ export default class MaterialNav extends React.Component {
 
   render = () => (
     <div>
-      <AppBar title={'Monster Machines'}
+      <AppBar title={'Monster Machine'}
         onTitleTouchTap={this.handleToggle}
         onLeftIconButtonTouchTap={this.handleToggle} />
       <Drawer
@@ -34,12 +34,12 @@ export default class MaterialNav extends React.Component {
           <ListItem leftAvatar={<Avatar src={GridLogo}
             size={40} onTouchTap={this.handleToggle} />}
             onTouchTap={this.handleClose}>
-            <Link to='/genres'>Monster Machine</Link>
+            <Link to='/'>Home</Link>
           </ListItem>
           <ListItem leftAvatar={<Avatar src={GridLogo}
             size={40} onTouchTap={this.handleToggle} />}
             onTouchTap={this.handleClose}>
-            <Link to='/playlists'>Monster Machine</Link>
+            <Link to='/playlists'>Playlists</Link>
           </ListItem>
         </List>
       </Drawer>

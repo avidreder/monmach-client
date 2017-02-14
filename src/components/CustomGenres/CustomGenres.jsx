@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import RaisedButton from 'material-ui/RaisedButton';
-import { Card, CardHeader, CardText } from 'material-ui/Card'
+import { Card, CardTitle, CardText, CardActions } from 'material-ui/Card'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Popover from 'material-ui/Popover'
@@ -43,30 +43,28 @@ export default class CustomGenres extends Component {
     return (
       <div>
         <Card>
-          <CardHeader title={ currentCustomGenre.Name } />
-          <CardText>
+          <CardTitle title={ currentCustomGenre.Name } />
+          <CardActions>
             <RaisedButton
-              onTouchTap={this.handleCustomGenreTouchTap}
-              label="Change genre..."
+              onClick={this.handleCustomGenreTouchTap}
+              label="Change Genre"
             />
-            <FloatingActionButton onClick= { showNewGenreForm }>
-              <ContentAdd />
-            </FloatingActionButton>
-          <Popover open={ customGenreOpen }
-              anchorEl={ anchorEl }
-              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-              targetOrigin={{horizontal: 'left', vertical: 'top'}}
-              onRequestClose={this.handleRequestClose} >
-              { customGenres.map(genre =>
-                <RaisedButton
-                  key={ genre.ID }
-                  label={ genre.Name }
-                  primary={ genre.ID == currentCustomGenre.ID }
-                  onClick={ () => this.setGenreAndCloseSelect(genre) }
-                />
-              ) }
+          <RaisedButton onClick={ showNewGenreForm } label="New Genre" />
+            <Popover open={ customGenreOpen }
+                anchorEl={ anchorEl }
+                anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                onRequestClose={this.handleRequestClose} >
+                { customGenres.map(genre =>
+                  <RaisedButton
+                    key={ genre.ID }
+                    label={ genre.Name }
+                    primary={ genre.ID == currentCustomGenre.ID }
+                    onClick={ () => this.setGenreAndCloseSelect(genre) }
+                  />
+                ) }
             </Popover>
-          </CardText>
+          </CardActions>
         </Card>
       </div>
     )

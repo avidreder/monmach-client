@@ -61,9 +61,23 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
+const makeChartData = (features) => {
+  let chartData = []
+  Object.keys(features).map((key) => {
+    if (['id','uri','track_href','analysis_url','key','mode','time_signature','duration_ms','tempo','loudness'].indexOf(key) === -1) {
+      let chartItem = {}
+      chartItem.feature = key.toString().charAt(0).toUpperCase() + key.toString().slice(1)
+      chartItem.value = features[key]
+      chartData.push(chartItem)
+    }
+  })
+  return chartData
+}
+
 const mapStateToProps = (state) => ({
   currentCustomGenre: state.core.get('currentCustomGenre').toJS(),
   currentTrack: state.core.get('currentTrack').toJS(),
+  chartData: makeChartData(state.core.get('currentTrack').toJS().Features),
   queue: state.core.get('queue').toJS(),
   genres: state.core.get('genres').toJS(),
   spotifyGenres: state.core.get('spotifyGenres').toJS(),

@@ -396,5 +396,8 @@ export function createNewGenreThunk(name, description) {
     axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     }})
+    .then(function(){
+      fetchGenres()
+    })
   }
 }
