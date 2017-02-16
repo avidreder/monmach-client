@@ -23,9 +23,7 @@ Queue.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    queue: state.core.getIn(['queue','TrackQueue']).toJS()
-  }
+  return {}
 }
 
 export const QueueContainer = connect(mapStateToProps)(Queue)

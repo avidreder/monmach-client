@@ -3,7 +3,7 @@ import { browserHistory, Router } from 'react-router'
 import { Provider } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import { cyan700, grey600, grey200, fullWhite, pinkA200, pinkA400, pinkA100, blueA700 } from 'material-ui/styles/colors'
+import { cyan700, grey600, grey200, fullWhite, pinkA200, pinkA400, pinkA100, blueA700, blueA200, blueA400 } from 'material-ui/styles/colors'
 import {fade} from 'material-ui/utils/colorManipulator'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import * as actionCreators from 'store/coreActionCreators.js'
@@ -15,9 +15,9 @@ const muiTheme = getMuiTheme({
     primary1Color: blueA700,
     primary2Color: blueA700,
     primary3Color: blueA700,
-    accent1Color: blueA700,
-    accent2Color: blueA700,
-    accent3Color: blueA700,
+    accent1Color: blueA200,
+    accent2Color: blueA200,
+    accent3Color: blueA200,
     textColor: grey200,
     secondaryTextColor: '#303030',
     alternateTextColor: '#303030',

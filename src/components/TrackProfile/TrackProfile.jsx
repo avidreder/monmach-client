@@ -7,26 +7,22 @@ import TrackVisualization from 'components/TrackVisualization'
 export const TrackProfile = (props) => (
   <div>
     <Card>
-      <CardHeader title='Song profile' />
-      <CardMedia>
-        <TrackVisualization />
+      <CardMedia overlay={<ul>
+        { Object.keys(props.track.Features).map((key) => {
+          return ['key','mode','time_signature','duration_ms','tempo','loudness'].indexOf(key) > -1 &&
+          <li key={ key }>{ key.toString().charAt(0).toUpperCase() + key.toString().slice(1) }: {props.track.Features[key]}</li>
+        })}
+      </ul>}>
+        <RadarChart width={500} height={500} cx="50%" cy="50%" outerRadius="80%" data={props.chartData}>
+          <Radar name="Features" dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
+          <PolarGrid />
+          <PolarAngleAxis dataKey="feature" />
+          <PolarRadiusAxis angle={30} domain={[0, 1]} />
+        </RadarChart>
       </CardMedia>
       <CardText>
         <Paper size={100}>
-          <ul>
-          { Object.keys(props.track.Features).map((key) => {
-            return ['key','mode','time_signature','duration_ms','tempo','loudness'].indexOf(key) > -1 &&
-            <li key={ key }>{ key.toString().charAt(0).toUpperCase() + key.toString().slice(1) }: {props.track.Features[key]}</li>
-          })}
-        </ul>
-        </Paper>
-        <Paper size={200}>
-          <RadarChart outerRadius={150} width={730} height={250} data={props.chartData}>
-            <Radar name="Features" dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-            <PolarGrid />
-            <PolarAngleAxis dataKey="feature" />
-            <PolarRadiusAxis angle={30} domain={[0, 1]} />
-          </RadarChart>
+
         </Paper>
       </CardText>
     </Card>

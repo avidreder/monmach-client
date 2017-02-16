@@ -7,63 +7,63 @@ import MenuItem from 'material-ui/MenuItem'
 import {GridList, GridTile} from 'material-ui/GridList';
 import * as _ from 'lodash'
 
-export default class TrackGenres extends Component {
+export default class TrackCustomGenres extends Component {
   constructor(props){
     super(props)
-    this.state = { genreOpen: false }
+    this.state = { customGenreOpen: false }
   }
   static propTypes = {
     track: React.PropTypes.object,
-    spotifyGenres: React.PropTypes.array,
-    addGenre: React.PropTypes.func,
-    removeGenre: React.PropTypes.func,
+    genres: React.PropTypes.array,
+    addCustomGenre: React.PropTypes.func,
+    removeCustomGenre: React.PropTypes.func,
   }
-  handleGenreTouchTap = (event) => {
+  handleCustomGenreTouchTap = (event) => {
     // This prevents ghost click.
     event.preventDefault();
 
     this.setState({
-      genreOpen: true,
+      customGenreOpen: true,
       anchorEl: event.currentTarget,
     });
   };
 
   handleRequestClose = () => {
     this.setState({
-      genreOpen: false,
+      customGenreOpen: false,
     });
   };
   render() {
-    const { genreOpen, anchorEl } = this.state;
-    const { track, spotifyGenres, addSpotifyGenre, removeSpotifyGenre } = this.props;
+    const { customGenreOpen, anchorEl } = this.state;
+    const { track, genres, addCustomGenre, removeCustomGenre } = this.props;
     return (
       <div>
         <Card>
-          <CardHeader title='Track Spotify Genres' />
+          <CardHeader title='Track Custom Genres' />
           <CardText>
-            { spotifyGenres.map(genre =>
-              _.includes(track.Genres, genre) && <Checkbox
-                key={ genre }
-                label={ genre }
+            { _.filter(genres, (o) => (_.includes(track.CustomGenres, o.ID))).map(genre => (
+              <Checkbox
+                key={ genre.ID }
+                label={ genre.Name }
                 checked
-                onCheck={ () => removeSpotifyGenre(genre) }
-              />
+                onCheck={ () => removeCustomGenre(genre) } />
+              )
             ) }
             <RaisedButton
-              onTouchTap={this.handleGenreTouchTap}
+              onTouchTap={this.handleCustomGenreTouchTap}
               label="Add..."
             />
-            <Popover open={ genreOpen }
+            <Popover open={ customGenreOpen }
               anchorEl={ anchorEl }
               anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
               targetOrigin={{horizontal: 'left', vertical: 'top'}}
               onRequestClose={this.handleRequestClose}>
-              { _.reject(spotifyGenres, (o) => (_.includes(track.Genres, o))).map(genre =>
+              { _.reject(genres, (o) => (_.includes(track.CustomGenres, o.ID))).map(genre =>
                 <Checkbox
-                  key={ genre }
-                  label={ genre }
+                  key={ genre.ID }
+                  label={ genre.Name }
                   checked={ false }
-                  onCheck={ () => addSpotifyGenre(genre) }
+                  onCheck={ () => addCustomGenre(genre) }
                 />
               ) }
             </Popover>
