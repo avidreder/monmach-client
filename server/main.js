@@ -18,6 +18,7 @@ app.use(require('connect-history-api-fallback')())
 // Apply gzip compression
 app.use(compress())
 app.use(bodyParser.urlencoded({extended: true}))
+app.all('*/index.html', auth.checkAuth)
 app.get('/api/getData', (req, res) => {
   data.getData(req)
   .then(function(body){

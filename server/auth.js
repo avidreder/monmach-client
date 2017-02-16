@@ -6,7 +6,7 @@ module.exports = {
     const loginPage = `<h1>Login</h1><button><a href="${project.browser_api_path}/auth/spotify">Spotify</a></button>`
     contactServer(req)
       .then(function(result){
-        if (result.LoggedIn == false) {
+        if (result.data.LoggedIn == false) {
           res.status(401).send(loginPage)
         } else {
           next()
@@ -28,10 +28,10 @@ function contactServer(req) {
     }
     axios.get(`${project.server_api_path}/getuser`, options)
       .then(function(body){
-        resolve(body.data)
+        resolve(body)
       })
       .catch(function(error){
-        reject(error.response.data)
+        reject(error)
       })
     })
 }
