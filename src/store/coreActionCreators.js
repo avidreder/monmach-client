@@ -232,6 +232,18 @@ export function showNewGenreForm() {
   }
 }
 
+export function hidePopulateQueueDialog() {
+  return {
+    type: 'HIDE_POPULATE_QUEUE_DIALOG',
+  }
+}
+
+export function showPopulateQueueDialog() {
+  return {
+    type: 'SHOW_POPULATE_QUEUE_DIALOG',
+  }
+}
+
 function handleErrors(response) {
     if (!response.ok) {
         throw Error(response.statusText);

@@ -27,7 +27,6 @@ export default class TrackPlayer extends Component {
       removeTrackFromGenre,
       discardTrackFromPlayer,
     } = this.props;
-    console.log(track.SpotifyTrack.artists)
     return(<div>
       <Card>
         <CardTitle title={track.SpotifyTrack.name} />
@@ -37,20 +36,17 @@ export default class TrackPlayer extends Component {
             label={ `Remove ${track.SpotifyTrack.name}` }
           />
           { track.SpotifyTrack.artists.map(artist =>
-            <div>
+            <div key={ `${artist.id}`} >
               <RaisedButton
                 onTouchTap={ () => addArtistToGenre(artist) }
-                key={ `${artist.id}_add_button` }
                 label={ `Add ${artist.name}` }
               />
               <RaisedButton
                 onTouchTap={ () => removeArtistFromGenre(artist) }
-                key={ `${artist.id}_remove_button` }
                 label={ `Remove ${artist.name}` }
               />
             </div>
           )}
-
           <Paper>
             <iframe id='externalPlayer'
               src={'https://embed.spotify.com/?uri=spotify:track:' +

@@ -16,6 +16,9 @@ const mapDispatchToProps = (dispatch) => ({
   showNewGenreForm: () => {
     dispatch(actionCreators.showNewGenreForm())
   },
+  showPopulateQueueDialog: () => {
+    dispatch(actionCreators.showPopulateQueueDialog())
+  },
   setTrack: (track) => {
     dispatch(actionCreators.setTrack(track))
     dispatch(actionCreators.removeFromQueue(track))

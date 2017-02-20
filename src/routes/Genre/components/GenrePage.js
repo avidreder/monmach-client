@@ -1,18 +1,17 @@
 import React from 'react'
+import FlatButton from 'material-ui/FlatButton'
+import CustomGenres from 'components/CustomGenres'
 import QueueContainer from 'components/Queue'
 import TrackProfile from 'components/TrackProfile'
 import TrackGenres from 'components/TrackGenres'
 import TrackCustomGenres from 'components/TrackCustomGenres'
-import GenreItem from 'components/GenreItem'
+import {Tabs, Tab} from 'material-ui/Tabs';
 import TrackPlaylists from 'components/TrackPlaylists'
 import TrackPlayer from 'components/TrackPlayer'
 import Badge from 'material-ui/Badge'
-import Playlists from 'components/Playlists'
-import CustomGenres from 'components/CustomGenres'
 import { Card, CardTitle, CardText, CardHeader } from 'material-ui/Card'
 import Checkbox from 'material-ui/Checkbox';
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
-import {Tabs, Tab} from 'material-ui/Tabs';
 import './GenrePage.scss'
 
 const genreName = 'My Custom Genre'
@@ -87,79 +86,26 @@ export const GenrePage = (props) => (
               </Row>
               <Row>
                 <Col md={12} sm={12} lg={12}>
-                  <Tabs>
-                    <Tab label="Tracks" >
-                      <Card>
-                        <CardText>
-                          <QueueContainer queue={props.currentCustomGenre.SeedTracks}
-                            removeFromQueue={props.removeFromQueue}
-                            setTrack={props.setTrack}
-                            discardTrackFromQueue={ (track) => props.discardTrackFromQueue(props.currentCustomGenre.ID, track) }
-                            addGenre={props.addGenre} />
-                        </CardText>
-                      </Card>
-                    </Tab>
-                    <Tab label="Genres">
-                      <Card>
-                        <CardText>
-                          { props.currentCustomGenre.SeedArtists.map(genre =>
-                            <GenreItem key={ genre }
-                              genre={ genre } />
-                          ) }
-                        </CardText>
-                      </Card>
-                    </Tab>
-                  </Tabs>
+                  <FlatButton
+                    label="More Tracks"
+                    primary={true}
+                    onTouchTap={ props.showPopulateQueueDialog }
+                  />
                 </Col>
               </Row>
             </Tab>
-            <Tab label='Queue'>
+            <Tab label='New Tracks'>
               <Row>
                 <Col md={12} sm={12} lg={12}>
-                  <Tabs>
-                    <Tab label="Sources" >
-                      <Row>
-                        <Col md={12} sm={12} lg={12}>
-                          <Tabs>
-                            <Tab label="Playlists" >
-                              <Card>
-                                <CardText>
-                                  <Playlists playlists={ props.playlists }
-                                    tracksFromPlaylist={ props.tracksFromPlaylist } />
-                                </CardText>
-                              </Card>
-                            </Tab>
-                            <Tab label="Genres">
-                              <Card>
-                                <CardHeader title='Track Spotify Genres' />
-                                <CardText>
-                                  { props.spotifyGenres.map(genre =>
-                                    <GenreItem key={ genre }
-                                      genre={ genre } />
-                                  ) }
-                                </CardText>
-                              </Card>
-                            </Tab>
-                          </Tabs>
-                        </Col>
-                      </Row>
-                    </Tab>
-                    <Tab label="Queue" >
-                      <Row>
-                        <Col md={12} sm={12} lg={12}>
-                          <Card>
-                            <CardText>
-                              <QueueContainer queue={props.queue.TrackQueue}
-                                removeFromQueue={props.removeFromQueue}
-                                setTrack={props.setTrack}
-                                discardTrackFromQueue={ (track) => props.discardTrackFromQueue(props.currentCustomGenre.ID, track) }
-                                addGenre={props.addGenre} />
-                            </CardText>
-                          </Card>
-                        </Col>
-                      </Row>
-                    </Tab>
-                  </Tabs>
+                  <Card>
+                    <CardText>
+                      <QueueContainer queue={props.queue.TrackQueue}
+                        removeFromQueue={props.removeFromQueue}
+                        setTrack={props.setTrack}
+                        discardTrackFromQueue={ (track) => props.discardTrackFromQueue(props.currentCustomGenre.ID, track) }
+                        addGenre={props.addGenre} />
+                    </CardText>
+                  </Card>
                 </Col>
               </Row>
             </Tab>
@@ -190,6 +136,7 @@ GenrePage.propTypes = {
   tracksFromPlaylist: React.PropTypes.func,
   addPlaylist: React.PropTypes.func,
   removePlaylist: React.PropTypes.func,
+  showPopulateQueueDialog: React.PropTypes.func,
   playlists: React.PropTypes.array,
   chartData: React.PropTypes.array,
 }

@@ -12,11 +12,9 @@ export const TrackActions = (props) => (
       <Toolbar>
         <ToolbarGroup>
           { _.range(1, props.track.Rating + 1).map((value) => {
-            console.log(props.track.Rating)
             return <FontIcon key={ value } className='material-icons' color={ amber500 } onClick={() => props.addRating(value)}>star</FontIcon>
           })}
           { _.range(props.track.Rating + 1, 6).map((value) => {
-            console.log(props.track.Rating)
             return <FontIcon key={ value } className='material-icons' hoverColor={ amber500 } onClick={() => props.addRating(value)}>star_border</FontIcon>
           })}
         </ToolbarGroup>

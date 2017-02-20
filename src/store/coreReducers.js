@@ -220,6 +220,18 @@ export function hideNewGenreForm(state) {
   }))
 }
 
+export function showPopulateQueueDialog(state) {
+  return fromJS(Object.assign({}, state.toJS(), {
+    populateQueueDialogOpen: true,
+  }))
+}
+
+export function hidePopulateQueueDialog(state) {
+  return fromJS(Object.assign({}, state.toJS(), {
+    populateQueueDialogOpen: false,
+  }))
+}
+
 export default function coreReducer (state = testState, action) {
   switch (action.type) {
     case 'SET_CURRENT_TRACK':
@@ -284,6 +296,10 @@ export default function coreReducer (state = testState, action) {
       return showNewGenreForm(state)
     case 'HIDE_NEW_GENRE_FORM':
       return hideNewGenreForm(state)
+    case 'SHOW_POPULATE_QUEUE_DIALOG':
+      return showPopulateQueueDialog(state)
+    case 'HIDE_POPULATE_QUEUE_DIALOG':
+      return hidePopulateQueueDialog(state)
     case 'SET_STATE':
       return state.merge(action.state);
     default:

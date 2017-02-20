@@ -72,7 +72,7 @@ class ErrorsContainer extends Component {
         primary={true}
         onTouchTap={this.handleRequestClose}
       />,
-    ];
+    ]
     return (
       <div>
         <Dialog open={this.state.open}
