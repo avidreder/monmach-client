@@ -36,7 +36,7 @@ export default class TrackGenres extends Component {
   };
   render() {
     const { genreOpen, anchorEl } = this.state;
-    const { track, spotifyGenres, addSpotifyGenre, removeSpotifyGenre, addGenreToGenre } = this.props;
+    const { track, spotifyGenres, addSpotifyGenre, removeSpotifyGenre, addGenreToGenre, removeGenreFromGenre } = this.props;
     return (
       <div>
         <Card>
@@ -52,6 +52,10 @@ export default class TrackGenres extends Component {
                 />
                 <RaisedButton
                   onTouchTap={ () => addGenreToGenre(genre) }
+                  label={ genre }
+                />
+                <RaisedButton
+                  onTouchTap={ () => removeGenreFromGenre(genre) }
                   label={ genre }
                 />
               </div>

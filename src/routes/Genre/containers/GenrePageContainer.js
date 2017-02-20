@@ -53,6 +53,15 @@ const mapDispatchToProps = (dispatch) => ({
   addArtistToGenre: (genreId, artist) => {
     dispatch(actionCreators.addArtistToGenre(genreId, artist))
   },
+  removeArtistFromGenre: (genreId, artist) => {
+    dispatch(actionCreators.removeArtistFromGenre(genreId, artist))
+  },
+  removeGenreFromGenre: (genreId, genre) => {
+    dispatch(actionCreators.removeGenreFromGenre(genreId, genre))
+  },
+  removeTrackFromGenre: (genreId, track) => {
+    dispatch(actionCreators.removeTrackFromGenre(genreId, track))
+  },
   discardTrackFromPlayer: (genreId, track) => {
     dispatch(actionCreators.discardTrackFromPlayerThunk(genreId, track))
   },

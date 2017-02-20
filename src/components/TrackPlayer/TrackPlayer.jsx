@@ -12,6 +12,7 @@ export default class TrackPlayer extends Component {
     addTrackToGenre: React.PropTypes.func,
     discardTrackFromPlayer: React.PropTypes.func,
     addArtistToGenre: React.PropTypes.func,
+    removeArtistFromGenre: React.PropTypes.func,
   }
   constructor(props) {
     super(props)
@@ -22,6 +23,8 @@ export default class TrackPlayer extends Component {
       addRating,
       addTrackToGenre,
       addArtistToGenre,
+      removeArtistFromGenre,
+      removeTrackFromGenre,
       discardTrackFromPlayer,
     } = this.props;
     console.log(track.SpotifyTrack.artists)
@@ -29,13 +32,25 @@ export default class TrackPlayer extends Component {
       <Card>
         <CardTitle title={track.SpotifyTrack.name} />
         <CardText>
+          <RaisedButton
+            onTouchTap={ () => removeTrackFromGenre(track) }
+            label={ `Remove ${track.SpotifyTrack.name}` }
+          />
           { track.SpotifyTrack.artists.map(artist =>
-            <RaisedButton
-              onTouchTap={ () => addArtistToGenre(artist) }
-              key={ `${artist.id}_button` }
-              label={ artist.name }
-            />
+            <div>
+              <RaisedButton
+                onTouchTap={ () => addArtistToGenre(artist) }
+                key={ `${artist.id}_add_button` }
+                label={ `Add ${artist.name}` }
+              />
+              <RaisedButton
+                onTouchTap={ () => removeArtistFromGenre(artist) }
+                key={ `${artist.id}_remove_button` }
+                label={ `Remove ${artist.name}` }
+              />
+            </div>
           )}
+
           <Paper>
             <iframe id='externalPlayer'
               src={'https://embed.spotify.com/?uri=spotify:track:' +

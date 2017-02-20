@@ -30,8 +30,10 @@ export const GenrePage = (props) => (
                   <TrackPlayer track={ props.currentTrack }
                     addRating={ props.addRating }
                     addTrackToGenre={ (track) => props.addTrackToGenre(props.currentCustomGenre.ID, track) }
+                    removeTrackFromGenre={ (artist) => props.removeTrackFromGenre(props.currentCustomGenre.ID, artist) }
                     discardTrackFromPlayer={ (track) => props.discardTrackFromPlayer(props.currentCustomGenre.ID, track) }
-                    addArtistToGenre={ (artist) => props.addArtistToGenre(props.currentCustomGenre.ID, artist) } />
+                    addArtistToGenre={ (artist) => props.addArtistToGenre(props.currentCustomGenre.ID, artist) }
+                    removeArtistFromGenre={ (artist) => props.removeArtistFromGenre(props.currentCustomGenre.ID, artist) } />
                 </CardText>
               </Card>
             </Col>
@@ -51,7 +53,8 @@ export const GenrePage = (props) => (
                         spotifyGenres={ props.spotifyGenres }
                         addSpotifyGenre={ props.addSpotifyGenre }
                         removeSpotifyGenre={ props.removeSpotifyGenre }
-                        addGenreToGenre={ (genre) => props.addGenreToGenre(props.currentCustomGenre.ID, genre) } />
+                        addGenreToGenre={ (genre) => props.addGenreToGenre(props.currentCustomGenre.ID, genre) }
+                        removeGenreFromGenre={ (genre) => props.removeGenreFromGenre(props.currentCustomGenre.ID, genre) } />
                     </Col>
                     <Col md={4} sm={4} lg={4}>
                       <TrackCustomGenres genres={ props.genres }

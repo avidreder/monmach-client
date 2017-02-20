@@ -339,7 +339,7 @@ export function addTrackToGenre(genreId, track) {
     let form = {};
     form.payload = JSON.stringify(track)
     form.auth = 'auth-session=' + authCookie,
-    form.endpoint = `/genre/${genreId}/seeds/track`
+    form.endpoint = `/genre/${genreId}/seeds/track/add`
     const data = querystring.stringify(form)
     axios.post(`${serverAddress}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -361,7 +361,29 @@ export function addGenreToGenre(genreId, genre) {
     let form = {};
     form.payload = genre
     form.auth = 'auth-session=' + authCookie,
-    form.endpoint = `/genre/${genreId}/seeds/genre`
+    form.endpoint = `/genre/${genreId}/seeds/genre/add`
+    const data = querystring.stringify(form)
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+      .then(function(body){
+        dispatch(trackSaveSuccess(fromJS(body)))
+      })
+      .catch(function(error){
+        dispatch(trackSaveError(fromJS(error.response.data)))
+      })
+  }
+}
+
+export function removeGenreFromGenre(genreId, genre) {
+  return function (dispatch) {
+    console.log('genre is: ', genre)
+    dispatch(requestTrackSave(genre))
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = genre
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/${genreId}/seeds/genre/remove`
     const data = querystring.stringify(form)
     axios.post(`${serverAddress}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -382,7 +404,49 @@ export function addArtistToGenre(genreId, artist) {
     let form = {};
     form.payload = JSON.stringify(artist)
     form.auth = 'auth-session=' + authCookie,
-    form.endpoint = `/genre/${genreId}/seeds/artist`
+    form.endpoint = `/genre/${genreId}/seeds/artist/add`
+    const data = querystring.stringify(form)
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+      .then(function(body){
+        dispatch(trackSaveSuccess(fromJS(body)))
+      })
+      .catch(function(error){
+        dispatch(trackSaveError(fromJS(error.response.data)))
+      })
+  }
+}
+
+export function removeTrackFromGenre(genreId, track) {
+  return function (dispatch) {
+    dispatch(requestTrackSave(track))
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = JSON.stringify(track)
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/${genreId}/seeds/track/remove`
+    const data = querystring.stringify(form)
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+      .then(function(body){
+        dispatch(trackSaveSuccess(fromJS(body)))
+      })
+      .catch(function(error){
+        dispatch(trackSaveError(fromJS(error.response.data)))
+      })
+  }
+}
+
+export function removeArtistFromGenre(genreId, artist) {
+  return function (dispatch) {
+    dispatch(requestTrackSave(artist))
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = JSON.stringify(artist)
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/${genreId}/seeds/artist/remove`
     const data = querystring.stringify(form)
     axios.post(`${serverAddress}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
