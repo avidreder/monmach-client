@@ -54,7 +54,7 @@
         "NODE_ENV": "development",
         "DEBUG": "app:*",
         "PORT": "8080",
-        "SERVER_HOST": "104.236.139.204"
+        "SERVER_HOST": "app.monmach.com"
       }
     },
     "deploy": {
@@ -64,10 +64,12 @@
       }
     },
     "deploy:dev": {
-      "command": "npm run deploy",
+      "command": "npm run compile",
       "env": {
         "NODE_ENV": "development",
-        "DEBUG": "app:*"
+        "DEBUG": "app:*",
+        "PORT": "8080",
+        "SERVER_HOST": "app.monmach.com"
       }
     },
     "deploy:prod": {
@@ -80,7 +82,11 @@
     "start": {
       "command": "node bin/dev-server",
       "env": {
-        "DEBUG": "app:*"
+        "DEBUG": "app:*",
+        "NODE_ENV": "development",
+        "DEBUG": "app:*",
+        "PORT": "8080",
+        "SERVER_HOST": "app.monmach.com"
       }
     },
     "test": {

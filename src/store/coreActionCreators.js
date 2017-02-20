@@ -1,7 +1,7 @@
 var request = require('request')
 var axios = require('axios')
 const querystring = require('querystring')
-
+const serverAddress = config ? config.browser_client_path : 'https://app.monmach.com'
 request = request.defaults({jar: true})
 import _ from 'lodash';
 import { fromJS } from 'immutable'
@@ -252,7 +252,7 @@ export function fetchPlaylists() {
         endpoint: '/spotify/playlists',
       }
     };
-    axios.get(`${config.browser_client_path}/api/getData`, options)
+    axios.get(`${serverAddress}/api/getData`, options)
       .then(function(body){
         dispatch(receivePlaylistsSuccess(body))
       })
@@ -275,7 +275,7 @@ export function fetchQueue() {
         endpoint: '/queue/user',
       }
     };
-    axios.get(`${config.browser_client_path}/api/getData`, options)
+    axios.get(`${serverAddress}/api/getData`, options)
       .then(function(body){
         dispatch(receiveQueueSuccess(body))
       })
@@ -298,7 +298,7 @@ export function fetchGenres() {
         endpoint: '/genre/user',
       }
     };
-    axios.get(`${config.browser_client_path}/api/getData`, options)
+    axios.get(`${serverAddress}/api/getData`, options)
       .then(function(body){
         dispatch(receiveGenresSuccess(body))
       })
@@ -322,7 +322,7 @@ export function tracksFromPlaylist(id) {
         endpoint: `/playlist/${id}`,
       }
     };
-    axios.get(`${config.browser_client_path}/api/getData`, options)
+    axios.get(`${serverAddress}/api/getData`, options)
       .then(function(response){
         dispatch(receiveTracksFromPlaylistSuccess(response))
       })
@@ -341,7 +341,7 @@ export function addTrackToGenre(genreId, track) {
     form.auth = 'auth-session=' + authCookie,
     form.endpoint = `/genre/${genreId}/seed`
     const data = querystring.stringify(form)
-    axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     }})
       .then(function(body){
@@ -362,7 +362,7 @@ export function discardTrackFromPlayerThunk(genreId, track) {
     form.auth = 'auth-session=' + authCookie,
     form.endpoint = `/genre/${genreId}/listened`
     const data = querystring.stringify(form)
-    axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     }})
   }
@@ -377,7 +377,7 @@ export function discardTrackFromQueueThunk(genreId, track) {
     form.auth = 'auth-session=' + authCookie,
     form.endpoint = `/genre/${genreId}/listened`
     const data = querystring.stringify(form)
-    axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     }})
   }
@@ -393,7 +393,7 @@ export function createNewGenreThunk(name, description) {
     form.auth = 'auth-session=' + authCookie,
     form.endpoint = `/genre/user/new`
     const data = querystring.stringify(form)
-    axios.post(`${config.browser_client_path}/api/postData`, data, {headers: {
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     }})
     .then(function(){

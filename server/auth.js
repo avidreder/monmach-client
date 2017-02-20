@@ -3,7 +3,7 @@ const axios = require('axios')
 
 module.exports = {
   checkAuth: function(req, res, next) {
-    const loginPage = `<h1>Login</h1><button><a href="${project.browser_api_path}/auth/spotify">Spotify</a></button>`
+    const loginPage = `<h1>Login</h1><button><a href="${project.browser_api_path}/auth/spotify/start">Spotify</a></button>`
     contactServer(req)
       .then(function(result){
         if (result.data.LoggedIn == false) {

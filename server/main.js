@@ -20,6 +20,7 @@ app.use(compress())
 app.use(bodyParser.urlencoded({extended: true}))
 app.all('*/index.html', auth.checkAuth)
 app.get('/api/getData', (req, res) => {
+  console.log("got data")
   data.getData(req)
   .then(function(body){
     res.status(200).send(body)

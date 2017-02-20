@@ -19,7 +19,7 @@
     - name: Install n globally
       npm: name=n global=yes
 
-    - name: Use latest node
+    - name: Use node 6.8.0
       command: n 6.8.0
 
     - name: Update npm
@@ -30,9 +30,6 @@
 
     - name: Install pm2
       npm: name=pm2 global=yes
-
-    - name: Install bower
-      npm: name=bower global=yes
 
     - name: Install webpack globally
       npm: name=webpack path=/srv/monmach-client global=yes
@@ -52,6 +49,9 @@
         owner: root
         group: root
 
+    - name: "Start example Node.js app."
+      command: npm run deploy:dev chdir=/srv/monmach-client
+
 - hosts: vagrant
   become: yes
   tasks:
@@ -63,5 +63,5 @@
   become: yes
   tasks:
     - name: Run monmach-client
-      command: pm2 start npm --name "monmach-client" -- run development chdir=/srv/monmach-client
+      command: pm2 start npm --name "monmach-client" -- run start chdir=/srv/monmach-client
       ignore_errors: yes
