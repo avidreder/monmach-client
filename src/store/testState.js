@@ -252,12 +252,11 @@ const testState = fromJS({
       Description: 'Downtempo rap and rnb',
       SeedArtists: [],
       SeedTracks:[],
-      SeedPlaylists:[],
+      SeedGenres:[],
       AvatarURL: '',
       Created:0,
       Updated:0,
-      TrackBlacklist: [],
-      TrackWhitelist: []
+      ListenedTracks: []
     },
     {
       ID: '58977d2efe10074d384efa49',
@@ -267,12 +266,11 @@ const testState = fromJS({
       Description: 'Ambient Electronica for focused work',
       SeedArtists: [],
       SeedTracks:[],
-      SeedPlaylists:[],
+      SeedGenres:[],
       AvatarURL: '',
       Created:0,
       Updated:0,
-      TrackBlacklist: [],
-      TrackWhitelist: []
+      ListenedTracks: []
     },
     {
       ID: '3',
@@ -282,12 +280,11 @@ const testState = fromJS({
       Description: 'Guitar based music',
       SeedArtists: [],
       SeedTracks:[],
-      SeedPlaylists:[],
+      SeedGenres:[],
       AvatarURL: '',
       Created:0,
       Updated:0,
-      TrackBlacklist: [],
-      TrackWhitelist: []
+      ListenedTracks: []
     },
   ],
   currentCustomGenre: {
@@ -298,12 +295,11 @@ const testState = fromJS({
     Description: 'Ambient Electronica for focused work',
     SeedArtists: [],
     SeedTracks:[],
-    SeedPlaylists:[],
+    SeedGenres:[],
     AvatarURL: '',
     Created:0,
     Updated:0,
-    TrackBlacklist: [],
-    TrackWhitelist: []
+    ListenedTracks: []
   }
 })
 

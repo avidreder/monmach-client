@@ -339,7 +339,50 @@ export function addTrackToGenre(genreId, track) {
     let form = {};
     form.payload = JSON.stringify(track)
     form.auth = 'auth-session=' + authCookie,
-    form.endpoint = `/genre/${genreId}/seed`
+    form.endpoint = `/genre/${genreId}/seeds/track`
+    const data = querystring.stringify(form)
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+      .then(function(body){
+        dispatch(trackSaveSuccess(fromJS(body)))
+      })
+      .catch(function(error){
+        dispatch(trackSaveError(fromJS(error.response.data)))
+      })
+  }
+}
+
+export function addGenreToGenre(genreId, genre) {
+  return function (dispatch) {
+    console.log('genre is: ', genre)
+    dispatch(requestTrackSave(genre))
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = genre
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/${genreId}/seeds/genre`
+    const data = querystring.stringify(form)
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+      .then(function(body){
+        dispatch(trackSaveSuccess(fromJS(body)))
+      })
+      .catch(function(error){
+        dispatch(trackSaveError(fromJS(error.response.data)))
+      })
+  }
+}
+
+export function addArtistToGenre(genreId, artist) {
+  return function (dispatch) {
+    dispatch(requestTrackSave(artist))
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = JSON.stringify(artist)
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/${genreId}/seeds/artist`
     const data = querystring.stringify(form)
     axios.post(`${serverAddress}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -397,7 +440,8 @@ export function createNewGenreThunk(name, description) {
       'Content-Type': 'application/x-www-form-urlencoded',
     }})
     .then(function(){
-      fetchGenres()
+      const thunk = fetchGenres();
+      dispatch(thunk)
     })
   }
 }

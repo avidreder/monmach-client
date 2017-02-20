@@ -40,7 +40,6 @@ class LoadingDialogContainer extends Component {
   componentWillReceiveProps(nextProps) {
     const { message } = this.state
     const newMessage = this.buildMessage(nextProps)
-    console.log('comparing:', message, newMessage)
     if (!_.isEqual(message, newMessage) && newMessage != null) {
       this.setState({
         message: newMessage,

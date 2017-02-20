@@ -17,6 +17,7 @@ export default class TrackGenres extends Component {
     spotifyGenres: React.PropTypes.array,
     addGenre: React.PropTypes.func,
     removeGenre: React.PropTypes.func,
+    addGenreToGenre: React.PropTypes.func,
   }
   handleGenreTouchTap = (event) => {
     // This prevents ghost click.
@@ -35,19 +36,25 @@ export default class TrackGenres extends Component {
   };
   render() {
     const { genreOpen, anchorEl } = this.state;
-    const { track, spotifyGenres, addSpotifyGenre, removeSpotifyGenre } = this.props;
+    const { track, spotifyGenres, addSpotifyGenre, removeSpotifyGenre, addGenreToGenre } = this.props;
     return (
       <div>
         <Card>
           <CardHeader title='Track Spotify Genres' />
           <CardText>
             { spotifyGenres.map(genre =>
-              _.includes(track.Genres, genre) && <Checkbox
-                key={ genre }
-                label={ genre }
-                checked
-                onCheck={ () => removeSpotifyGenre(genre) }
-              />
+              _.includes(track.Genres, genre) &&
+              <div key={ `${genre}_actions` }>
+                <Checkbox
+                  label={ genre }
+                  checked
+                  onCheck={ () => removeSpotifyGenre(genre) }
+                />
+                <RaisedButton
+                  onTouchTap={ () => addGenreToGenre(genre) }
+                  label={ genre }
+                />
+              </div>
             ) }
             <RaisedButton
               onTouchTap={this.handleGenreTouchTap}
