@@ -91,6 +91,11 @@ export const GenrePage = (props) => (
                     primary={true}
                     onTouchTap={ props.showPopulateQueueDialog }
                   />
+                  <FlatButton
+                    label="Get Recs"
+                    primary={true}
+                    onTouchTap={ () => props.getRecommendedTracks(props.recommendationSeeds.tracks, props.recommendationSeeds.artists, props.recommendationSeeds.genres) }
+                  />
                 </Col>
               </Row>
             </Tab>
@@ -139,6 +144,7 @@ GenrePage.propTypes = {
   showPopulateQueueDialog: React.PropTypes.func,
   playlists: React.PropTypes.array,
   chartData: React.PropTypes.array,
+  getRecommendedTracks: React.PropTypes.func,
 }
 
 export default GenrePage

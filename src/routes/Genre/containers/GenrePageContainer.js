@@ -76,6 +76,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   removeFromQueue: (track) => {
     dispatch(actionCreators.removeFromQueue(track))
+  },
+  getRecommendedTracks: (tracks, artists, genres) => {
+    dispatch(actionCreators.getRecommendedTracksThunk(tracks, artists, genres))
   }
 })
 
@@ -99,7 +102,8 @@ const mapStateToProps = (state) => ({
   queue: state.core.get('queue').toJS(),
   genres: state.core.get('genres').toJS(),
   spotifyGenres: state.core.get('spotifyGenres').toJS(),
-  playlists: state.core.get('playlists').toJS()
+  playlists: state.core.get('playlists').toJS(),
+  recommendationSeeds: state.core.get('recommendationSeeds').toJS(),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

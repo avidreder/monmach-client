@@ -537,3 +537,23 @@ export function createNewGenreThunk(name, description) {
     })
   }
 }
+
+export function getRecommendedTracksThunk(tracks, artists, genres) {
+  return function (dispatch) {
+    // dispatch(hideNewGenreForm())
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = JSON.stringify({ tracks: _.map(tracks, 'SpotifyID'), artists: _.map(artists, 'id'), genres: genres })
+    console.log(form.payload)
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/recommended`
+    const data = querystring.stringify(form)
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+    .then(function(){
+      const thunk = fetchGenres();
+      dispatch(thunk)
+    })
+  }
+}
