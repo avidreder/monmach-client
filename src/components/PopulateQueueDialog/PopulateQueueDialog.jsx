@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Playlists from 'components/Playlists'
 import GenreSeeds from 'components/GenreSeeds'
+import RecommendationSeeds from 'components/RecommendationSeeds'
 import { connect } from 'react-redux'
 import { Card, CardTitle, CardText, CardHeader } from 'material-ui/Card'
 import Paper from 'material-ui/Paper'
@@ -16,7 +17,7 @@ class PopulateQueueDialogContainer extends Component {
     populateQueueDialogOpen: React.PropTypes.bool,
     tracksFromPlaylist: React.PropTypes.func,
     currentCustomGenre: React.PropTypes.object,
-    recommendationSeeds: React.PropTypes.array,
+    recommendationSeeds: React.PropTypes.object,
     hidePopulateQueueDialog: React.PropTypes.func,
   }
 
@@ -36,6 +37,9 @@ class PopulateQueueDialogContainer extends Component {
 
   render() {
     const {
+      addToRecommended,
+      removeFromRecommended,
+      recommendationSeeds,
       populateQueueDialogOpen,
       currentCustomGenre,
       playlists,
@@ -67,8 +71,11 @@ class PopulateQueueDialogContainer extends Component {
               <Card>
                 <CardHeader title='Seeds and Stuff' />
                 <CardText>
+                  <RecommendationSeeds recommendationSeeds={ recommendationSeeds }
+                    removeFromRecommended={ removeFromRecommended } />
                   <Paper>The active Seeds</Paper>
-                    <GenreSeeds currentCustomGenre={ currentCustomGenre }
+                    <GenreSeeds addToRecommended={ addToRecommended }
+                      currentCustomGenre={ currentCustomGenre }
                       playlists={ playlists }
                       tracksFromPlaylist={ tracksFromPlaylist } />
                 </CardText>
@@ -88,6 +95,12 @@ const mapDispatchToProps = (dispatch) => ({
   tracksFromPlaylist: (playlist) => {
     dispatch(actionCreators.tracksFromPlaylist(playlist.id))
   },
+  addToRecommended: (itemType, item) => {
+    dispatch(actionCreators.addToRecommended(itemType, item))
+  },
+  removeFromRecommended: (itemType, item) => {
+    dispatch(actionCreators.removeFromRecommended(itemType, item))
+  }
 })
 
 const mapStateToProps = (state) => {

@@ -8,12 +8,12 @@ const iconStyles = {
   
 }
 
-export const GenreItem = (props) => (
+export const TrackItem = (props) => (
   <div>
     <Paper>
       <Toolbar>
         <ToolbarGroup>
-          <ToolbarTitle text={props.genre} />
+          <ToolbarTitle text={props.track.SpotifyTrack.name} />
         </ToolbarGroup>
         <ToolbarGroup>
           { props.addToRecommended &&
@@ -30,10 +30,10 @@ export const GenreItem = (props) => (
   </div>
 )
 
-GenreItem.propTypes = {
-  genre: React.PropTypes.string,
+TrackItem.propTypes = {
+  track: React.PropTypes.object,
   addToRecommended: React.PropTypes.func,
   removeFromRecommended: React.PropTypes.func,
 }
 
-export default GenreItem
+export default TrackItem

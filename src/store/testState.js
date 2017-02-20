@@ -3,7 +3,11 @@ import { fromJS } from 'immutable'
 const testState = fromJS({
   newGenreFormOpen: false,
   populateQueueDialogOpen: false,
-  recommendationSeeds: [],
+  recommendationSeeds: {
+    artists: [],
+    genres: [],
+    tracks: [],
+  },
   data: {
     playlists: {
       loading: false,

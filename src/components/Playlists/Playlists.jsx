@@ -3,8 +3,6 @@ import PlaylistItem from 'components/PlaylistItem'
 import { connect } from 'react-redux'
 import * as actionCreators from 'store/coreActionCreators'
 
-
-
 export const Playlists = (props) => {
   return(
     <div>

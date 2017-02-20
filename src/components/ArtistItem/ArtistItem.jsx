@@ -8,12 +8,12 @@ const iconStyles = {
   
 }
 
-export const GenreItem = (props) => (
+export const ArtistItem = (props) => (
   <div>
     <Paper>
       <Toolbar>
         <ToolbarGroup>
-          <ToolbarTitle text={props.genre} />
+          <ToolbarTitle text={props.artist.name} />
         </ToolbarGroup>
         <ToolbarGroup>
           { props.addToRecommended &&
@@ -30,10 +30,10 @@ export const GenreItem = (props) => (
   </div>
 )
 
-GenreItem.propTypes = {
-  genre: React.PropTypes.string,
+ArtistItem.propTypes = {
+  artist: React.PropTypes.object,
   addToRecommended: React.PropTypes.func,
   removeFromRecommended: React.PropTypes.func,
 }
 
-export default GenreItem
+export default ArtistItem

@@ -220,6 +220,22 @@ export function receiveTracksFromPlaylistError(error) {
   }
 }
 
+export function removeFromRecommended(itemType, item) {
+  return {
+    type: 'REMOVE_FROM_RECOMMENDED',
+    itemType,
+    item
+  }
+}
+
+export function addToRecommended(itemType, item) {
+  return {
+    type: 'ADD_TO_RECOMMENDED',
+    itemType,
+    item
+  }
+}
+
 export function hideNewGenreForm() {
   return {
     type: 'HIDE_NEW_GENRE_FORM',

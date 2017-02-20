@@ -8,6 +8,19 @@ import testState from './testState.js'
 
 export const SET_TEST_DATA = 'SET_TEST_DATA'
 
+export function addToRecommended(state, itemType, item) {
+  const currentItems = state.getIn(['recommendationSeeds', itemType]).toJS()
+  currentItems.push(item)
+  return state.setIn(['recommendationSeeds', itemType], fromJS(currentItems))
+}
+
+export function removeFromRecommended(state, itemType, item){
+  const currentItems = state.getIn(['recommendationSeeds', itemType]).toJS()
+  const newItems = itemType == 'genres' ? _.remove(currentItems, (v) => v == item)
+    : _.reject(currentItems, item)
+  return state.setIn(['recommendationSeeds', itemType], fromJS(newItems))
+}
+
 export function setTrack(state, track){
   return fromJS(Object.assign({}, state.toJS(), {
     currentTrack: track
@@ -292,6 +305,10 @@ export default function coreReducer (state = testState, action) {
       return receiveTracksFromPlaylistSuccess(state, action.response);
     case 'RECEIVE_TRACKS_FROM_PLAYLIST_ERROR':
       return receiveTracksFromPlaylistError(state, action.error);
+    case 'ADD_TO_RECOMMENDED':
+      return addToRecommended(state, action.itemType, action.item);
+    case 'REMOVE_FROM_RECOMMENDED':
+      return removeFromRecommended(state, action.itemType, action.item);
     case 'SHOW_NEW_GENRE_FORM':
       return showNewGenreForm(state)
     case 'HIDE_NEW_GENRE_FORM':

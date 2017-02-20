@@ -1,6 +1,6 @@
 import React from 'react'
-import QueueContainer from 'components/Queue'
-import QueueItem from 'components/QueueItem'
+import TrackItem from 'components/TrackItem'
+import ArtistItem from 'components/ArtistItem'
 import GenreItem from 'components/GenreItem'
 import Playlists from 'components/Playlists'
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
@@ -13,22 +13,22 @@ export const GenreSeeds = (props) => (
     <Tab label="Tracks" >
       <Card>
         <CardText>
-          <QueueContainer queue={props.currentCustomGenre.SeedTracks}
-            removeFromQueue={props.removeFromQueue}
-            setTrack={props.setTrack}
-            discardTrackFromQueue={ (track) => props.discardTrackFromQueue(props.currentCustomGenre.ID, track) }
-            addGenre={props.addGenre} />
+          { props.currentCustomGenre.SeedTracks.map(track =>
+            <TrackItem key={ track.ID }
+              track={ track }
+              addToRecommended={() => props.addToRecommended('tracks', track)}/>
+          ) }
         </CardText>
       </Card>
     </Tab>
     <Tab label="Artists" >
       <Card>
         <CardText>
-          <QueueContainer queue={props.currentCustomGenre.SeedTracks}
-            removeFromQueue={props.removeFromQueue}
-            setTrack={props.setTrack}
-            discardTrackFromQueue={ (track) => props.discardTrackFromQueue(props.currentCustomGenre.ID, track) }
-            />
+          { props.currentCustomGenre.SeedArtists.map(artist =>
+            <ArtistItem key={ artist.id }
+              artist={ artist }
+              addToRecommended={() => props.addToRecommended('artists', artist)} />
+          ) }
         </CardText>
       </Card>
     </Tab>
@@ -37,7 +37,8 @@ export const GenreSeeds = (props) => (
         <CardText>
           { props.currentCustomGenre.SeedGenres.map(genre =>
             <GenreItem key={ genre }
-              genre={ genre } />
+              genre={ genre }
+              addToRecommended={() => props.addToRecommended('genres', genre)} />
           ) }
         </CardText>
       </Card>
@@ -50,6 +51,7 @@ GenreSeeds.propTypes = {
   setTrack: React.PropTypes.func,
   removeFromQueue: React.PropTypes.func,
   discardTrackFromQueue: React.PropTypes.func,
+  addToRecommended: React.PropTypes.func,
 }
 
 export default GenreSeeds
