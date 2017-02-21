@@ -221,6 +221,25 @@ export function receiveTracksFromPlaylistError(state, error) {
   return setError(unSetResponse(newState, 'tracks'), 'tracks', fromJS(error))
 }
 
+export function getRecommendedTracksSuccess(state, response) {
+  let newQueue = state.get('queue').toJS()
+  const tracks = fromJS(response.data)
+  const trackQueue = state.getIn(['queue','TrackQueue']).toJS()
+  newQueue.TrackQueue = trackQueue.concat(tracks.toJS())
+  const spotifyGenres = _.uniq(_.filter(_.flatten(_.map(newQueue.TrackQueue, 'Genres')), null))
+  const newState = fromJS(Object.assign({}, state.toJS(), {
+    queue: newQueue,
+    spotifyGenres,
+  }))
+  return unSetLoading(setResponse(newState, 'tracks', fromJS(response)), 'tracks')
+}
+
+export function getRecommendedTracksError(state, error) {
+  console.log('getRecommendedTracksError')
+  const newState = fromJS(Object.assign({}, state.toJS()))
+  return setError(unSetResponse(newState, 'tracks'), 'tracks', fromJS(error))
+}
+
 export function showNewGenreForm(state) {
   return fromJS(Object.assign({}, state.toJS(), {
     newGenreFormOpen: true,
@@ -305,6 +324,12 @@ export default function coreReducer (state = testState, action) {
       return receiveTracksFromPlaylistSuccess(state, action.response);
     case 'RECEIVE_TRACKS_FROM_PLAYLIST_ERROR':
       return receiveTracksFromPlaylistError(state, action.error);
+    case 'REQUEST_GET_RECOMMENDED_TRACKS':
+      return setLoading(state, 'tracks')
+    case 'GET_RECOMMENDED_TRACKS_SUCCESS':
+      return getRecommendedTracksSuccess(state, action.response);
+    case 'GET_RECOMMENDED_TRACKS_ERROR':
+      return getRecommendedTracksError(state, action.error);
     case 'ADD_TO_RECOMMENDED':
       return addToRecommended(state, action.itemType, action.item);
     case 'REMOVE_FROM_RECOMMENDED':

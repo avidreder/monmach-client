@@ -213,6 +213,26 @@ export function receiveTracksFromPlaylistSuccess(response) {
   }
 }
 
+export function requestGetRecommendedTracks() {
+  return {
+    type: 'REQUEST_GET_RECOMMENDED_TRACKS'
+  }
+}
+
+export function getRecommendedTracksError(error) {
+  return {
+    type: 'GET_RECOMMENDED_TRACKS_ERROR',
+    error: error
+  }
+}
+
+export function getRecommendedTracksSuccess(response) {
+  return {
+    type: 'GET_RECOMMENDED_TRACKS_SUCCESS',
+    response: response
+  }
+}
+
 export function receiveTracksFromPlaylistError(error) {
   return {
     type: 'RECEIVE_TRACKS_FROM_PLAYLIST_ERROR',
@@ -540,7 +560,7 @@ export function createNewGenreThunk(name, description) {
 
 export function getRecommendedTracksThunk(tracks, artists, genres) {
   return function (dispatch) {
-    // dispatch(hideNewGenreForm())
+    dispatch(requestGetRecommendedTracks())
     const authCookie = cookie.load('auth-session')
     let form = {};
     form.payload = JSON.stringify({ tracks: _.map(tracks, 'SpotifyID'), artists: _.map(artists, 'id'), genres: genres })
@@ -551,9 +571,13 @@ export function getRecommendedTracksThunk(tracks, artists, genres) {
     axios.post(`${serverAddress}/api/postData`, data, {headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     }})
-    .then(function(){
-      const thunk = fetchGenres();
-      dispatch(thunk)
+    .then(function(response){
+      console.log(response);
+      dispatch(getRecommendedTracksSuccess(response))
+    })
+    .catch(function(error){
+      console.log(error);
+      dispatch(getRecommendedTracksError(error))
     })
   }
 }
