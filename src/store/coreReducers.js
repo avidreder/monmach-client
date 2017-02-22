@@ -176,8 +176,10 @@ export function receiveQueueError(state, error) {
 
 export function receiveGenresSuccess(state, response) {
   const genres = fromJS(response.data)
+  const currentGenre = state.get('currentCustomGenre').toJS()
   const newState = fromJS(Object.assign({}, state.toJS(), {
-    genres: genres.toJS()
+    genres: genres.toJS(),
+    currentCustomGenre: genres.toJS().length > 0 ? currentGenre : genres.toJS()[0],
   }))
   return unSetLoading(setResponse(newState, 'genres', fromJS(response)), 'genres')
 }

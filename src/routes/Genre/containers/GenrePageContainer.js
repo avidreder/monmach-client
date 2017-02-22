@@ -77,9 +77,6 @@ const mapDispatchToProps = (dispatch) => ({
   removeFromQueue: (track) => {
     dispatch(actionCreators.removeFromQueue(track))
   },
-  getRecommendedTracks: (tracks, artists, genres) => {
-    dispatch(actionCreators.getRecommendedTracksThunk(tracks, artists, genres))
-  }
 })
 
 const makeChartData = (features) => {

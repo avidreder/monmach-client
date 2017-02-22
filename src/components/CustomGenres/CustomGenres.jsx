@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import { Card, CardTitle, CardText, CardActions } from 'material-ui/Card'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Popover from 'material-ui/Popover'
 import Checkbox from 'material-ui/Checkbox';
 import MenuItem from 'material-ui/MenuItem'
+import GenreSeeds from 'components/GenreSeeds'
 import * as _ from 'lodash'
 
 export default class CustomGenres extends Component {
@@ -43,13 +45,16 @@ export default class CustomGenres extends Component {
     return (
       <div>
         <Card>
-          <CardTitle title={ currentCustomGenre.Name } />
+          <CardTitle title={ currentCustomGenre.Name }
+            subtitle={ currentCustomGenre.Description }
+            actAsExpander={ true }
+            showExpandableButton={ true } />
           <CardActions>
-            <RaisedButton
+            <FlatButton
               onClick={this.handleCustomGenreTouchTap}
               label="Change Genre"
             />
-          <RaisedButton onClick={ showNewGenreForm } label="New Genre" />
+            <FlatButton onClick={ showNewGenreForm } label="New Genre" />
             <Popover open={ customGenreOpen }
                 anchorEl={ anchorEl }
                 anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
@@ -65,6 +70,10 @@ export default class CustomGenres extends Component {
                 ) }
             </Popover>
           </CardActions>
+          <CardText expandable={true}>
+            <GenreSeeds addToRecommended={ () => {} }
+              currentCustomGenre={ currentCustomGenre } />
+          </CardText>
         </Card>
       </div>
     )

@@ -41,6 +41,7 @@ class PopulateQueueDialogContainer extends Component {
       removeFromRecommended,
       recommendationSeeds,
       populateQueueDialogOpen,
+      getRecommendedTracks,
       currentCustomGenre,
       playlists,
       tracksFromPlaylist,
@@ -68,18 +69,11 @@ class PopulateQueueDialogContainer extends Component {
               </Card>
             </Tab>
             <Tab label="Recommend">
-              <Card>
-                <CardHeader title='Seeds and Stuff' />
-                <CardText>
-                  <RecommendationSeeds recommendationSeeds={ recommendationSeeds }
-                    removeFromRecommended={ removeFromRecommended } />
-                  <Paper>The active Seeds</Paper>
-                    <GenreSeeds addToRecommended={ addToRecommended }
-                      currentCustomGenre={ currentCustomGenre }
-                      playlists={ playlists }
-                      tracksFromPlaylist={ tracksFromPlaylist } />
-                </CardText>
-              </Card>
+              <RecommendationSeeds recommendationSeeds={ recommendationSeeds }
+                removeFromRecommended={ removeFromRecommended }
+                getRecommendedTracks={ getRecommendedTracks }/>
+              <GenreSeeds addToRecommended={ addToRecommended }
+                currentCustomGenre={ currentCustomGenre } />
             </Tab>
           </Tabs>
         </Dialog>
@@ -100,6 +94,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   removeFromRecommended: (itemType, item) => {
     dispatch(actionCreators.removeFromRecommended(itemType, item))
+  },
+  getRecommendedTracks: (tracks, artists, genres) => {
+    dispatch(actionCreators.getRecommendedTracksThunk(tracks, artists, genres))
   }
 })
 

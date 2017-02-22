@@ -1,5 +1,6 @@
 import React from 'react'
 import FontIcon from 'material-ui/FontIcon'
+import FlatButton from 'material-ui/FlatButton'
 import Paper from 'material-ui/Paper'
 import { Card, CardTitle, CardText, CardHeader } from 'material-ui/Card'
 import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar'
@@ -11,6 +12,13 @@ import GenreItem from 'components/GenreItem'
 export const RecommendationSeeds = (props) => (
   <div>
     <Card>
+      <CardTitle title="Seeds for recommendations" subtitle="Please choose up to 5 tracks, artists, or genres">
+        <FlatButton
+          label="Get Tracks"
+          primary={true}
+          onTouchTap={ () => props.getRecommendedTracks(props.recommendationSeeds.tracks, props.recommendationSeeds.artists, props.recommendationSeeds.genres) }
+        />
+      </CardTitle>
       <CardText>
         { props.recommendationSeeds.tracks.map(track =>
           <TrackItem key={ track.ID }
