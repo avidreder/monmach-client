@@ -179,7 +179,7 @@ export function receiveGenresSuccess(state, response) {
   const currentGenre = state.get('currentCustomGenre').toJS()
   const newState = fromJS(Object.assign({}, state.toJS(), {
     genres: genres.toJS(),
-    currentCustomGenre: genres.toJS().length > 0 ? currentGenre : genres.toJS()[0],
+    currentCustomGenre: genres.toJS().length > 0 ? genres.toJS()[0] : currentGenre,
   }))
   return unSetLoading(setResponse(newState, 'genres', fromJS(response)), 'genres')
 }
