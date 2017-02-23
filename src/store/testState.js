@@ -4,71 +4,9 @@ const testState = fromJS({
   newGenreFormOpen: false,
   populateQueueDialogOpen: false,
   recommendationSeeds: {
-    artists: [{
-      name: 'Betablock3r',
-      id: '1s5qarNhu9YkU9fFVSFcnk'
-    }],
+    artists: [],
     genres: [],
-    tracks: [
-      {
-        Playlists: [],
-        Created: '0001-01-01T00:00:00Z',
-        Genres: [],
-        CustomGenres: [],
-        SpotifyTrack: {
-          name: 'I. Walk',
-          id: '4yOhGLL7kBAiaAteFfluC8',
-          album: {
-            images: [
-              {
-                height: 640,
-                width: 640,
-                url: 'https://i.scdn.co/image/1c72dfb5beba7771320b17f8fc0e6245a05c054a'
-              },
-              {
-                height: 300,
-                width: 300,
-                url: 'https://i.scdn.co/image/9fda984cb6d275d453697e74fbb69b0eed5cfd80'
-              },
-              {
-                height: 64,
-                width: 64,
-                url: 'https://i.scdn.co/image/54efcee5c385913326bf68afadc07f62b2c94d65'
-              }
-            ]
-          },
-          artists: [
-            {
-              name: 'Owen Thiele x Zack Sekoff',
-              id: '3HtzVA7P6FAoqOSfvdVYC4'
-            }
-          ]
-        },
-        SpotifyID: '4yOhGLL7kBAiaAteFfluC8',
-        Updated: '0001-01-01T00:00:00Z',
-        ID: '',
-        Features: {
-          liveness: 0.162,
-          mode: 1,
-          time_signature: 4,
-          energy: 0.604,
-          loudness: -8.157,
-          instrumentalness: 0.00000644,
-          uri: 'spotify:track:4yOhGLL7kBAiaAteFfluC8',
-          valence: 0.861,
-          analysis_url: 'https://api.spotify.com/v1/audio-analysis/4yOhGLL7kBAiaAteFfluC8',
-          duration_ms: 217033,
-          danceability: 0.769,
-          acousticness: 0.0517,
-          id: '4yOhGLL7kBAiaAteFfluC8',
-          tempo: 123.97,
-          speechiness: 0.042,
-          track_href: 'https://api.spotify.com/v1/tracks/4yOhGLL7kBAiaAteFfluC8',
-          key: 0
-        },
-        Rating: 0
-      }
-    ],
+    tracks: [],
   },
   data: {
     playlists: {

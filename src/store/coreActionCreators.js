@@ -280,6 +280,22 @@ export function showPopulateQueueDialog() {
   }
 }
 
+export function removeFromGenre(itemType, item) {
+  return {
+    type: 'REMOVE_FROM_GENRE',
+    itemType,
+    item
+  }
+}
+
+export function addToGenre(itemType, item) {
+  return {
+    type: 'ADD_TO_GENRE',
+    itemType,
+    item
+  }
+}
+
 function handleErrors(response) {
     if (!response.ok) {
         throw Error(response.statusText);
@@ -382,7 +398,7 @@ export function tracksFromPlaylist(id) {
 
 export function addTrackToGenre(genreId, track) {
   return function (dispatch) {
-    dispatch(requestTrackSave(track))
+    dispatch(addToGenre('SeedTracks', track))
     const authCookie = cookie.load('auth-session')
     let form = {};
     form.payload = JSON.stringify(track)
@@ -397,14 +413,14 @@ export function addTrackToGenre(genreId, track) {
       })
       .catch(function(error){
         dispatch(trackSaveError(fromJS(error.response.data)))
+        dispatch(removeFromGenre('SeedTracks', track))
       })
   }
 }
 
 export function addGenreToGenre(genreId, genre) {
   return function (dispatch) {
-    console.log('genre is: ', genre)
-    dispatch(requestTrackSave(genre))
+    dispatch(addToGenre('SeedGenres', genre))
     const authCookie = cookie.load('auth-session')
     let form = {};
     form.payload = genre
@@ -419,14 +435,14 @@ export function addGenreToGenre(genreId, genre) {
       })
       .catch(function(error){
         dispatch(trackSaveError(fromJS(error.response.data)))
+        dispatch(removeFromGenre('SeedGenres', genre))
       })
   }
 }
 
 export function removeGenreFromGenre(genreId, genre) {
   return function (dispatch) {
-    console.log('genre is: ', genre)
-    dispatch(requestTrackSave(genre))
+    dispatch(removeFromGenre('SeedGenres', genre))
     const authCookie = cookie.load('auth-session')
     let form = {};
     form.payload = genre
@@ -441,34 +457,14 @@ export function removeGenreFromGenre(genreId, genre) {
       })
       .catch(function(error){
         dispatch(trackSaveError(fromJS(error.response.data)))
-      })
-  }
-}
-
-export function addArtistToGenre(genreId, artist) {
-  return function (dispatch) {
-    dispatch(requestTrackSave(artist))
-    const authCookie = cookie.load('auth-session')
-    let form = {};
-    form.payload = JSON.stringify(artist)
-    form.auth = 'auth-session=' + authCookie,
-    form.endpoint = `/genre/${genreId}/seeds/artist/add`
-    const data = querystring.stringify(form)
-    axios.post(`${serverAddress}/api/postData`, data, {headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    }})
-      .then(function(body){
-        dispatch(trackSaveSuccess(fromJS(body)))
-      })
-      .catch(function(error){
-        dispatch(trackSaveError(fromJS(error.response.data)))
+        dispatch(addToGenre('SeedGenres', genre))
       })
   }
 }
 
 export function removeTrackFromGenre(genreId, track) {
   return function (dispatch) {
-    dispatch(requestTrackSave(track))
+    dispatch(removeFromGenre('SeedTracks', track))
     const authCookie = cookie.load('auth-session')
     let form = {};
     form.payload = JSON.stringify(track)
@@ -483,13 +479,36 @@ export function removeTrackFromGenre(genreId, track) {
       })
       .catch(function(error){
         dispatch(trackSaveError(fromJS(error.response.data)))
+        dispatch(addToGenre('SeedTracks', track))
+      })
+  }
+}
+
+export function addArtistToGenre(genreId, artist) {
+  return function (dispatch) {
+    dispatch(addToGenre('SeedArtists', artist))
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = JSON.stringify(artist)
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/${genreId}/seeds/artist/add`
+    const data = querystring.stringify(form)
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+      .then(function(body){
+        dispatch(trackSaveSuccess(fromJS(body)))
+      })
+      .catch(function(error){
+        dispatch(trackSaveError(fromJS(error.response.data)))
+        dispatch(removeFromGenre('SeedArtists', artist))
       })
   }
 }
 
 export function removeArtistFromGenre(genreId, artist) {
   return function (dispatch) {
-    dispatch(requestTrackSave(artist))
+    dispatch(removeFromGenre('SeedArtists', artist))
     const authCookie = cookie.load('auth-session')
     let form = {};
     form.payload = JSON.stringify(artist)
@@ -504,6 +523,7 @@ export function removeArtistFromGenre(genreId, artist) {
       })
       .catch(function(error){
         dispatch(trackSaveError(fromJS(error.response.data)))
+        dispatch(addToGenre('SeedArtists', artist))
       })
   }
 }

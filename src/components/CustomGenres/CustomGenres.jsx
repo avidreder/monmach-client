@@ -50,10 +50,11 @@ export default class CustomGenres extends Component {
             actAsExpander={ true }
             showExpandableButton={ true } />
           <CardActions>
-            <FlatButton
+            { customGenres.length > 1 &&
+              <FlatButton
               onClick={this.handleCustomGenreTouchTap}
-              label="Change Genre"
-            />
+              label="Change Genre" />
+            }
             <FlatButton onClick={ showNewGenreForm } label="New Genre" />
             <Popover open={ customGenreOpen }
                 anchorEl={ anchorEl }

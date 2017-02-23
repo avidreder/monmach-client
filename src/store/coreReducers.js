@@ -8,6 +8,19 @@ import testState from './testState.js'
 
 export const SET_TEST_DATA = 'SET_TEST_DATA'
 
+export function addToGenre(state, itemType, item) {
+  const currentItems = state.getIn(['currentCustomGenre', itemType]).toJS()
+  currentItems.push(item)
+  return state.setIn(['currentCustomGenre', itemType], fromJS(currentItems))
+}
+
+export function removeFromGenre(state, itemType, item){
+  const currentItems = state.getIn(['currentCustomGenre', itemType]).toJS()
+  const newItems = itemType == 'SeedGenres' ? _.remove(currentItems, (v) => v == item)
+    : _.reject(currentItems, item)
+  return state.setIn(['currentCustomGenre', itemType], fromJS(newItems))
+}
+
 export function addToRecommended(state, itemType, item) {
   const currentItems = state.getIn(['recommendationSeeds', itemType]).toJS()
   currentItems.push(item)
@@ -336,6 +349,10 @@ export default function coreReducer (state = testState, action) {
       return addToRecommended(state, action.itemType, action.item);
     case 'REMOVE_FROM_RECOMMENDED':
       return removeFromRecommended(state, action.itemType, action.item);
+    case 'ADD_TO_GENRE':
+      return addToGenre(state, action.itemType, action.item);
+    case 'REMOVE_FROM_GENRE':
+      return removeFromGenre(state, action.itemType, action.item);
     case 'SHOW_NEW_GENRE_FORM':
       return showNewGenreForm(state)
     case 'HIDE_NEW_GENRE_FORM':

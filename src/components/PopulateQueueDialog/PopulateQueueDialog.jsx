@@ -58,9 +58,10 @@ class PopulateQueueDialogContainer extends Component {
         <Dialog open={populateQueueDialogOpen}
           onRequestClose={this.handleRequestClose}
           onActionTouchTap={this.handleActionTouchTap}
+          autoScrollBodyContent={true}
           actions={ actions } >
           <Tabs>
-            <Tab label="Playlists" >
+            <Tab label="Playlists">
               <Card>
                 <CardText>
                   <Playlists playlists={ playlists }
