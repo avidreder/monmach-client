@@ -43,7 +43,7 @@ export const GenrePage = (props) => (
         </Col>
         <Col md={6} sm={6} lg={6}>
           <CurrentQueueWithES
-            requiredData={ props.currentTrack}
+            requiredData={ props.queue}
             dataType={ 'Track queue'}
             message={ 'Get tracks from your playlists or recommendations' }
             {...props} />
