@@ -95,7 +95,7 @@ const makeChartData = (features) => {
 const mapStateToProps = (state) => ({
   currentCustomGenre: state.core.get('currentCustomGenre').toJS(),
   currentTrack: state.core.get('currentTrack').toJS(),
-  chartData: makeChartData(state.core.get('currentTrack').toJS().Features),
+  chartData: state.core.get('currentTrack').toJS().Features ? makeChartData(state.core.get('currentTrack').toJS().Features) : [],
   queue: state.core.get('queue').toJS(),
   genres: state.core.get('genres').toJS(),
   spotifyGenres: state.core.get('spotifyGenres').toJS(),

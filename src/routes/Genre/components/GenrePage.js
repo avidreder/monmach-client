@@ -3,6 +3,9 @@ import FlatButton from 'material-ui/FlatButton'
 import CustomGenres from 'components/CustomGenres'
 import QueueContainer from 'components/Queue'
 import TrackProfile from 'components/TrackProfile'
+import withEmptyState from 'components/EmptyState'
+import CurrentTrack from 'components/CurrentTrack'
+import CurrentQueue from 'components/CurrentQueue'
 import TrackGenres from 'components/TrackGenres'
 import TrackCustomGenres from 'components/TrackCustomGenres'
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -15,6 +18,9 @@ import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 import './GenrePage.scss'
 
 const genreName = 'My Custom Genre'
+
+const CurrentTrackWithES = withEmptyState(CurrentTrack)
+const CurrentQueueWithES = withEmptyState(CurrentQueue)
 
 export const GenrePage = (props) => (
   <div>
@@ -29,75 +35,27 @@ export const GenrePage = (props) => (
       </Row>
       <Row>
         <Col md={6} sm={6} lg={6}>
-          <Row>
-            <Col md={12} sm={12} lg={12}>
-              <Card>
-                <CardTitle title='Currently Playing' />
-                <CardText>
-                  <TrackPlayer track={ props.currentTrack }
-                    addRating={ props.addRating }
-                    addTrackToGenre={ (track) => props.addTrackToGenre(props.currentCustomGenre.ID, track) }
-                    removeTrackFromGenre={ (artist) => props.removeTrackFromGenre(props.currentCustomGenre.ID, artist) }
-                    discardTrackFromPlayer={ (track) => props.discardTrackFromPlayer(props.currentCustomGenre.ID, track) }
-                    addArtistToGenre={ (artist) => props.addArtistToGenre(props.currentCustomGenre.ID, artist) }
-                    removeArtistFromGenre={ (artist) => props.removeArtistFromGenre(props.currentCustomGenre.ID, artist) } />
-                </CardText>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={12} sm={12} lg={12}>
-              <TrackProfile chartData={ props.chartData } track={ props.currentTrack } />
-            </Col>
-          </Row>
-          <Row>
-            <Col md={12} sm={12} lg={12}>
-              <Card>
-                <CardText>
-                  <Row>
-                    <Col md={4} sm={4} lg={4}>
-                      <TrackGenres track={ props.currentTrack }
-                        spotifyGenres={ props.spotifyGenres }
-                        addSpotifyGenre={ props.addSpotifyGenre }
-                        removeSpotifyGenre={ props.removeSpotifyGenre }
-                        addGenreToGenre={ (genre) => props.addGenreToGenre(props.currentCustomGenre.ID, genre) }
-                        removeGenreFromGenre={ (genre) => props.removeGenreFromGenre(props.currentCustomGenre.ID, genre) } />
-                    </Col>
-                    <Col md={4} sm={4} lg={4}>
-                      <TrackCustomGenres genres={ props.genres }
-                        track={ props.currentTrack }
-                        addCustomGenre={ props.addCustomGenre }
-                        removeCustomGenre={ props.removeCustomGenre } />
-                    </Col>
-                    <Col md={4} sm={4} lg={4}>
-                      <TrackPlaylists track={ props.currentTrack }
-                        playlists={ props.playlists }
-                        addPlaylist={ props.addPlaylist }
-                        removePlaylist={ props.removePlaylist } />
-                    </Col>
-                  </Row>
-                </CardText>
-              </Card>
-            </Col>
-          </Row>
+          <CurrentTrackWithES
+            requiredData={ props.currentTrack}
+            dataType={ 'Current Track'}
+            message={ 'Please choose a track from the queue' }
+            {...props} />
         </Col>
         <Col md={6} sm={6} lg={6}>
-          <Card>
-            <CardTitle title='New Track Queue'>
-              <FlatButton
-                label="More Tracks"
-                primary={true}
-                onTouchTap={ props.showPopulateQueueDialog }
-              />
-            </CardTitle>
-            <CardText>
-              <QueueContainer queue={props.queue.TrackQueue}
-                removeFromQueue={props.removeFromQueue}
-                setTrack={props.setTrack}
-                discardTrackFromQueue={ (track) => props.discardTrackFromQueue(props.currentCustomGenre.ID, track) }
-                addGenre={props.addGenre} />
-            </CardText>
-          </Card>
+          <CurrentQueueWithES
+            requiredData={ props.currentTrack}
+            dataType={ 'Track queue'}
+            message={ 'Get tracks from your playlists or recommendations' }
+            {...props} />
+        </Col>
+      </Row>
+      <Row>
+        <Col md={12} sm={12} lg={12}>
+          <FlatButton
+            label="More Tracks"
+            primary={true}
+            onTouchTap={ props.showPopulateQueueDialog }
+          />
         </Col>
       </Row>
     </Grid>

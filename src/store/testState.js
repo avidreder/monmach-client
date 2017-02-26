@@ -22,64 +22,7 @@ const testState = fromJS({
       loading: false,
     },
   },
-  currentTrack: {
-    Playlists: [],
-    Created: '0001-01-01T00:00:00Z',
-    Genres: ['cool genre'],
-    CustomGenres: [],
-    SpotifyTrack: {
-      name: 'What You Wanted',
-      id: '4OlUxUBwAvogyWVfsdKRkf',
-      album: {
-        images: [
-          {
-            height: 640,
-            width: 640,
-            url: 'https://i.scdn.co/image/778991b4d78f9028b82ba8f02945d8d92188aec2'
-          },
-          {
-            height: 300,
-            width: 300,
-            url: 'https://i.scdn.co/image/500ee81f0fc53ff252c70f03d6cae982d4b927d8'
-          },
-          {
-            height: 64,
-            width: 64,
-            url: 'https://i.scdn.co/image/48dee53dab89a9d1cf435c04715589f449bf1783'
-          }
-        ]
-      },
-      artists: [
-        {
-          name: 'Betablock3r',
-          id: '1s5qarNhu9YkU9fFVSFcnk'
-        }
-      ]
-    },
-    SpotifyID: '4OlUxUBwAvogyWVfsdKRkf',
-    Updated: '0001-01-01T00:00:00Z',
-    ID: '',
-    Features: {
-      liveness: 0.102,
-      mode: 1,
-      time_signature: 4,
-      energy: 0.859,
-      loudness: -3.8,
-      instrumentalness: 0.00485,
-      uri: 'spotify:track:4OlUxUBwAvogyWVfsdKRkf',
-      valence: 0.647,
-      analysis_url: 'https://api.spotify.com/v1/audio-analysis/4OlUxUBwAvogyWVfsdKRkf',
-      duration_ms: 213939,
-      danceability: 0.779,
-      acousticness: 0.00407,
-      id: '4OlUxUBwAvogyWVfsdKRkf',
-      tempo: 119.989,
-      speechiness: 0.0314,
-      track_href: 'https://api.spotify.com/v1/tracks/4OlUxUBwAvogyWVfsdKRkf',
-      key: 2
-    },
-    Rating: 0
-  },
+  currentTrack: {},
   queue: {
     'ID': '586abdb166a62a280991a6d4',
     'UserID': '586abdb166a62a280991a6d3',
