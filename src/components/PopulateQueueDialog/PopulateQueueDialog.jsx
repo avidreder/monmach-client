@@ -8,9 +8,13 @@ import Paper from 'material-ui/Paper'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import {Tabs, Tab} from 'material-ui/Tabs';
+import withEmptyState from 'components/EmptyState'
 
 import * as actionCreators from 'store/coreActionCreators'
 import _ from 'lodash'
+
+const PlaylistsWithES = withEmptyState(Playlists)
+const RecommendationSeedsWithES = withEmptyState(RecommendationSeeds)
 
 class PopulateQueueDialogContainer extends Component {
   static propTypes = {
@@ -46,6 +50,7 @@ class PopulateQueueDialogContainer extends Component {
       playlists,
       tracksFromPlaylist,
     } = this.props
+
     const actions = [
       <FlatButton
         label="Close"
@@ -64,13 +69,21 @@ class PopulateQueueDialogContainer extends Component {
             <Tab label="Playlists">
               <Card>
                 <CardText>
-                  <Playlists playlists={ playlists }
+                  <PlaylistsWithES
+                    requiredData={ playlists }
+                    dataType={ 'Playlists' }
+                    message={ 'Create playlists on Spotify' }
+                    playlists={ playlists }
                     tracksFromPlaylist={ tracksFromPlaylist } />
                 </CardText>
               </Card>
             </Tab>
             <Tab label="Recommend">
-              <RecommendationSeeds recommendationSeeds={ recommendationSeeds }
+              <RecommendationSeedsWithES
+                requiredData={ _.flatten(_.values(recommendationSeeds)) }
+                dataType={ 'Recommendation Seeds' }
+                message={ 'Add seeds to recommendation engine below' }
+                recommendationSeeds={ recommendationSeeds }
                 removeFromRecommended={ removeFromRecommended }
                 getRecommendedTracks={ getRecommendedTracks }/>
               <GenreSeeds addToRecommended={ addToRecommended }

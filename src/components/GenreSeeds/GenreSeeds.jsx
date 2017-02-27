@@ -3,6 +3,7 @@ import TrackItem from 'components/TrackItem'
 import ArtistItem from 'components/ArtistItem'
 import GenreItem from 'components/GenreItem'
 import Playlists from 'components/Playlists'
+import EmptyState from 'components/EmptyState'
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 import { Card, CardTitle, CardText, CardHeader } from 'material-ui/Card'
 import {Tabs, Tab} from 'material-ui/Tabs';
