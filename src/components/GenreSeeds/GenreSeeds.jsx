@@ -11,41 +11,60 @@ import { connect } from 'react-redux'
 
 export const GenreSeeds = (props) => (
   <Card>
-    <CardTitle title={`Available Seeds for ${ props.currentCustomGenre.Name }`} />
+    <CardTitle title={ 'Available Seeds' } />
     <CardText>
       <Tabs>
-        <Tab label="Tracks" >
-          <Card>
-            <CardText>
-              { props.currentCustomGenre.SeedTracks.map(track =>
-                <TrackItem key={ track.ID }
-                  track={ track }
-                  addToRecommended={() => props.addToRecommended('tracks', track)}/>
-              ) }
-            </CardText>
-          </Card>
+        <Tab label={ `Seeds for ${ props.currentCustomGenre.Name }` } >
+          <Tabs>
+            <Tab label="Tracks" >
+              <Card>
+                <CardText>
+                  { props.currentCustomGenre.SeedTracks.map(track =>
+                    <TrackItem key={ `genre_track_${track.SpotifyID}` }
+                      track={ track }
+                      addToRecommended={() => props.addToRecommended('tracks', track)}/>
+                  ) }
+                </CardText>
+              </Card>
+            </Tab>
+            <Tab label="Artists" >
+              <Card>
+                <CardText>
+                  { props.currentCustomGenre.SeedArtists.map(artist =>
+                    <ArtistItem key={ `genre_artist_${artist.id}` }
+                      artist={ artist }
+                      addToRecommended={() => props.addToRecommended('artists', artist)} />
+                  ) }
+                </CardText>
+              </Card>
+            </Tab>
+          </Tabs>
         </Tab>
-        <Tab label="Artists" >
-          <Card>
-            <CardText>
-              { props.currentCustomGenre.SeedArtists.map(artist =>
-                <ArtistItem key={ artist.id }
-                  artist={ artist }
-                  addToRecommended={() => props.addToRecommended('artists', artist)} />
-              ) }
-            </CardText>
-          </Card>
-        </Tab>
-        <Tab label="Genres">
-          <Card>
-            <CardText>
-              { props.currentCustomGenre.SeedGenres.map(genre =>
-                <GenreItem key={ genre }
-                  genre={ genre }
-                  addToRecommended={() => props.addToRecommended('genres', genre)} />
-              ) }
-            </CardText>
-          </Card>
+        <Tab label="Available In Queue" >
+          <Tabs>
+            <Tab label="Tracks" >
+              <Card>
+                <CardText>
+                  { props.queueTracks.map(track =>
+                    <TrackItem key={ `queue_track_${track.SpotifyID}` }
+                      track={ track }
+                      addToRecommended={() => props.addToRecommended('tracks', track)}/>
+                  ) }
+                </CardText>
+              </Card>
+            </Tab>
+            <Tab label="Artists" >
+              <Card>
+                <CardText>
+                  { props.queueArtists.map(artist =>
+                    <ArtistItem key={ `queue_artist_${artist.id}` }
+                      artist={ artist }
+                      addToRecommended={() => props.addToRecommended('artists', artist)} />
+                  ) }
+                </CardText>
+              </Card>
+            </Tab>
+          </Tabs>
         </Tab>
       </Tabs>
     </CardText>

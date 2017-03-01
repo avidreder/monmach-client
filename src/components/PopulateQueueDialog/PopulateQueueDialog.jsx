@@ -48,6 +48,8 @@ class PopulateQueueDialogContainer extends Component {
       getRecommendedTracks,
       currentCustomGenre,
       playlists,
+      queueTracks,
+      queueArtists,
       tracksFromPlaylist,
     } = this.props
 
@@ -87,7 +89,9 @@ class PopulateQueueDialogContainer extends Component {
                 removeFromRecommended={ removeFromRecommended }
                 getRecommendedTracks={ getRecommendedTracks }/>
               <GenreSeeds addToRecommended={ addToRecommended }
-                currentCustomGenre={ currentCustomGenre } />
+                currentCustomGenre={ currentCustomGenre }
+                queueTracks={ queueTracks }
+                queueArtists={ queueArtists } />
             </Tab>
           </Tabs>
         </Dialog>
@@ -115,12 +119,17 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => {
+  const queue = state.core.get('queue').toJS()
+  const queueTracks = queue.TrackQueue || []
+  const queueArtists = _.uniqBy((_.flatten(_.map(queueTracks, 'SpotifyTrack.artists'))), 'id')
   return {
     populateQueueDialogOpen: state.core.get('populateQueueDialogOpen'),
     spotifyGenres: state.core.get('spotifyGenres').toJS(),
     playlists: state.core.get('playlists').toJS(),
     currentCustomGenre: state.core.get('currentCustomGenre').toJS(),
     recommendationSeeds: state.core.get('recommendationSeeds').toJS(),
+    queueTracks,
+    queueArtists,
   }
 }
 

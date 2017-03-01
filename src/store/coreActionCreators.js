@@ -391,6 +391,7 @@ export function tracksFromPlaylist(id) {
         dispatch(receiveTracksFromPlaylistSuccess(response))
       })
       .catch(function(error){
+        console.log('wtf', error)
         dispatch(receiveTracksFromPlaylistError(error))
       })
   }

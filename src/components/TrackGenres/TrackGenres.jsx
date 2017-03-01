@@ -50,19 +50,11 @@ export default class TrackGenres extends Component {
                   checked
                   onCheck={ () => removeSpotifyGenre(genre) }
                 />
-                <RaisedButton
-                  onTouchTap={ () => addGenreToGenre(genre) }
-                  label={ genre }
-                />
-                <RaisedButton
-                  onTouchTap={ () => removeGenreFromGenre(genre) }
-                  label={ genre }
-                />
               </div>
             ) }
             <RaisedButton
               onTouchTap={this.handleGenreTouchTap}
-              label="Add..."
+              label="More..."
             />
             <Popover open={ genreOpen }
               anchorEl={ anchorEl }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import TrackActions from 'components/TrackActions'
-import { Card, CardTitle, CardText } from 'material-ui/Card'
+import { Card, CardTitle, CardText, CardActions } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper'
 
@@ -31,22 +31,6 @@ export default class TrackPlayer extends Component {
       <Card>
         <CardTitle title={track.SpotifyTrack.name} />
         <CardText>
-          <RaisedButton
-            onTouchTap={ () => removeTrackFromGenre(track) }
-            label={ `Remove ${track.SpotifyTrack.name}` }
-          />
-          { track.SpotifyTrack.artists.map(artist =>
-            <div key={ `${artist.id}`} >
-              <RaisedButton
-                onTouchTap={ () => addArtistToGenre(artist) }
-                label={ `Add ${artist.name}` }
-              />
-              <RaisedButton
-                onTouchTap={ () => removeArtistFromGenre(artist) }
-                label={ `Remove ${artist.name}` }
-              />
-            </div>
-          )}
           <Paper>
             <iframe id='externalPlayer'
               src={'https://embed.spotify.com/?uri=spotify:track:' +
@@ -60,6 +44,20 @@ export default class TrackPlayer extends Component {
             addTrackToGenre={ addTrackToGenre }
             discardTrackFromPlayer={ discardTrackFromPlayer } />
         </CardText>
+        <CardActions>
+          { track.SpotifyTrack.artists.map(artist =>
+            <div key={ `${artist.id}`} >
+              <RaisedButton
+                onTouchTap={ () => addArtistToGenre(artist) }
+                label={ `Add ${artist.name} to Genre Seeds` }
+              />
+              <RaisedButton
+                onTouchTap={ () => removeArtistFromGenre(artist) }
+                label={ `Remove ${artist.name}` }
+              />
+            </div>
+          )}
+        </CardActions>
       </Card>
     </div>)
   }
