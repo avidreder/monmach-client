@@ -16,6 +16,10 @@ export function clearQueue(state) {
   }))
 }
 
+export function updateFilters(state, filter, value) {
+  return state.setIn(['genreTracksFilters', filter], fromJS(value))
+}
+
 export function addToGenre(state, itemType, item) {
   const currentItems = state.getIn(['currentCustomGenre', itemType]).toJS()
   currentItems.push(item)
@@ -379,6 +383,8 @@ export default function coreReducer (state = testState, action) {
       return showPopulateQueueDialog(state)
     case 'HIDE_POPULATE_QUEUE_DIALOG':
       return hidePopulateQueueDialog(state)
+    case 'UPDATE_FILTERS':
+      return updateFilters(state, action.filter, action.value)
     case 'SET_STATE':
       return state.merge(action.state);
     default:

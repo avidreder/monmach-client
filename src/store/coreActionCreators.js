@@ -7,19 +7,13 @@ import _ from 'lodash';
 import { fromJS } from 'immutable'
 import cookie from 'react-cookie';
 
-// export function openModal(modalType) {
-//   return {
-//     type: 'OPEN_MODAL',
-//     modalType
-//   };
-// }
-
-// export function closeModal(modalType) {
-//   return {
-//     type: 'CLOSE_MODAL',
-//     modalType
-//   };
-// }
+export function updateFilters(filter, value) {
+  return {
+    type: 'UPDATE_FILTERS',
+    filter,
+    value
+  };
+}
 
 export function clearQueue(state) {
   return {

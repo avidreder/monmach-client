@@ -42,11 +42,26 @@ export const GenrePage = (props) => (
             {...props} />
         </Col>
         <Col md={6} sm={6} lg={6}>
-          <CurrentQueueWithES
-            requiredData={ props.queue.TrackQueue }
-            dataType={ 'Track queue'}
-            message={ 'Get tracks from your playlists or recommendations' }
-            {...props} />
+          <Tabs>
+            <Tab label='Genre Tracks'>
+              <CurrentQueueWithES
+                filters={ props.genreTracksFilters }
+                updateFilters={ props.updateFilters }
+                queueTracks={ props.currentCustomGenre.ListenedTracks }
+                requiredData={ props.currentCustomGenre.ListenedTracks }
+                dataType={ 'Genre Track Queue'}
+                message={ 'Listen to tracks from the new track queue' }
+                {...props} />
+            </Tab>
+            <Tab label='New Tracks'>
+              <CurrentQueueWithES
+                queueTracks={ props.queue.TrackQueue }
+                requiredData={ props.queue.TrackQueue }
+                dataType={ 'Track queue'}
+                message={ 'Get tracks from your playlists or recommendations' }
+                {...props} />
+            </Tab>
+          </Tabs>
         </Col>
       </Row>
       <Row>

@@ -13,6 +13,12 @@ import Badge from 'material-ui/Badge'
 import { Card, CardTitle, CardText, CardHeader } from 'material-ui/Card'
 import Checkbox from 'material-ui/Checkbox';
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
+import FontIcon from 'material-ui/FontIcon'
+import { amber500 } from 'material-ui/styles/colors'
+
+const fontIconStyles = {
+  cursor: 'pointer',
+}
 
 export const CurrentQueue = (props) => (
   <Card>
@@ -23,9 +29,18 @@ export const CurrentQueue = (props) => (
         onTouchTap={ props.showPopulateQueueDialog }
       />
       <RaisedButton label='Clear Queue' onClick={ props.clearQueue } />
+      { props.filters && <div>
+        { _.range(1, props.filters.rating + 1).map((value) => {
+          return <FontIcon style={ fontIconStyles } key={ value } className='material-icons' color={ amber500 } onClick={() => props.updateFilters('rating', value)}>star</FontIcon>
+        })}
+        { _.range(props.filters.rating + 1, 6).map((value) => {
+          return <FontIcon style={ fontIconStyles } key={ value } className='material-icons' hoverColor={ amber500 } onClick={() => props.updateFilters('rating', value)}>star_border</FontIcon>
+        })}
+        </div>
+      }
     </CardTitle>
     <CardText>
-      <QueueContainer queue={props.queue.TrackQueue}
+      <QueueContainer queue={ _.filter(props.queueTracks, (track) => track.Rating >= props.filters.rating) }
         removeFromQueue={props.removeFromQueue}
         setTrack={props.setTrack}
         discardTrackFromQueue={ (track) => props.discardTrackFromQueue(props.currentCustomGenre.ID, track) }
@@ -59,6 +74,7 @@ CurrentQueue.propTypes = {
   chartData: React.PropTypes.array,
   getRecommendedTracks: React.PropTypes.func,
   clearQueue: React.PropTypes.func,
+  queueTracks: React.PropTypes.array,
 }
 
 export default CurrentQueue

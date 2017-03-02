@@ -3,6 +3,9 @@ import { fromJS } from 'immutable'
 const testState = fromJS({
   newGenreFormOpen: false,
   populateQueueDialogOpen: false,
+  genreTracksFilters: {
+    rating: 3,
+  },
   recommendationSeeds: {
     artists: [],
     genres: [],

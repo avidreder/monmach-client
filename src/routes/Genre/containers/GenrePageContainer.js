@@ -13,6 +13,9 @@ import GenrePage from '../components/GenrePage'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = (dispatch) => ({
+  updateFilters: (filter, value) => {
+    dispatch(actionCreators.updateFilters(filter, value))
+  },
   showNewGenreForm: () => {
     dispatch(actionCreators.showNewGenreForm())
   },
@@ -104,6 +107,7 @@ const mapStateToProps = (state) => ({
   spotifyGenres: state.core.get('spotifyGenres').toJS(),
   playlists: state.core.get('playlists').toJS(),
   recommendationSeeds: state.core.get('recommendationSeeds').toJS(),
+  genreTracksFilters: state.core.get('genreTracksFilters').toJS(),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
