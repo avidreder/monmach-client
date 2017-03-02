@@ -15,6 +15,7 @@ import _ from 'lodash'
 
 const PlaylistsWithES = withEmptyState(Playlists)
 const RecommendationSeedsWithES = withEmptyState(RecommendationSeeds)
+const GenreSeedsWithES = withEmptyState(GenreSeeds)
 
 class PopulateQueueDialogContainer extends Component {
   static propTypes = {
@@ -88,7 +89,10 @@ class PopulateQueueDialogContainer extends Component {
                 recommendationSeeds={ recommendationSeeds }
                 removeFromRecommended={ removeFromRecommended }
                 getRecommendedTracks={ getRecommendedTracks }/>
-              <GenreSeeds addToRecommended={ addToRecommended }
+              <GenreSeedsWithES addToRecommended={ addToRecommended }
+                requiredData={ currentCustomGenre }
+                dataType={ 'Genre Seeds' }
+                message={ 'Add seeds to genre from queue' }
                 currentCustomGenre={ currentCustomGenre }
                 queueTracks={ queueTracks }
                 queueArtists={ queueArtists } />

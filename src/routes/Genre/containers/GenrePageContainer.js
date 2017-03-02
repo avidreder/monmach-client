@@ -77,6 +77,9 @@ const mapDispatchToProps = (dispatch) => ({
   removeFromQueue: (track) => {
     dispatch(actionCreators.removeFromQueue(track))
   },
+  clearQueue: () => {
+    dispatch(actionCreators.clearQueue())
+  },
 })
 
 const makeChartData = (features) => {

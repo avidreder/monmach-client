@@ -8,6 +8,14 @@ import testState from './testState.js'
 
 export const SET_TEST_DATA = 'SET_TEST_DATA'
 
+export function clearQueue(state) {
+  let queue = state.get('queue').toJS()
+  queue.TrackQueue = []
+  return fromJS(Object.assign({}, state.toJS(), {
+    queue: queue
+  }))
+}
+
 export function addToGenre(state, itemType, item) {
   const currentItems = state.getIn(['currentCustomGenre', itemType]).toJS()
   currentItems.push(item)
@@ -217,6 +225,10 @@ export function receivePlaylistsError(state, error) {
   return setError(unSetResponse(newState, 'playlists'), 'playlists', fromJS(error))
 }
 
+export function requestTracksFromPlaylist(state) {
+  return setLoading(hidePopulateQueueDialog(state), 'tracks')
+}
+
 export function receiveTracksFromPlaylistSuccess(state, response) {
   let newQueue = state.get('queue').toJS()
   const tracks = fromJS(response.data)
@@ -234,6 +246,10 @@ export function receiveTracksFromPlaylistError(state, error) {
   console.log('receiveTracksFromPlaylistError')
   const newState = fromJS(Object.assign({}, state.toJS()))
   return setError(unSetResponse(newState, 'tracks'), 'tracks', fromJS(error))
+}
+
+export function requestGetRecommendedTracks(state) {
+  return setLoading(hidePopulateQueueDialog(state), 'tracks')
 }
 
 export function getRecommendedTracksSuccess(state, response) {
@@ -283,6 +299,8 @@ export default function coreReducer (state = testState, action) {
   switch (action.type) {
     case 'SET_CURRENT_TRACK':
       return setTrack(state, action.track)
+    case 'CLEAR_QUEUE':
+      return clearQueue(state)
     case 'SET_CURRENT_CUSTOM_GENRE':
       return setCurrentCustomGenre(state, action.genre)
     case 'REMOVE_FROM_QUEUE':
@@ -334,13 +352,13 @@ export default function coreReducer (state = testState, action) {
     case 'RECEIVE_PLAYLISTS_ERROR':
       return receivePlaylistsError(state, action.error);
     case 'REQUEST_TRACKS_FROM_PLAYLIST':
-      return setLoading(state, 'tracks')
+      return requestTracksFromPlaylist(state)
     case 'RECEIVE_TRACKS_FROM_PLAYLIST_SUCCESS':
       return receiveTracksFromPlaylistSuccess(state, action.response);
     case 'RECEIVE_TRACKS_FROM_PLAYLIST_ERROR':
       return receiveTracksFromPlaylistError(state, action.error);
     case 'REQUEST_GET_RECOMMENDED_TRACKS':
-      return setLoading(state, 'tracks')
+      return requestGetRecommendedTracks(state, 'tracks')
     case 'GET_RECOMMENDED_TRACKS_SUCCESS':
       return getRecommendedTracksSuccess(state, action.response);
     case 'GET_RECOMMENDED_TRACKS_ERROR':

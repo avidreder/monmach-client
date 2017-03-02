@@ -21,6 +21,13 @@ import cookie from 'react-cookie';
 //   };
 // }
 
+export function clearQueue(state) {
+  return {
+    type: 'CLEAR_QUEUE',
+    state
+  };
+}
+
 export function setState(state) {
   return {
     type: 'SET_STATE',

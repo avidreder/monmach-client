@@ -8,6 +8,7 @@ import Popover from 'material-ui/Popover'
 import Checkbox from 'material-ui/Checkbox';
 import MenuItem from 'material-ui/MenuItem'
 import GenreSeeds from 'components/GenreSeeds'
+import withEmptyState from 'components/EmptyState'
 import * as _ from 'lodash'
 
 export default class CustomGenres extends Component {
@@ -42,6 +43,8 @@ export default class CustomGenres extends Component {
   render() {
     const { customGenreOpen, anchorEl } = this.state;
     const { customGenres, currentCustomGenre, showNewGenreForm } = this.props;
+    const GenreSeedsWithES = withEmptyState(GenreSeeds)
+    console.log(_.concat(currentCustomGenre.SeedArtists, currentCustomGenre.SeedTracks))
     return (
       <div>
         <Card>
@@ -72,7 +75,10 @@ export default class CustomGenres extends Component {
             </Popover>
           </CardActions>
           <CardText expandable={true}>
-            <GenreSeeds addToRecommended={ () => {} }
+            <GenreSeedsWithES addToRecommended={ () => {} }
+              requiredData={ currentCustomGenre }
+              dataType={ 'Recommendation Seeds' }
+              message={ 'Add seeds to recommendation engine below' }
               currentCustomGenre={ currentCustomGenre } />
           </CardText>
         </Card>

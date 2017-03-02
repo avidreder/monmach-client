@@ -1,5 +1,5 @@
 import React from 'react'
-import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
 import CustomGenres from 'components/CustomGenres'
 import QueueContainer from 'components/Queue'
 import TrackProfile from 'components/TrackProfile'
@@ -17,11 +17,12 @@ import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 export const CurrentQueue = (props) => (
   <Card>
     <CardTitle title='New Track Queue'>
-      <FlatButton
+      <RaisedButton
         label="More Tracks"
         primary={true}
         onTouchTap={ props.showPopulateQueueDialog }
       />
+      <RaisedButton label='Clear Queue' onClick={ props.clearQueue } />
     </CardTitle>
     <CardText>
       <QueueContainer queue={props.queue.TrackQueue}
@@ -57,6 +58,7 @@ CurrentQueue.propTypes = {
   playlists: React.PropTypes.array,
   chartData: React.PropTypes.array,
   getRecommendedTracks: React.PropTypes.func,
+  clearQueue: React.PropTypes.func,
 }
 
 export default CurrentQueue

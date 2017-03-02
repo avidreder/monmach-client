@@ -1,6 +1,7 @@
 import React from 'react'
 import QueueItem from 'components/QueueItem'
 import { connect } from 'react-redux'
+import RaisedButton from 'material-ui/RaisedButton';
 
 export const Queue = (props) => (
   <div>
@@ -20,6 +21,7 @@ Queue.propTypes = {
   setTrack: React.PropTypes.func,
   removeFromQueue: React.PropTypes.func,
   discardTrackFromQueue: React.PropTypes.func,
+  clearQueue: React.PropTypes.func,
 }
 
 const mapStateToProps = (state) => {
