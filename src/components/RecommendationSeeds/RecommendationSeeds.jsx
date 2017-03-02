@@ -21,7 +21,7 @@ export const RecommendationSeeds = (props) => (
       </CardTitle>
       <CardText>
         { props.recommendationSeeds.tracks.map(track =>
-          <TrackItem key={ track.ID }
+          <TrackItem key={ track.SpotifyID }
             track={ track }
             removeFromRecommended={() => props.removeFromRecommended('tracks', track)} />
         ) }
