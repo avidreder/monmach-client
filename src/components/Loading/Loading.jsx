@@ -54,10 +54,15 @@ class LoadingDialogContainer extends Component {
   }
 
   render() {
+    const customContentStyle = {
+      width: '100%',
+      maxWidth: 'none',
+    };
     const { message } = this.state
     return (
       <div>
-        <Dialog open={this.state.open} >
+        <Dialog open={this.state.open}
+          contentStyle={ customContentStyle } >
           <div>
             { message && message.map((item) => (
               <div key={ item }>{ item }</div>

@@ -73,10 +73,15 @@ class ErrorsContainer extends Component {
         onTouchTap={this.handleRequestClose}
       />,
     ]
+    const customContentStyle = {
+      width: '100%',
+      maxWidth: 'none',
+    }
     return (
       <div>
         <Dialog open={this.state.open}
           actions={ actions }
+          contentStyle={ customContentStyle }
           onActionTouchTap={this.handleActionTouchTap}
           onRequestClose={this.handleRequestClose} >
           <div>

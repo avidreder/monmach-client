@@ -61,13 +61,18 @@ class PopulateQueueDialogContainer extends Component {
         onTouchTap={ this.handleActionTouchTap }
       />,
     ]
+    const customContentStyle = {
+      width: '100%',
+      maxWidth: 'none',
+    }
     return (
       <div>
         <Dialog open={populateQueueDialogOpen}
           onRequestClose={this.handleRequestClose}
           onActionTouchTap={this.handleActionTouchTap}
           autoScrollBodyContent={true}
-          actions={ actions } >
+          actions={ actions }
+          contentStyle={ customContentStyle } >
           <Tabs>
             <Tab label="Playlists">
               <Card>

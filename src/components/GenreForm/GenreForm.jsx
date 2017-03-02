@@ -54,10 +54,15 @@ class GenreFormContainer extends Component {
         onTouchTap={this.handleActionTouchTap}
       />,
     ];
+    const customContentStyle = {
+      width: '100%',
+      maxWidth: 'none',
+    }
     return (
       <div>
         <Dialog open={ newGenreFormOpen }
           actions={ actions }
+          contentStyle={ customContentStyle }
           onActionTouchTap={this.handleActionTouchTap}
           onRequestClose={this.handleRequestClose} >
           <div>
