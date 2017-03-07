@@ -14,13 +14,13 @@ export const GenreSeeds = (props) => (
     <CardTitle title={ 'Available Seeds' } />
     <CardText>
       <Tabs>
-        <Tab label={ `Seeds for ${ props.currentCustomGenre.Name }` } >
+        <Tab label={ `Seeds for ${ props.name }` } >
           <Tabs>
             <Tab label="Tracks" >
               <Card>
                 <CardText>
-                  { props.currentCustomGenre.SeedTracks.map(track =>
-                    <TrackItem key={ `genre_track_${track.SpotifyID}` }
+                  { props.tracks.map(track =>
+                    <TrackItem key={ `${props.labelKey}_track_${track.SpotifyID}` }
                       track={ track }
                       addToRecommended={() => props.addToRecommended('tracks', track)}/>
                   ) }
@@ -30,34 +30,8 @@ export const GenreSeeds = (props) => (
             <Tab label="Artists" >
               <Card>
                 <CardText>
-                  { props.currentCustomGenre.SeedArtists.map(artist =>
-                    <ArtistItem key={ `genre_artist_${artist.id}` }
-                      artist={ artist }
-                      addToRecommended={() => props.addToRecommended('artists', artist)} />
-                  ) }
-                </CardText>
-              </Card>
-            </Tab>
-          </Tabs>
-        </Tab>
-        <Tab label="Available In Queue" >
-          <Tabs>
-            <Tab label="Tracks" >
-              <Card>
-                <CardText>
-                  { props.queueTracks.map(track =>
-                    <TrackItem key={ `queue_track_${track.SpotifyID}` }
-                      track={ track }
-                      addToRecommended={() => props.addToRecommended('tracks', track)}/>
-                  ) }
-                </CardText>
-              </Card>
-            </Tab>
-            <Tab label="Artists" >
-              <Card>
-                <CardText>
-                  { props.queueArtists.map(artist =>
-                    <ArtistItem key={ `queue_artist_${artist.id}` }
+                  { props.artists.map(artist =>
+                    <ArtistItem key={ `${props.labelKey}_artist_${artist.id}` }
                       artist={ artist }
                       addToRecommended={() => props.addToRecommended('artists', artist)} />
                   ) }

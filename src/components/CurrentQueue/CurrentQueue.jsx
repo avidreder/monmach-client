@@ -20,34 +20,39 @@ const fontIconStyles = {
   cursor: 'pointer',
 }
 
-export const CurrentQueue = (props) => (
-  <Card>
-    <CardTitle title='New Track Queue'>
-      <RaisedButton
-        label="More Tracks"
-        primary={true}
-        onTouchTap={ props.showPopulateQueueDialog }
-      />
-      <RaisedButton label='Clear Queue' onClick={ props.clearQueue } />
-      { props.filters && <div>
-        { _.range(1, props.filters.rating + 1).map((value) => {
-          return <FontIcon style={ fontIconStyles } key={ value } className='material-icons' color={ amber500 } onClick={() => props.updateFilters('rating', value)}>star</FontIcon>
-        })}
-        { _.range(props.filters.rating + 1, 6).map((value) => {
-          return <FontIcon style={ fontIconStyles } key={ value } className='material-icons' hoverColor={ amber500 } onClick={() => props.updateFilters('rating', value)}>star_border</FontIcon>
-        })}
-        </div>
-      }
-    </CardTitle>
-    <CardText>
-      <QueueContainer queue={ _.filter(props.queueTracks, (track) => track.Rating >= props.filters.rating) }
-        removeFromQueue={props.removeFromQueue}
-        setTrack={props.setTrack}
-        discardTrackFromQueue={ (track) => props.discardTrackFromQueue(props.currentCustomGenre.ID, track) }
-        addGenre={props.addGenre} />
-    </CardText>
-  </Card>
-)
+export const CurrentQueue = (props) => {
+  const filteredTracks = _.includes(props.activeFilters, 'rating') ?
+    _.filter(props.queueTracks, (track) => track.Rating >= props.filters.rating) :
+    props.queueTracks
+  return (
+    <Card>
+      <CardTitle title='New Track Queue'>
+        <RaisedButton
+          label="More Tracks"
+          primary={true}
+          onTouchTap={ props.showPopulateQueueDialog }
+        />
+        <RaisedButton label='Clear Queue' onClick={ props.clearQueue } />
+        { props.filters && _.includes(props.activeFilters, 'rating') && <div>
+          { _.range(1, props.filters.rating + 1).map((value) => {
+            return <FontIcon style={ fontIconStyles } key={ value } className='material-icons' color={ amber500 } onClick={() => props.updateFilters('rating', value)}>star</FontIcon>
+          })}
+          { _.range(props.filters.rating + 1, 6).map((value) => {
+            return <FontIcon style={ fontIconStyles } key={ value } className='material-icons' hoverColor={ amber500 } onClick={() => props.updateFilters('rating', value)}>star_border</FontIcon>
+          })}
+          </div>
+        }
+      </CardTitle>
+      <CardText>
+        <QueueContainer queue={ filteredTracks }
+          removeFromQueue={props.removeFromQueue}
+          setTrack={props.setTrack}
+          discardTrackFromQueue={ (track) => props.discardTrackFromQueue(props.currentCustomGenre.ID, track) }
+          addGenre={props.addGenre} />
+      </CardText>
+    </Card>
+  )
+}
 
 CurrentQueue.propTypes = {
   currentCustomGenre: React.PropTypes.object,

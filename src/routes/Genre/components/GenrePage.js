@@ -45,6 +45,7 @@ export const GenrePage = (props) => (
           <Tabs>
             <Tab label='Genre Tracks'>
               <CurrentQueueWithES
+                activeFilters={ ['rating'] }
                 filters={ props.genreTracksFilters }
                 updateFilters={ props.updateFilters }
                 queueTracks={ props.currentCustomGenre.ListenedTracks }
@@ -55,6 +56,8 @@ export const GenrePage = (props) => (
             </Tab>
             <Tab label='New Tracks'>
               <CurrentQueueWithES
+                activeFilters={ [] }
+                filters={ props.genreTracksFilters }
                 queueTracks={ props.queue.TrackQueue }
                 requiredData={ props.queue.TrackQueue }
                 dataType={ 'Track queue'}

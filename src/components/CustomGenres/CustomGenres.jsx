@@ -75,7 +75,12 @@ export default class CustomGenres extends Component {
             </Popover>
           </CardActions>
           <CardText expandable={true}>
-            <GenreSeedsWithES addToRecommended={ () => {} }
+            <GenreSeedsWithES
+              tracks={ currentCustomGenre.SeedTracks }
+              artists={ currentCustomGenre.SeedArtists }
+              name={ currentCustomGenre.Name }
+              labelKey={ 'genre' }
+              addToRecommended={ () => {} }
               requiredData={ currentCustomGenre }
               dataType={ 'Recommendation Seeds' }
               message={ 'Add seeds to recommendation engine below' }

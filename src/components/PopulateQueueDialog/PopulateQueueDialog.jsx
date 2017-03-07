@@ -16,6 +16,7 @@ import _ from 'lodash'
 const PlaylistsWithES = withEmptyState(Playlists)
 const RecommendationSeedsWithES = withEmptyState(RecommendationSeeds)
 const GenreSeedsWithES = withEmptyState(GenreSeeds)
+const QueueSeedsWithES = withEmptyState(GenreSeeds)
 
 class PopulateQueueDialogContainer extends Component {
   static propTypes = {
@@ -94,13 +95,28 @@ class PopulateQueueDialogContainer extends Component {
                 recommendationSeeds={ recommendationSeeds }
                 removeFromRecommended={ removeFromRecommended }
                 getRecommendedTracks={ getRecommendedTracks }/>
-              <GenreSeedsWithES addToRecommended={ addToRecommended }
+              <GenreSeedsWithES
+                tracks={ currentCustomGenre.SeedTracks }
+                artists={ currentCustomGenre.SeedArtists }
+                name={ currentCustomGenre.Name }
+                labelKey={ 'genre' }
+                addToRecommended={ addToRecommended }
                 requiredData={ currentCustomGenre }
                 dataType={ 'Genre Seeds' }
                 message={ 'Add seeds to genre from queue' }
                 currentCustomGenre={ currentCustomGenre }
                 queueTracks={ queueTracks }
                 queueArtists={ queueArtists } />
+              <QueueSeedsWithES
+                tracks={ queueTracks }
+                artists={ queueArtists }
+                name={ 'Seeds from your Queue' }
+                labelKey={ 'queue' }
+                addToRecommended={ addToRecommended }
+                requiredData={ queueTracks }
+                dataType={ 'Genre Seeds' }
+                message={ 'Add seeds to genre from queue' }
+                currentCustomGenre={ currentCustomGenre } />
             </Tab>
           </Tabs>
         </Dialog>
