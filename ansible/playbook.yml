@@ -35,7 +35,7 @@
       npm: name=webpack path=/srv/monmach-client global=yes
 
     - name: Clone repo
-      git: repo=git://github.com/avidreder/monmach-client.git dest=/srv/monmach-client version=master force=yes accept_hostkey=yes
+      git: repo=ssh://git@github.com/avidreder/monmach-client.git dest=/srv/monmach-client version=master force=yes accept_hostkey=yes
       ignore_errors: yes
 
     - name: Install website deps
