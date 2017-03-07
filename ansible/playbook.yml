@@ -34,8 +34,24 @@
     - name: Install webpack globally
       npm: name=webpack path=/srv/monmach-client global=yes
 
+    - name: Create the Github SSH public key file
+      copy: src="config/id_avidreder_deploy.pub"
+            dest="/root/.ssh/id_avidreder_deploy.pub"
+            mode=0644
+
+    - name: Create the Github SSH private key file
+      copy: src="config/id_avidreder_deploy"
+            dest="/root/.ssh/id_avidreder_deploy"
+            mode=0600
+
     - name: Clone repo
-      git: repo=ssh://git@github.com/avidreder/monmach-client.git dest=/srv/monmach-client version=master force=yes accept_hostkey=yes
+      git:
+        repo: ssh://git@github.com/avidreder/monmach-client.git
+        dest: /srv/monmach-client
+        version: master
+        force: yes
+        accept_hostkey: yes
+        key_file: /root/.ssh/id_avidreder_deploy
       ignore_errors: yes
 
     - name: Install website deps
