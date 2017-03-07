@@ -3,6 +3,9 @@ logs
 *.log
 npm-debug.log*
 
+# Deploy
+ansible/config
+
 # Runtime data
 pids
 *.pid
