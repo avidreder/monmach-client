@@ -34,18 +34,18 @@ export const CurrentTrack = (props) => (
       </Col>
     </Row>
     <Row>
-      <Col md={12} sm={12} lg={12}>
+      <Col md={12} sm={12} lg={12} xs={12}>
         <TrackProfile
           chartData={ props.chartData }
           track={ props.currentTrack } />
       </Col>
     </Row>
     <Row>
-      <Col md={12} sm={12} lg={12}>
+      <Col md={12} sm={12} lg={12} xs={12}>
         <Card>
           <CardText>
             <Row>
-              <Col md={4} sm={4} lg={4}>
+              <Col md={4} sm={4} lg={4} xs={4}>
                 <TrackGenres track={ props.currentTrack }
                   spotifyGenres={ props.spotifyGenres }
                   addSpotifyGenre={ props.addSpotifyGenre }
@@ -53,13 +53,13 @@ export const CurrentTrack = (props) => (
                   addGenreToGenre={ (genre) => props.addGenreToGenre(props.currentCustomGenre.ID, genre) }
                   removeGenreFromGenre={ (genre) => props.removeGenreFromGenre(props.currentCustomGenre.ID, genre) } />
               </Col>
-              <Col md={4} sm={4} lg={4}>
+              <Col md={4} sm={4} lg={4} xs={4}>
                 <TrackCustomGenres genres={ props.genres }
                   track={ props.currentTrack }
                   addCustomGenre={ props.addCustomGenre }
                   removeCustomGenre={ props.removeCustomGenre } />
               </Col>
-              <Col md={4} sm={4} lg={4}>
+              <Col md={4} sm={4} lg={4} xs={4}>
                 <TrackPlaylists track={ props.currentTrack }
                   playlists={ props.playlists }
                   addPlaylist={ props.addPlaylist }

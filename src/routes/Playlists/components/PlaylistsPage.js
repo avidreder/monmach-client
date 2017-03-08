@@ -8,12 +8,12 @@ export const PlaylistsPage = (props) => (
   <div>
     <Grid fluid>
       <Row>
-        <Col md={12} sm={12} lg={12}>
+        <Col md={12} sm={12} lg={12} xs={12}>
           <h1>Playlists</h1>
         </Col>
       </Row>
       <Row>
-        <Col md={12} sm={12} lg={12}>
+        <Col md={12} sm={12} lg={12} xs={12}>
           <Card>
             <CardTitle title='Queue' />
             <CardText>

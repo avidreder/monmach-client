@@ -23,61 +23,59 @@ const CurrentTrackWithES = withEmptyState(CurrentTrack)
 const CurrentQueueWithES = withEmptyState(CurrentQueue)
 
 export const GenrePage = (props) => (
-  <div>
-    <Grid fluid>
-      <Row>
-        <Col md={12} sm={12} lg={12}>
-          <CustomGenres customGenres={ props.genres }
-            setCurrentCustomGenre={ props.setCurrentCustomGenre }
-            currentCustomGenre={ props.currentCustomGenre }
-            showNewGenreForm={ props.showNewGenreForm } />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={6} sm={6} lg={6}>
-          <CurrentTrackWithES
-            requiredData={ props.currentTrack}
-            dataType={ 'Current Track'}
-            message={ 'Please choose a track from the queue' }
-            {...props} />
-        </Col>
-        <Col md={6} sm={6} lg={6}>
-          <Tabs>
-            <Tab label='Genre Tracks'>
-              <CurrentQueueWithES
-                activeFilters={ ['rating'] }
-                filters={ props.genreTracksFilters }
-                updateFilters={ props.updateFilters }
-                queueTracks={ props.currentCustomGenre.ListenedTracks }
-                requiredData={ props.currentCustomGenre.ListenedTracks }
-                dataType={ 'Genre Track Queue'}
-                message={ 'Listen to tracks from the new track queue' }
-                {...props} />
-            </Tab>
-            <Tab label='New Tracks'>
-              <CurrentQueueWithES
-                activeFilters={ [] }
-                filters={ props.genreTracksFilters }
-                queueTracks={ props.queue.TrackQueue }
-                requiredData={ props.queue.TrackQueue }
-                dataType={ 'Track queue'}
-                message={ 'Get tracks from your playlists or recommendations' }
-                {...props} />
-            </Tab>
-          </Tabs>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={12} sm={12} lg={12}>
-          <FlatButton
-            label="More Tracks"
-            primary={true}
-            onTouchTap={ props.showPopulateQueueDialog }
-          />
-        </Col>
-      </Row>
-    </Grid>
-  </div>
+  <Grid fluid>
+    <Row>
+      <Col md={12} sm={12} lg={12} xs={12}>
+        <CustomGenres customGenres={ props.genres }
+          setCurrentCustomGenre={ props.setCurrentCustomGenre }
+          currentCustomGenre={ props.currentCustomGenre }
+          showNewGenreForm={ props.showNewGenreForm } />
+      </Col>
+    </Row>
+    <Row>
+      <Col md={6} sm={12} lg={6} xs={12}>
+        <CurrentTrackWithES
+          requiredData={ props.currentTrack}
+          dataType={ 'Current Track'}
+          message={ 'Please choose a track from the queue' }
+          {...props} />
+      </Col>
+      <Col md={6} sm={12} lg={6} xs={12}>
+        <Tabs>
+          <Tab label='Genre Tracks'>
+            <CurrentQueueWithES
+              activeFilters={ ['rating'] }
+              filters={ props.genreTracksFilters }
+              updateFilters={ props.updateFilters }
+              queueTracks={ props.currentCustomGenre.ListenedTracks }
+              requiredData={ props.currentCustomGenre.ListenedTracks }
+              dataType={ 'Genre Track Queue'}
+              message={ 'Listen to tracks from the new track queue' }
+              {...props} />
+          </Tab>
+          <Tab label='New Tracks'>
+            <CurrentQueueWithES
+              activeFilters={ [] }
+              filters={ props.genreTracksFilters }
+              queueTracks={ props.queue.TrackQueue }
+              requiredData={ props.queue.TrackQueue }
+              dataType={ 'Track queue'}
+              message={ 'Get tracks from your playlists or recommendations' }
+              {...props} />
+          </Tab>
+        </Tabs>
+      </Col>
+    </Row>
+    <Row>
+      <Col md={12} sm={12} lg={12} xs={12}>
+        <FlatButton
+          label="More Tracks"
+          primary={true}
+          onTouchTap={ props.showPopulateQueueDialog }
+        />
+      </Col>
+    </Row>
+  </Grid>
 )
 
 GenrePage.propTypes = {
