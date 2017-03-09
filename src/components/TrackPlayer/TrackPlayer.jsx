@@ -27,7 +27,7 @@ export default class TrackPlayer extends Component {
       removeTrackFromGenre,
       discardTrackFromPlayer,
     } = this.props;
-    return(<div>
+    return(
       <Card>
         <CardTitle title={track.SpotifyTrack.name} />
         <CardText>
@@ -59,6 +59,6 @@ export default class TrackPlayer extends Component {
           )}
         </CardActions>
       </Card>
-    </div>)
+    )
   }
 }
