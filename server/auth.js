@@ -2,20 +2,31 @@ const project = require('../config/project.config')
 const axios = require('axios')
 
 module.exports = {
-  checkAuth: function(req, res, next) {
-    const loginPage = `<h1>Login</h1><button><a href="${project.browser_api_path}/auth/spotify/start">Spotify</a></button>`
-    contactServer(req)
-      .then(function(result){
-        if (result.data.LoggedIn == false) {
-          res.status(401).send(loginPage)
-        } else {
-          next()
+  checkAuth: function(req) {
+    return new Promise(function(resolve, reject) {
+      if (req.body.auth) {
+        var options = {
+          headers: {
+            'Cookie': req.body.auth,
+            'Content-Type': 'application/json',
+          }
         }
+      } else {
+        var options = {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }
+      }
+      axios.get(`${project.server_api_path}/getuser`, options)
+        .then(function(body){
+          resolve(body.data)
+        })
+        .catch(function(error){
+          reject(error.response.data)
+        })
       })
-      .catch(function(error){
-        res.status(401).send(loginPage)
-      })
-  }
+  },
 }
 
 function contactServer(req) {

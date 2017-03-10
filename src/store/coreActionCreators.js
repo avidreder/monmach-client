@@ -6,6 +6,8 @@ request = request.defaults({jar: true})
 import _ from 'lodash';
 import { fromJS } from 'immutable'
 import cookie from 'react-cookie';
+import { updateLocation } from './location'
+import { browserHistory } from 'react-router'
 
 export function addToTracks(track) {
   return {
@@ -659,5 +661,35 @@ export function getRecommendedTracksThunk(tracks, artists, genres) {
       console.log(error);
       dispatch(getRecommendedTracksError(error))
     })
+  }
+}
+
+export function checkAuth() {
+  return function (dispatch) {
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.auth = 'auth-session=' + authCookie
+    const data = querystring.stringify(form)
+    axios.post(`${serverAddress}/api/checkAuth`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+    .then(function(response){
+      if (response.data.LoggedIn) {
+        dispatch(handleLogin())
+      } else {
+        dispatch(redirectToLogin())
+      }
+    })
+    .catch(function(error){
+      browserHistory.push('/login')
+    })
+  }
+}
+
+export function handleLogin() {
+  return function (dispatch) {
+    dispatch(fetchQueue())
+    dispatch(fetchPlaylists())
+    dispatch(fetchGenres())
   }
 }

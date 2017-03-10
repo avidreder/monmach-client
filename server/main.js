@@ -18,9 +18,17 @@ app.use(require('connect-history-api-fallback')())
 // Apply gzip compression
 app.use(compress())
 app.use(bodyParser.urlencoded({extended: true}))
-app.all('*/index.html', auth.checkAuth)
 app.get('/api/getData', (req, res) => {
   data.getData(req)
+  .then(function(body){
+    res.status(200).send(body)
+  })
+  .catch(function(err){
+    res.status(500).send(err)
+  })
+})
+app.post('/api/checkAuth', (req, res) => {
+  auth.checkAuth(req)
   .then(function(body){
     res.status(200).send(body)
   })
@@ -37,7 +45,7 @@ app.post('/api/postData', (req, res) => {
     res.status(500).send(err)
   })
 })
-app.all('*/index.html', auth.checkAuth)
+// app.all('*/index.html', auth.checkAuth)
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------
