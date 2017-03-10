@@ -16,6 +16,15 @@ export function clearQueue(state) {
   }))
 }
 
+export function setUser(state, email, loggedIn, spotifyId) {
+  const userData = {
+    email,
+    loggedIn,
+    spotifyId,
+  }
+  return state.set('currentUser', fromJS(userData))
+}
+
 export function updateFilters(state, filter, value) {
   return state.setIn(['genreTracksFilters', filter], fromJS(value))
 }
@@ -303,6 +312,8 @@ export default function coreReducer (state = testState, action) {
   switch (action.type) {
     case 'ADD_TO_TRACKS':
       return addToGenre(state, 'TrackList', action.track)
+    case 'SET_USER':
+      return setUser(state, action.email, action.loggedIn, action.spotifyId)
     case 'REMOVE_FROM_TRACKS':
       return removeFromGenre(state, 'TrackList', action.track)
     case 'SET_CURRENT_TRACK':

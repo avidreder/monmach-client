@@ -313,6 +313,24 @@ export function addToGenre(itemType, item) {
   }
 }
 
+export function setUser(data) {
+  return {
+    type: 'SET_USER',
+    email: data.Email,
+    loggedIn: data.LoggedIn,
+    spotifyId: data.SpotifyID
+  }
+}
+
+export function removeUser() {
+  return {
+    type: 'SET_USER',
+    email: '',
+    loggedIn: false,
+    spotifyId: ''
+  }
+}
+
 function handleErrors(response) {
     if (!response.ok) {
         throw Error(response.statusText);
@@ -675,9 +693,10 @@ export function checkAuth() {
     }})
     .then(function(response){
       if (response.data.LoggedIn) {
-        dispatch(handleLogin())
+        dispatch(setUser(response.data))
+        dispatch(fetchUserData())
       } else {
-        dispatch(redirectToLogin())
+        browserHistory.push('/login')
       }
     })
     .catch(function(error){
@@ -686,7 +705,7 @@ export function checkAuth() {
   }
 }
 
-export function handleLogin() {
+export function fetchUserData() {
   return function (dispatch) {
     dispatch(fetchQueue())
     dispatch(fetchPlaylists())

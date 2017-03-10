@@ -1,6 +1,11 @@
 import { fromJS } from 'immutable'
 
 const testState = fromJS({
+  currentUser: {
+    email: '',
+    loggedIn: '',
+    spotifyId: '',
+  },
   newGenreFormOpen: false,
   populateQueueDialogOpen: false,
   genreTracksFilters: {
