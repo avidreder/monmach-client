@@ -38,6 +38,7 @@ export const GenrePage = (props) => (
           requiredData={ props.currentTrack}
           dataType={ 'Current Track'}
           message={ 'Please choose a track from the queue' }
+          saveTrack={ props.saveTrack }
           {...props} />
       </Col>
       <Col md={6} sm={12} lg={6} xs={12}>
@@ -47,8 +48,8 @@ export const GenrePage = (props) => (
               activeFilters={ ['rating'] }
               filters={ props.genreTracksFilters }
               updateFilters={ props.updateFilters }
-              queueTracks={ props.currentCustomGenre.ListenedTracks }
-              requiredData={ props.currentCustomGenre.ListenedTracks }
+              queueTracks={ props.currentCustomGenre.TrackList }
+              requiredData={ props.currentCustomGenre.TrackList }
               dataType={ 'Genre Track Queue'}
               message={ 'Listen to tracks from the new track queue' }
               {...props} />
@@ -102,6 +103,7 @@ GenrePage.propTypes = {
   playlists: React.PropTypes.array,
   chartData: React.PropTypes.array,
   getRecommendedTracks: React.PropTypes.func,
+  saveTrack: React.PropTypes.func,
 }
 
 export default GenrePage

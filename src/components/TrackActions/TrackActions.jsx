@@ -21,7 +21,7 @@ export const TrackActions = (props) => (
         <ToolbarGroup>
           <FloatingActionButton mini>
             <FontIcon className='material-icons'
-              onClick={() => props.addTrackToGenre(props.track)}>
+              onClick={() => props.saveTrack(props.track)}>
               save</FontIcon>
           </FloatingActionButton>
           <FloatingActionButton mini>

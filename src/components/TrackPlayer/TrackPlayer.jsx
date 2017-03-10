@@ -3,6 +3,7 @@ import TrackActions from 'components/TrackActions'
 import { Card, CardTitle, CardText, CardActions } from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper'
+import _ from 'lodash'
 
 export default class TrackPlayer extends Component {
   static propTypes = {
@@ -13,6 +14,7 @@ export default class TrackPlayer extends Component {
     discardTrackFromPlayer: React.PropTypes.func,
     addArtistToGenre: React.PropTypes.func,
     removeArtistFromGenre: React.PropTypes.func,
+    saveTrack: React.PropTypes.func,
   }
   constructor(props) {
     super(props)
@@ -23,10 +25,28 @@ export default class TrackPlayer extends Component {
       addRating,
       addTrackToGenre,
       addArtistToGenre,
+      currentCustomGenre,
       removeArtistFromGenre,
       removeTrackFromGenre,
       discardTrackFromPlayer,
+      saveTrack,
     } = this.props;
+    const trackButton = _.some(currentCustomGenre.SeedTracks, (e) => e.SpotifyID == track.SpotifyID) ?
+      <RaisedButton key={ `remove_${track.SpotifyTrack.id}`}
+        onTouchTap={ () => removeTrackFromGenre(track) }
+        label={ `Remove ${track.SpotifyTrack.name} from Genre Tracks` } /> :
+      <RaisedButton key={ `add_${track.SpotifyTrack.id}`}
+        onTouchTap={ () => addTrackToGenre(track) }
+        label={ `Add ${track.SpotifyTrack.name} to Genre Tracks` } />
+    const artistButtons = []
+    track.SpotifyTrack.artists.map(artist =>
+      _.some(currentCustomGenre.SeedArtists, (e) => e.id == artist.id) ?
+      artistButtons.push(<RaisedButton key={ `remove_${artist.id}`}
+        onTouchTap={ () => removeArtistFromGenre(artist) }
+        label={ `Remove ${artist.name} from Genre Seeds` } />) :
+      artistButtons.push(<RaisedButton key={ `add_${artist.id}`}
+        onTouchTap={ () => addArtistToGenre(artist) }
+        label={ `Add ${artist.name} to Genre Seeds` }/>))
     return(
       <Card>
         <CardTitle title={track.SpotifyTrack.name} />
@@ -41,22 +61,12 @@ export default class TrackPlayer extends Component {
           </Paper>
           <TrackActions track={ track }
             addRating={ addRating }
-            addTrackToGenre={ addTrackToGenre }
+            saveTrack={ saveTrack }
             discardTrackFromPlayer={ discardTrackFromPlayer } />
         </CardText>
         <CardActions>
-          { track.SpotifyTrack.artists.map(artist =>
-            <div key={ `${artist.id}`} >
-              <RaisedButton
-                onTouchTap={ () => addArtistToGenre(artist) }
-                label={ `Add ${artist.name} to Genre Seeds` }
-              />
-              <RaisedButton
-                onTouchTap={ () => removeArtistFromGenre(artist) }
-                label={ `Remove ${artist.name}` }
-              />
-            </div>
-          )}
+          { trackButton }
+          { artistButtons }
         </CardActions>
       </Card>
     )

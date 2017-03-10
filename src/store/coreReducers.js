@@ -301,6 +301,10 @@ export function hidePopulateQueueDialog(state) {
 
 export default function coreReducer (state = testState, action) {
   switch (action.type) {
+    case 'ADD_TO_TRACKS':
+      return addToGenre(state, 'TrackList', action.track)
+    case 'REMOVE_FROM_TRACKS':
+      return removeFromGenre(state, 'TrackList', action.track)
     case 'SET_CURRENT_TRACK':
       return setTrack(state, action.track)
     case 'CLEAR_QUEUE':

@@ -22,7 +22,7 @@ const fontIconStyles = {
 
 export const CurrentQueue = (props) => {
   const filteredTracks = _.includes(props.activeFilters, 'rating') ?
-    _.filter(props.queueTracks, (track) => track.Rating >= props.filters.rating) :
+    _.filter(props.queueTracks, (track) => track.Rating >= props.filters.rating || track.Rating == 0) :
     props.queueTracks
   return (
     <Card>

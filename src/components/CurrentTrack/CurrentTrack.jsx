@@ -11,7 +11,7 @@ import TrackPlaylists from 'components/TrackPlaylists'
 import TrackPlayer from 'components/TrackPlayer'
 import Badge from 'material-ui/Badge'
 import { Card, CardTitle, CardText, CardHeader } from 'material-ui/Card'
-import Checkbox from 'material-ui/Checkbox';
+import Checkbox from 'material-ui/Checkbox'
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 
 export const CurrentTrack = (props) => (
@@ -22,6 +22,8 @@ export const CurrentTrack = (props) => (
           <CardTitle title='Currently Playing' />
           <CardText>
             <TrackPlayer
+              saveTrack={ (track) => props.saveTrack(props.currentCustomGenre.ID, track) }
+              currentCustomGenre={ props.currentCustomGenre }
               track={ props.currentTrack }
               addRating={ props.addRating }
               addTrackToGenre={ (track) => props.addTrackToGenre(props.currentCustomGenre.ID, track) }
@@ -38,36 +40,6 @@ export const CurrentTrack = (props) => (
         <TrackProfile
           chartData={ props.chartData }
           track={ props.currentTrack } />
-      </Col>
-    </Row>
-    <Row>
-      <Col md={12} sm={12} lg={12} xs={12}>
-        <Card>
-          <CardText>
-            <Row>
-              <Col md={4} sm={4} lg={4} xs={4}>
-                <TrackGenres track={ props.currentTrack }
-                  spotifyGenres={ props.spotifyGenres }
-                  addSpotifyGenre={ props.addSpotifyGenre }
-                  removeSpotifyGenre={ props.removeSpotifyGenre }
-                  addGenreToGenre={ (genre) => props.addGenreToGenre(props.currentCustomGenre.ID, genre) }
-                  removeGenreFromGenre={ (genre) => props.removeGenreFromGenre(props.currentCustomGenre.ID, genre) } />
-              </Col>
-              <Col md={4} sm={4} lg={4} xs={4}>
-                <TrackCustomGenres genres={ props.genres }
-                  track={ props.currentTrack }
-                  addCustomGenre={ props.addCustomGenre }
-                  removeCustomGenre={ props.removeCustomGenre } />
-              </Col>
-              <Col md={4} sm={4} lg={4} xs={4}>
-                <TrackPlaylists track={ props.currentTrack }
-                  playlists={ props.playlists }
-                  addPlaylist={ props.addPlaylist }
-                  removePlaylist={ props.removePlaylist } />
-              </Col>
-            </Row>
-          </CardText>
-        </Card>
       </Col>
     </Row>
   </div>
@@ -97,6 +69,7 @@ CurrentTrack.propTypes = {
   playlists: React.PropTypes.array,
   chartData: React.PropTypes.array,
   getRecommendedTracks: React.PropTypes.func,
+  saveTrack: React.PropTypes.func,
 }
 
 export default CurrentTrack

@@ -7,6 +7,20 @@ import _ from 'lodash';
 import { fromJS } from 'immutable'
 import cookie from 'react-cookie';
 
+export function addToTracks(track) {
+  return {
+    type: 'ADD_TO_TRACKS',
+    track
+  };
+}
+
+export function removeFromTracks(track) {
+  return {
+    type: 'REMOVE_FROM_TRACKS',
+    track
+  };
+}
+
 export function updateFilters(filter, value) {
   return {
     type: 'UPDATE_FILTERS',
@@ -394,6 +408,50 @@ export function tracksFromPlaylist(id) {
       .catch(function(error){
         console.log('wtf', error)
         dispatch(receiveTracksFromPlaylistError(error))
+      })
+  }
+}
+
+export function saveTrack(genreId, track) {
+  return function (dispatch) {
+    dispatch(addToTracks(track))
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = JSON.stringify(track)
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/${genreId}/track/add`
+    const data = querystring.stringify(form)
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+      .then(function(body){
+        dispatch(trackSaveSuccess(fromJS(body)))
+      })
+      .catch(function(error){
+        dispatch(trackSaveError(fromJS(error.response.data)))
+        dispatch(removeFromTracks(track))
+      })
+  }
+}
+
+export function removeTrack(genreId, track) {
+  return function (dispatch) {
+    dispatch(removeFromTracks(track))
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = JSON.stringify(track)
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/genre/${genreId}/track/remove`
+    const data = querystring.stringify(form)
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+      .then(function(body){
+        dispatch(trackSaveSuccess(fromJS(body)))
+      })
+      .catch(function(error){
+        dispatch(trackSaveError(fromJS(error.response.data)))
+        dispatch(addToTracks(track))
       })
   }
 }

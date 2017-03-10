@@ -299,6 +299,7 @@ const testState = fromJS({
     QueueID: 1,
     Name: 'Coding Music',
     Description: 'Ambient Electronica for focused work',
+    TrackList: [],
     SeedArtists: [],
     SeedTracks:[],
     SeedGenres:[],
