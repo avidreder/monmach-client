@@ -424,6 +424,7 @@ export function tracksFromPlaylist(id) {
     axios.get(`${serverAddress}/api/getData`, options)
       .then(function(response){
         dispatch(receiveTracksFromPlaylistSuccess(response))
+        dispatch(saveQueue())
       })
       .catch(function(error){
         console.log('wtf', error)
@@ -450,6 +451,30 @@ export function saveTrack(genreId, track) {
       .catch(function(error){
         dispatch(trackSaveError(fromJS(error.response.data)))
         dispatch(removeFromTracks(track))
+      })
+  }
+}
+
+export function saveQueue() {
+  return function (dispatch, getState) {
+    // dispatch(requestSaveQueue())
+    console.log(getState())
+    const queue = getState().core.get('queue').toJS()
+    console.log('saving queue: ', queue)
+    const authCookie = cookie.load('auth-session')
+    let form = {};
+    form.payload = JSON.stringify(queue)
+    form.auth = 'auth-session=' + authCookie,
+    form.endpoint = `/queue/save`
+    const data = querystring.stringify(form)
+    axios.post(`${serverAddress}/api/postData`, data, {headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }})
+      .then(function(body){
+        dispatch(queueSaveSuccess(fromJS(body)))
+      })
+      .catch(function(error){
+        dispatch(queueSaveError(fromJS(error.response.data)))
       })
   }
 }
@@ -623,9 +648,10 @@ export function discardTrackFromPlayerThunk(genreId, track) {
   }
 }
 
-export function discardTrackFromQueueThunk(genreId, track) {
+export function discardTrackFromQueueThunk(genreId, track, queue) {
   return function (dispatch) {
     dispatch(discardTrackFromQueue(track))
+    dispatch(saveQueue())
     const authCookie = cookie.load('auth-session')
     let form = {};
     form.payload = JSON.stringify(track)
@@ -674,6 +700,7 @@ export function getRecommendedTracksThunk(tracks, artists, genres) {
     .then(function(response){
       console.log(response);
       dispatch(getRecommendedTracksSuccess(response))
+      dispatch(saveQueue())
     })
     .catch(function(error){
       console.log(error);

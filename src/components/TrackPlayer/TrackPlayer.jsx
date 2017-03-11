@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import TrackActions from 'components/TrackActions'
 import { Card, CardTitle, CardText, CardActions } from 'material-ui/Card'
+import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper'
 import _ from 'lodash'
@@ -47,26 +48,43 @@ export default class TrackPlayer extends Component {
       artistButtons.push(<RaisedButton key={ `add_${artist.id}`}
         onTouchTap={ () => addArtistToGenre(artist) }
         label={ `Add ${artist.name} to Genre Seeds` }/>))
+      const artistString = track.SpotifyTrack.artists.map((artist) => artist.name).join(', ')
+      const genreString = track.Genres.join(', ')
     return(
       <Card>
-        <CardTitle title={track.SpotifyTrack.name} />
+        <CardTitle title={track.SpotifyTrack.name} subtitle={artistString}/>
         <CardText>
-          <Paper>
-            <iframe id='externalPlayer'
-              src={'https://embed.spotify.com/?uri=spotify:track:' +
-                track.SpotifyID}
-              width='100%' height='80'
-              frameBorder='0'
-              allowTransparency='true' />
-          </Paper>
+          <Row>
+            <Col md={12} sm={12} lg={12} xs={12}>
+              <Paper>
+                <iframe id='externalPlayer'
+                  src={'https://embed.spotify.com/?uri=spotify:track:' +
+                    track.SpotifyID}
+                  width='100%' height='80'
+                  frameBorder='0'
+                  allowTransparency='true' />
+              </Paper>
+            </Col>
+          </Row>
           <TrackActions track={ track }
             addRating={ addRating }
             saveTrack={ saveTrack }
             discardTrackFromPlayer={ discardTrackFromPlayer } />
         </CardText>
+        <CardText>
+          {genreString}
+        </CardText>
         <CardActions>
-          { trackButton }
-          { artistButtons }
+          <Row>
+            <Col md={12} sm={12} lg={12} xs={12}>
+              { trackButton }
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12} sm={12} lg={12} xs={12}>
+              { artistButtons }
+            </Col>
+          </Row>
         </CardActions>
       </Card>
     )

@@ -17,7 +17,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 export const CurrentTrack = (props) => (
   <div>
     <Row>
-      <Col md={12} sm={12} lg={12}>
+      <Col md={12} sm={12} lg={12} xs={12}>
         <Card>
           <CardTitle title='Currently Playing' />
           <CardText>

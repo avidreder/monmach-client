@@ -3,36 +3,56 @@ import Paper from 'material-ui/Paper'
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import FontIcon from 'material-ui/FontIcon'
+import IconButton from 'material-ui/IconButton'
 import { amber500 } from 'material-ui/styles/colors'
+import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 import * as _ from 'lodash'
 
 export const TrackActions = (props) => (
-  <div>
-    <Paper>
-      <Toolbar>
-        <ToolbarGroup>
-          { _.range(1, props.track.Rating + 1).map((value) => {
-            return <FontIcon key={ value } className='material-icons' color={ amber500 } onClick={() => props.addRating(value)}>star</FontIcon>
-          })}
-          { _.range(props.track.Rating + 1, 6).map((value) => {
-            return <FontIcon key={ value } className='material-icons' hoverColor={ amber500 } onClick={() => props.addRating(value)}>star_border</FontIcon>
-          })}
-        </ToolbarGroup>
-        <ToolbarGroup>
-          <FloatingActionButton mini>
-            <FontIcon className='material-icons'
-              onClick={() => props.saveTrack(props.track)}>
-              save</FontIcon>
-          </FloatingActionButton>
-          <FloatingActionButton mini>
-            <FontIcon className='material-icons'
-              onClick={() => props.discardTrackFromPlayer(props.track)} >
-              not_interested</FontIcon>
-          </FloatingActionButton>
-        </ToolbarGroup>
-      </Toolbar>
-    </Paper>
-  </div>
+  <Row>
+    <Col md={12} sm={12} lg={12} xs={12}>
+      <Paper>
+          <Row>
+            <Col md={12} sm={12} lg={12} xs={12}>
+                { _.range(1, props.track.Rating + 1).map((value) => {
+                  return (
+                    <IconButton onClick={() => props.addRating(value)}>
+                      <FontIcon key={ value }
+                        className='material-icons'
+                        color={ amber500 }>
+                        star
+                      </FontIcon>
+                    </IconButton>
+                  )
+                })}
+                { _.range(props.track.Rating + 1, 6).map((value) => {
+                  return (
+                    <IconButton onClick={() => props.addRating(value)}>
+                      <FontIcon key={ value }
+                        className='material-icons'
+                        hoverColor={ amber500 }>
+                        star_border
+                      </FontIcon>
+                    </IconButton>
+                  )
+                })}
+            </Col>
+            <Col md={12} sm={12} lg={12} xs={12}>
+                <IconButton onClick={() => props.saveTrack(props.track)}>
+                  <FontIcon className='material-icons'>
+                    save
+                  </FontIcon>
+                </IconButton>
+                <IconButton onClick={() => props.discardTrackFromPlayer(props.track)}>
+                  <FontIcon className='material-icons'>
+                    not_interested
+                  </FontIcon>
+                </IconButton>
+            </Col>
+          </Row>
+      </Paper>
+    </Col>
+  </Row>
 )
 
 TrackActions.propTypes = {
