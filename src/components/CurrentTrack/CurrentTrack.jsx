@@ -14,12 +14,14 @@ import { Card, CardTitle, CardText, CardHeader } from 'material-ui/Card'
 import Checkbox from 'material-ui/Checkbox'
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 
-export const CurrentTrack = (props) => (
-  <div>
+export const CurrentTrack = (props) => {
+  const artistString = props.currentTrack.SpotifyTrack.artists.map((artist) => artist.name).join(', ')
+  return (
     <Row>
       <Col md={12} sm={12} lg={12} xs={12}>
-        <Card>
-          <CardTitle title='Currently Playing' />
+        <Card initiallyExpanded={ false }>
+          <CardTitle title={props.currentTrack.SpotifyTrack.name} subtitle={artistString}
+            actAsExpander={ true } showExpandableButton={ true } />
           <CardText>
             <TrackPlayer
               saveTrack={ (track) => props.saveTrack(props.currentCustomGenre.ID, track) }
@@ -32,18 +34,16 @@ export const CurrentTrack = (props) => (
               addArtistToGenre={ (artist) => props.addArtistToGenre(props.currentCustomGenre.ID, artist) }
               removeArtistFromGenre={ (artist) => props.removeArtistFromGenre(props.currentCustomGenre.ID, artist) } />
           </CardText>
+          <CardText expandable={ true }>
+            <TrackProfile
+              chartData={ props.chartData }
+              track={ props.currentTrack } />
+          </CardText>
         </Card>
       </Col>
     </Row>
-    <Row>
-      <Col md={12} sm={12} lg={12} xs={12}>
-        <TrackProfile
-          chartData={ props.chartData }
-          track={ props.currentTrack } />
-      </Col>
-    </Row>
-  </div>
-)
+  )
+}
 
 CurrentTrack.propTypes = {
   currentCustomGenre: React.PropTypes.object,

@@ -62,6 +62,7 @@ class PopulateQueueDialogContainer extends Component {
         onTouchTap={ this.handleActionTouchTap }
       />,
     ]
+    const allSeeds = _.concat(currentCustomGenre.SeedArtists, currentCustomGenre.SeedTracks)
     const customContentStyle = {
       width: '100%',
       maxWidth: 'none',
@@ -101,7 +102,7 @@ class PopulateQueueDialogContainer extends Component {
                 name={ currentCustomGenre.Name }
                 labelKey={ 'genre' }
                 addToRecommended={ addToRecommended }
-                requiredData={ currentCustomGenre }
+                requiredData={ allSeeds }
                 dataType={ 'Genre Seeds' }
                 message={ 'Add seeds to genre from queue' }
                 currentCustomGenre={ currentCustomGenre }
@@ -114,7 +115,7 @@ class PopulateQueueDialogContainer extends Component {
                 labelKey={ 'queue' }
                 addToRecommended={ addToRecommended }
                 requiredData={ queueTracks }
-                dataType={ 'Genre Seeds' }
+                dataType={ 'Queue Seeds' }
                 message={ 'Add seeds to genre from queue' }
                 currentCustomGenre={ currentCustomGenre } />
             </Tab>

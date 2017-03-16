@@ -44,7 +44,7 @@ export default class CustomGenres extends Component {
     const { customGenreOpen, anchorEl } = this.state;
     const { customGenres, currentCustomGenre, showNewGenreForm } = this.props;
     const GenreSeedsWithES = withEmptyState(GenreSeeds)
-    console.log(_.concat(currentCustomGenre.SeedArtists, currentCustomGenre.SeedTracks))
+    const allSeeds = _.concat(currentCustomGenre.SeedArtists, currentCustomGenre.SeedTracks)
     return (
       <Card>
         <CardTitle title={ currentCustomGenre.Name }
@@ -80,9 +80,9 @@ export default class CustomGenres extends Component {
             name={ currentCustomGenre.Name }
             labelKey={ 'genre' }
             addToRecommended={ () => {} }
-            requiredData={ currentCustomGenre }
-            dataType={ 'Recommendation Seeds' }
-            message={ 'Add seeds to recommendation engine below' }
+            requiredData={ allSeeds }
+            dataType={ 'Genre Seeds' }
+            message={ 'Add tracks or artists to genre seeds' }
             currentCustomGenre={ currentCustomGenre } />
         </CardText>
       </Card>

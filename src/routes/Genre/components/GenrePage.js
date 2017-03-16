@@ -21,12 +21,19 @@ const genreName = 'My Custom Genre'
 
 const CurrentTrackWithES = withEmptyState(CurrentTrack)
 const CurrentQueueWithES = withEmptyState(CurrentQueue)
+const CustomGenresWithES = withEmptyState(CustomGenres)
 
 export const GenrePage = (props) => (
   <Grid fluid>
     <Row>
       <Col md={12} sm={12} lg={12} xs={12}>
-        <CustomGenres customGenres={ props.genres }
+        <CustomGenresWithES
+          requiredData={ props.genres }
+          dataType={ 'Custom Genres'}
+          message={ 'Create a new custom genre' }
+          dataAction={ props.showNewGenreForm }
+          actionLabel='New Genre'
+          customGenres={ props.genres }
           setCurrentCustomGenre={ props.setCurrentCustomGenre }
           currentCustomGenre={ props.currentCustomGenre }
           showNewGenreForm={ props.showNewGenreForm } />
@@ -46,6 +53,8 @@ export const GenrePage = (props) => (
           <Tab label='Genre Tracks'>
             <CurrentQueueWithES
               activeFilters={ ['rating'] }
+              dataAction={ props.showPopulateQueueDialog }
+              actionLabel='Get New Tracks'
               filters={ props.genreTracksFilters }
               updateFilters={ props.updateFilters }
               queueTracks={ props.currentCustomGenre.TrackList }
@@ -57,6 +66,8 @@ export const GenrePage = (props) => (
           <Tab label='New Tracks'>
             <CurrentQueueWithES
               activeFilters={ [] }
+              dataAction={ props.showPopulateQueueDialog }
+              actionLabel='Get New Tracks'
               filters={ props.genreTracksFilters }
               queueTracks={ props.queue.TrackQueue }
               requiredData={ props.queue.TrackQueue }
@@ -65,15 +76,6 @@ export const GenrePage = (props) => (
               {...props} />
           </Tab>
         </Tabs>
-      </Col>
-    </Row>
-    <Row>
-      <Col md={12} sm={12} lg={12} xs={12}>
-        <FlatButton
-          label="More Tracks"
-          primary={true}
-          onTouchTap={ props.showPopulateQueueDialog }
-        />
       </Col>
     </Row>
   </Grid>

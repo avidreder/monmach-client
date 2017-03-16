@@ -48,11 +48,9 @@ export default class TrackPlayer extends Component {
       artistButtons.push(<RaisedButton key={ `add_${artist.id}`}
         onTouchTap={ () => addArtistToGenre(artist) }
         label={ `Add ${artist.name} to Genre Seeds` }/>))
-      const artistString = track.SpotifyTrack.artists.map((artist) => artist.name).join(', ')
       const genreString = track.Genres.join(', ')
     return(
       <Card>
-        <CardTitle title={track.SpotifyTrack.name} subtitle={artistString}/>
         <CardText>
           <Row>
             <Col md={12} sm={12} lg={12} xs={12}>
