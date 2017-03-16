@@ -7,9 +7,11 @@ const testState = fromJS({
     spotifyId: '',
   },
   newGenreFormOpen: false,
+  filterDialogOpen: false,
   populateQueueDialogOpen: false,
   genreTracksFilters: {
     rating: 3,
+    genres: [],
   },
   recommendationSeeds: {
     artists: [],

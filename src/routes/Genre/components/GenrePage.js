@@ -53,6 +53,7 @@ export const GenrePage = (props) => (
           <Tab label='Genre Tracks'>
             <CurrentQueueWithES
               activeFilters={ ['rating'] }
+              showFilterDialog={ props.showFilterDialog }
               dataAction={ props.showPopulateQueueDialog }
               actionLabel='Get New Tracks'
               filters={ props.genreTracksFilters }
@@ -66,6 +67,7 @@ export const GenrePage = (props) => (
           <Tab label='New Tracks'>
             <CurrentQueueWithES
               activeFilters={ [] }
+              showFilterDialog={ props.showFilterDialog }
               dataAction={ props.showPopulateQueueDialog }
               actionLabel='Get New Tracks'
               filters={ props.genreTracksFilters }

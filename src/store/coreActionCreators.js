@@ -285,6 +285,18 @@ export function showNewGenreForm() {
   }
 }
 
+export function hideFilterDialog() {
+  return {
+    type: 'HIDE_FILTER_DIALOG',
+  }
+}
+
+export function showFilterDialog() {
+  return {
+    type: 'SHOW_FILTER_DIALOG',
+  }
+}
+
 export function hidePopulateQueueDialog() {
   return {
     type: 'HIDE_POPULATE_QUEUE_DIALOG',

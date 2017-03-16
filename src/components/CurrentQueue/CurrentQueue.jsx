@@ -32,7 +32,11 @@ export const CurrentQueue = (props) => {
           primary={true}
           onTouchTap={ props.showPopulateQueueDialog }
         />
-        <RaisedButton label='Clear Queue' onClick={ props.clearQueue } />
+        <RaisedButton label='Clear Queue' onTouchTap={ props.clearQueue } />
+        <RaisedButton
+          label="Filters"
+          onTouchTap={ props.showFilterDialog }
+        />
         { props.filters && _.includes(props.activeFilters, 'rating') && <div>
           { _.range(1, props.filters.rating + 1).map((value) => {
             return <FontIcon style={ fontIconStyles } key={ value } className='material-icons' color={ amber500 } onClick={() => props.updateFilters('rating', value)}>star</FontIcon>
@@ -55,6 +59,7 @@ export const CurrentQueue = (props) => {
 }
 
 CurrentQueue.propTypes = {
+  showFilterDialog: React.PropTypes.func,
   currentCustomGenre: React.PropTypes.object,
   addGenre: React.PropTypes.func,
   removeFromQueue: React.PropTypes.func,

@@ -4,6 +4,7 @@ import MaterialNav from '../../components/MaterialNav'
 import Errors from '../../components/Errors'
 import GenreForm from '../../components/GenreForm'
 import PopulateQueueDialog from '../../components/PopulateQueueDialog'
+import FilterDialog from '../../components/FilterDialog'
 import Loading from '../../components/Loading'
 import Footer from '../../components/Footer'
 import './CoreLayout.scss'
@@ -20,6 +21,7 @@ export const CoreLayout = ({ children }) => (
     <Loading />
     <GenreForm />
     <PopulateQueueDialog />
+    <FilterDialog />
   </div>
 )
 

@@ -13,6 +13,9 @@ import GenrePage from '../components/GenrePage'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = (dispatch) => ({
+  showFilterDialog: () => {
+    dispatch(actionCreators.showFilterDialog())
+  },
   updateFilters: (filter, value) => {
     dispatch(actionCreators.updateFilters(filter, value))
   },

@@ -296,6 +296,18 @@ export function hideNewGenreForm(state) {
   }))
 }
 
+export function showFilterDialog(state) {
+  return fromJS(Object.assign({}, state.toJS(), {
+    filterDialogOpen: true,
+  }))
+}
+
+export function hideFilterDialog(state) {
+  return fromJS(Object.assign({}, state.toJS(), {
+    filterDialogOpen: false,
+  }))
+}
+
 export function showPopulateQueueDialog(state) {
   return fromJS(Object.assign({}, state.toJS(), {
     populateQueueDialogOpen: true,
@@ -394,6 +406,10 @@ export default function coreReducer (state = testState, action) {
       return showNewGenreForm(state)
     case 'HIDE_NEW_GENRE_FORM':
       return hideNewGenreForm(state)
+    case 'SHOW_FILTER_DIALOG':
+      return showFilterDialog(state)
+    case 'HIDE_FILTER_DIALOG':
+      return hideFilterDialog(state)
     case 'SHOW_POPULATE_QUEUE_DIALOG':
       return showPopulateQueueDialog(state)
     case 'HIDE_POPULATE_QUEUE_DIALOG':
