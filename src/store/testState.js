@@ -12,6 +12,7 @@ const testState = fromJS({
   genreTracksFilters: {
     rating: 3,
     genres: [],
+    active: [],
   },
   recommendationSeeds: {
     artists: [],

@@ -2,8 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actionCreators from 'store/coreActionCreators'
 import Dialog from 'material-ui/Dialog'
+import FontIcon from 'material-ui/FontIcon'
 import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
+import SelectField from 'material-ui/SelectField'
+import IconButton from 'material-ui/IconButton'
+import { amber500 } from 'material-ui/styles/colors'
 import _ from 'lodash'
 
 class FilterDialogContainer extends Component {
@@ -14,8 +18,7 @@ class FilterDialogContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rating: this.props.filters.rating,
-      genres: this.props.filters.genres,
+      filters: this.props.filters,
     }
   }
 
@@ -28,28 +31,38 @@ class FilterDialogContainer extends Component {
   }
 
   handleRequestClose = () => {
-    const { closeModal } = this.props
+    const { closeModal, setFilters } = this.props
+    const { filters } = this.state
+    setFilters(filters)
     closeModal()
   }
 
-  handleNameChange = (e) => {
+  toggleFilter = (filterName) => {
+    let { filters } = this.state
+    if (filters.active.indexOf(filterName) == -1) {
+      filters.active.push(filterName)
+    } else {
+      filters.active = _.without(filters.active, filterName)
+    }
     this.setState({
-      rating: e.target.value,
+      filters,
     })
   }
 
-  handleDescriptionChange = (e) => {
+  addRating = (value) => {
+    const { filters } = this.state
+    filters.rating = value
     this.setState({
-      genres: e.target.value,
+      filters,
     })
   }
 
   render() {
-    const { rating, genres } = this.state
-    const { filterDialogOpen, filters } = this.props
+    const { filters } = this.state
+    const { filterDialogOpen } = this.props
     const actions = [
       <FlatButton
-        label="Close"
+        label="Apply"
         primary={true}
         onTouchTap={this.handleRequestClose}
       />,
@@ -58,6 +71,53 @@ class FilterDialogContainer extends Component {
       width: '100%',
       maxWidth: 'none',
     }
+    const starInputs = []
+    const ratingActive = filters.active.indexOf('rating') > -1
+    const toggleIcon = ratingActive ? 'cancel' : 'check_circle'
+    if (ratingActive) {
+      _.range(1, filters.rating + 1).map((value) => {
+        starInputs.push((
+          <IconButton key={ value } onClick={() => this.addRating(value)}>
+            <FontIcon
+              className='material-icons'
+              color={ amber500 }>
+              star
+            </FontIcon>
+          </IconButton>
+        ))
+      })
+      _.range(filters.rating + 1, 6).map((value) => {
+        starInputs.push((
+          <IconButton key={ value } onClick={() => this.addRating(value)}>
+            <FontIcon
+              className='material-icons'
+              hoverColor={ amber500 }>
+              star_border
+            </FontIcon>
+          </IconButton>
+        ))
+      })
+    } else {
+      _.range(1, 6).map((value) => {
+        starInputs.push((
+          <IconButton key={ value } disabled={ true }>
+            <FontIcon
+              className='material-icons'
+              hoverColor={ amber500 }>
+              star_border
+            </FontIcon>
+          </IconButton>
+        ))
+      })
+    }
+    starInputs.push((
+      <IconButton key={'toggle'} onClick={() => this.toggleFilter('rating')}>
+        <FontIcon
+          className='material-icons'>
+          {toggleIcon}
+        </FontIcon>
+      </IconButton>
+    ))
     return (
       <div>
         <Dialog open={ filterDialogOpen }
@@ -66,21 +126,7 @@ class FilterDialogContainer extends Component {
           onActionTouchTap={this.handleActionTouchTap}
           onRequestClose={this.handleRequestClose} >
           <div>
-            <TextField
-              floatingLabelText="Rating"
-              floatingLabelFixed={true}
-              id="name-text-field"
-              value={ rating }
-              onChange={ this.handleRatingChange }
-            />
-            <br />
-            <TextField
-              floatingLabelText="Genre"
-              floatingLabelFixed={true}
-              id="description-text-field"
-              value={ genres }
-              onChange={this.handleGenresChange}
-            />
+              { starInputs }
           </div>
         </Dialog>
       </div>
@@ -91,14 +137,14 @@ class FilterDialogContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     filterDialogOpen: state.core.get('filterDialogOpen'),
-    filters: state.core.get('genreTracksFilters')
+    filters: state.core.get('genreTracksFilters').toJS()
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setFilters: (filter, value) => {
-      dispatch(actionCreators.updateFilters(filter, value))
+    setFilters: (filters) => {
+      dispatch(actionCreators.updateFilters('genreTracksFilters', filters))
     },
     closeModal: () => {
       dispatch(actionCreators.hideFilterDialog())

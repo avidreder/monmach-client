@@ -23,11 +23,11 @@ export function removeFromTracks(track) {
   };
 }
 
-export function updateFilters(filter, value) {
+export function updateFilters(filterType, filters) {
   return {
     type: 'UPDATE_FILTERS',
-    filter,
-    value
+    filterType,
+    filters,
   };
 }
 

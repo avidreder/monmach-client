@@ -16,8 +16,8 @@ export const TrackActions = (props) => (
             <Col md={12} sm={12} lg={12} xs={12}>
                 { _.range(1, props.track.Rating + 1).map((value) => {
                   return (
-                    <IconButton onClick={() => props.addRating(value)}>
-                      <FontIcon key={ value }
+                    <IconButton key={ value } onClick={() => props.addRating(value)}>
+                      <FontIcon
                         className='material-icons'
                         color={ amber500 }>
                         star
@@ -27,8 +27,8 @@ export const TrackActions = (props) => (
                 })}
                 { _.range(props.track.Rating + 1, 6).map((value) => {
                   return (
-                    <IconButton onClick={() => props.addRating(value)}>
-                      <FontIcon key={ value }
+                    <IconButton key={ value } onClick={() => props.addRating(value)}>
+                      <FontIcon
                         className='material-icons'
                         hoverColor={ amber500 }>
                         star_border

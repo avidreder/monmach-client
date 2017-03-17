@@ -25,8 +25,8 @@ export function setUser(state, email, loggedIn, spotifyId) {
   return state.set('currentUser', fromJS(userData))
 }
 
-export function updateFilters(state, filter, value) {
-  return state.setIn(['genreTracksFilters', filter], fromJS(value))
+export function updateFilters(state, filterType, filters) {
+  return state.set(filterType, fromJS(filters))
 }
 
 export function addToGenre(state, itemType, item) {
@@ -415,7 +415,7 @@ export default function coreReducer (state = testState, action) {
     case 'HIDE_POPULATE_QUEUE_DIALOG':
       return hidePopulateQueueDialog(state)
     case 'UPDATE_FILTERS':
-      return updateFilters(state, action.filter, action.value)
+      return updateFilters(state, action.filterType, action.filters)
     case 'SET_STATE':
       return state.merge(action.state);
     default:
