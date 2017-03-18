@@ -26,7 +26,7 @@ export const CurrentQueue = (props) => {
     props.queueTracks
   return (
     <Card>
-      <CardTitle title='New Track Queue'>
+      <CardTitle title={ props.title }>
         <RaisedButton
           label="More Tracks"
           primary={true}
@@ -37,15 +37,6 @@ export const CurrentQueue = (props) => {
           label="Filters"
           onTouchTap={ props.showFilterDialog }
         />
-        { props.filters && _.includes(props.activeFilters, 'rating') && <div>
-          { _.range(1, props.filters.rating + 1).map((value) => {
-            return <FontIcon style={ fontIconStyles } key={ value } className='material-icons' color={ amber500 } onClick={() => props.updateFilters('rating', value)}>star</FontIcon>
-          })}
-          { _.range(props.filters.rating + 1, 6).map((value) => {
-            return <FontIcon style={ fontIconStyles } key={ value } className='material-icons' hoverColor={ amber500 } onClick={() => props.updateFilters('rating', value)}>star_border</FontIcon>
-          })}
-          </div>
-        }
       </CardTitle>
       <CardText>
         <QueueContainer queue={ filteredTracks }

@@ -6,11 +6,17 @@ const testState = fromJS({
     loggedIn: '',
     spotifyId: '',
   },
+  customGenreGenreList: [],
   newGenreFormOpen: false,
-  filterDialogOpen: false,
+  genreFilterDialogOpen: false,
+  newTrackFilterDialogOpen: false,
   populateQueueDialogOpen: false,
-  genreTracksFilters: {
+  genreTrackFilters: {
     rating: 3,
+    genres: [],
+    active: [],
+  },
+  newTrackFilters: {
     genres: [],
     active: [],
   },

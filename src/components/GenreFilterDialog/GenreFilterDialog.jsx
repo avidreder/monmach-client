@@ -14,7 +14,7 @@ import { amber500 } from 'material-ui/styles/colors'
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 import _ from 'lodash'
 
-class FilterDialogContainer extends Component {
+class GenreFilterDialogContainer extends Component {
   static propTypes = {
     data: React.PropTypes.object,
   }
@@ -303,8 +303,8 @@ class FilterDialogContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    filterDialogOpen: state.core.get('filterDialogOpen'),
-    filters: state.core.get('genreTracksFilters').toJS(),
+    filterDialogOpen: state.core.get('genreFilterDialogOpen'),
+    filters: state.core.get('genreTrackFilters').toJS(),
     genres: state.core.get('spotifyGenres').toJS(),
   }
 }
@@ -312,14 +312,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setFilters: (filters) => {
-      dispatch(actionCreators.updateFilters('genreTracksFilters', filters))
+      dispatch(actionCreators.updateFilters('genreTrackFilters', filters))
     },
     closeModal: () => {
-      dispatch(actionCreators.hideFilterDialog())
+      dispatch(actionCreators.hideGenreFilterDialog())
     }
   }
 }
 
-const FilterDialog = connect(mapStateToProps, mapDispatchToProps)(FilterDialogContainer)
+const GenreFilterDialog = connect(mapStateToProps, mapDispatchToProps)(GenreFilterDialogContainer)
 
-export default FilterDialog
+export default GenreFilterDialog

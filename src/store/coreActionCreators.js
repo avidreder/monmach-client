@@ -285,15 +285,27 @@ export function showNewGenreForm() {
   }
 }
 
-export function hideFilterDialog() {
+export function hideGenreFilterDialog() {
   return {
-    type: 'HIDE_FILTER_DIALOG',
+    type: 'HIDE_GENRE_FILTER_DIALOG',
   }
 }
 
-export function showFilterDialog() {
+export function hideNewTrackFilterDialog() {
   return {
-    type: 'SHOW_FILTER_DIALOG',
+    type: 'HIDE_NEW_TRACK_FILTER_DIALOG',
+  }
+}
+
+export function showGenreFilterDialog() {
+  return {
+    type: 'SHOW_GENRE_FILTER_DIALOG',
+  }
+}
+
+export function showNewTrackFilterDialog() {
+  return {
+    type: 'SHOW_NEW_TRACK_FILTER_DIALOG',
   }
 }
 

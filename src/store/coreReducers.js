@@ -32,14 +32,20 @@ export function updateFilters(state, filterType, filters) {
 export function addToGenre(state, itemType, item) {
   const currentItems = state.getIn(['currentCustomGenre', itemType]).toJS()
   currentItems.push(item)
-  return state.setIn(['currentCustomGenre', itemType], fromJS(currentItems))
+  const newState = state.setIn(['currentCustomGenre', itemType], fromJS(currentItems))
+  const currentTracks = newState.getIn(['currentCustomGenre', 'TrackList']).toJS()
+  const newGenres = _.uniq(_.filter(_.flatten(_.map(currentTracks, 'Genres')), null))
+  return newState.set('customGenreGenreList', fromJS(newGenres))
 }
 
 export function removeFromGenre(state, itemType, item){
   const currentItems = state.getIn(['currentCustomGenre', itemType]).toJS()
   const newItems = itemType == 'SeedGenres' ? _.remove(currentItems, (v) => v == item)
     : _.reject(currentItems, item)
-  return state.setIn(['currentCustomGenre', itemType], fromJS(newItems))
+  const newState = state.setIn(['currentCustomGenre', itemType], fromJS(newItems))
+  const currentTracks = newState.getIn(['currentCustomGenre', 'TrackList']).toJS()
+  const newGenres = _.uniq(_.filter(_.flatten(_.map(currentTracks, 'Genres')), null))
+  return newState.set('customGenreGenreList', fromJS(newGenres))
 }
 
 export function addToRecommended(state, itemType, item) {
@@ -62,9 +68,12 @@ export function setTrack(state, track){
 }
 
 export function setCurrentCustomGenre(state, genre){
-  return fromJS(Object.assign({}, state.toJS(), {
+  const newState = fromJS(Object.assign({}, state.toJS(), {
     currentCustomGenre: genre
   }))
+  const currentTracks = newState.getIn(['currentCustomGenre', 'TrackList']).toJS()
+  const newGenres = _.uniq(_.filter(_.flatten(_.map(currentTracks, 'Genres')), null))
+  return newState.set('customGenreGenreList', fromJS(newGenres))
 }
 
 export function removeFromQueue(state, track){
@@ -215,7 +224,10 @@ export function receiveGenresSuccess(state, response) {
     genres: genres.toJS(),
     currentCustomGenre: genres.toJS().length > 0 ? genres.toJS()[0] : currentGenre,
   }))
-  return unSetLoading(setResponse(newState, 'genres', fromJS(response)), 'genres')
+  const currentTracks = newState.getIn(['currentCustomGenre', 'TrackList']).toJS()
+  const newGenres = _.uniq(_.filter(_.flatten(_.map(currentTracks, 'Genres')), null))
+  const finalState = newState.set('customGenreGenreList', fromJS(newGenres))
+  return unSetLoading(setResponse(finalState, 'genres', fromJS(response)), 'genres')
 }
 
 export function receiveGenresError(state, error) {
@@ -296,15 +308,27 @@ export function hideNewGenreForm(state) {
   }))
 }
 
-export function showFilterDialog(state) {
+export function showGenreFilterDialog(state) {
   return fromJS(Object.assign({}, state.toJS(), {
-    filterDialogOpen: true,
+    genreFilterDialogOpen: true,
   }))
 }
 
-export function hideFilterDialog(state) {
+export function hideGenreFilterDialog(state) {
   return fromJS(Object.assign({}, state.toJS(), {
-    filterDialogOpen: false,
+    genreFilterDialogOpen: false,
+  }))
+}
+
+export function showNewTrackFilterDialog(state) {
+  return fromJS(Object.assign({}, state.toJS(), {
+    newTrackFilterDialogOpen: true,
+  }))
+}
+
+export function hideNewTrackFilterDialog(state) {
+  return fromJS(Object.assign({}, state.toJS(), {
+    newTrackFilterDialogOpen: false,
   }))
 }
 
@@ -406,10 +430,14 @@ export default function coreReducer (state = testState, action) {
       return showNewGenreForm(state)
     case 'HIDE_NEW_GENRE_FORM':
       return hideNewGenreForm(state)
-    case 'SHOW_FILTER_DIALOG':
-      return showFilterDialog(state)
-    case 'HIDE_FILTER_DIALOG':
-      return hideFilterDialog(state)
+    case 'SHOW_GENRE_FILTER_DIALOG':
+      return showGenreFilterDialog(state)
+    case 'HIDE_GENRE_FILTER_DIALOG':
+      return hideGenreFilterDialog(state)
+    case 'SHOW_NEW_TRACK_FILTER_DIALOG':
+      return showNewTrackFilterDialog(state)
+    case 'HIDE_NEW_TRACK_FILTER_DIALOG':
+      return hideNewTrackFilterDialog(state)
     case 'SHOW_POPULATE_QUEUE_DIALOG':
       return showPopulateQueueDialog(state)
     case 'HIDE_POPULATE_QUEUE_DIALOG':
