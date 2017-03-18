@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import IconButton from 'material-ui/IconButton'
+import Checkbox from 'material-ui/Checkbox'
 import { amber500 } from 'material-ui/styles/colors'
 import _ from 'lodash'
 
@@ -19,6 +20,7 @@ class FilterDialogContainer extends Component {
     super(props);
     this.state = {
       filters: this.props.filters,
+      genreOpen: false,
     }
   }
 
@@ -57,9 +59,45 @@ class FilterDialogContainer extends Component {
     })
   }
 
-  render() {
+  addGenre = (genre) => {
     const { filters } = this.state
-    const { filterDialogOpen } = this.props
+    if (filters.genres.indexOf(genre) == -1) {
+      filters.genres.push(genre)
+    }
+    this.setState({
+      filters,
+    })
+  }
+
+  removeGenre = (genre) => {
+    const { filters } = this.state
+    if (filters.genres.indexOf(genre) != -1) {
+      filters.genres = _.without(filters.genres, genre)
+    }
+    this.setState({
+      filters,
+    })
+  }
+
+  handleGenreTouchTap = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
+
+    this.setState({
+      genreOpen: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+
+  handleGenreRequestClose = () => {
+    this.setState({
+      genreOpen: false,
+    });
+  };
+
+  render() {
+    const { filters, genreOpen, anchorEl } = this.state
+    const { filterDialogOpen, genres } = this.props
     const actions = [
       <FlatButton
         label="Apply"
@@ -72,8 +110,11 @@ class FilterDialogContainer extends Component {
       maxWidth: 'none',
     }
     const starInputs = []
+    const genreInputs = []
     const ratingActive = filters.active.indexOf('rating') > -1
-    const toggleIcon = ratingActive ? 'cancel' : 'check_circle'
+    const genresActive = filters.active.indexOf('genres') > -1
+    const ratingToggleIcon = ratingActive ? 'cancel' : 'check_circle'
+    const genresToggleIcon = genresActive ? 'cancel' : 'check_circle'
     if (ratingActive) {
       _.range(1, filters.rating + 1).map((value) => {
         starInputs.push((
@@ -114,7 +155,39 @@ class FilterDialogContainer extends Component {
       <IconButton key={'toggle'} onClick={() => this.toggleFilter('rating')}>
         <FontIcon
           className='material-icons'>
-          {toggleIcon}
+          {ratingToggleIcon}
+        </FontIcon>
+      </IconButton>
+    ))
+    if (genresActive) {
+      genres.map(genre => {
+        if (_.includes(filters.genres, genre)) {
+          genreInputs.push((
+            <div key={ `${genre}_actions` }>
+              <Checkbox
+                label={ genre }
+                checked
+                onCheck={ () => this.removeGenre(genre) }
+              />
+            </div>
+          ))
+        } else {
+          genreInputs.push((
+            <Checkbox
+              key={ genre }
+              label={ genre }
+              checked={ false }
+              onCheck={ () => this.addGenre(genre) }
+            />
+          ))
+        }
+      })
+    }
+    genreInputs.push((
+      <IconButton key={'toggle'} onClick={() => this.toggleFilter('genres')}>
+        <FontIcon
+          className='material-icons'>
+          {genresToggleIcon}
         </FontIcon>
       </IconButton>
     ))
@@ -126,7 +199,10 @@ class FilterDialogContainer extends Component {
           onActionTouchTap={this.handleActionTouchTap}
           onRequestClose={this.handleRequestClose} >
           <div>
-              { starInputs }
+            { starInputs }
+          </div>
+          <div>
+            { genreInputs }
           </div>
         </Dialog>
       </div>
@@ -137,7 +213,8 @@ class FilterDialogContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     filterDialogOpen: state.core.get('filterDialogOpen'),
-    filters: state.core.get('genreTracksFilters').toJS()
+    filters: state.core.get('genreTracksFilters').toJS(),
+    genres: state.core.get('spotifyGenres').toJS(),
   }
 }
 
