@@ -140,17 +140,17 @@ class FilterDialogContainer extends Component {
       })
     }
     const starToggleButton = (
-      <IconButton key={'toggle'} onClick={() => this.toggleFilter('rating')}>
-        <FontIcon
-          className='material-icons'>
-          {ratingToggleIcon}
-        </FontIcon>
-      </IconButton>
+      <FontIcon key={'toggle'} onClick={() => this.toggleFilter('rating')}
+        className='material-icons'>
+        {ratingToggleIcon}
+      </FontIcon>
     )
     return (
       <Card key='RatingCard'>
-        <CardTitle title='Rating' />
-        <CardHeader avatar={ starToggleButton }>
+        <CardHeader title='Rating'
+          showExpandableButton
+          closeIcon={ starToggleButton }
+          openIcon={ starToggleButton }>
           { starInputs }
         </CardHeader>
       </Card>
@@ -242,19 +242,18 @@ class FilterDialogContainer extends Component {
         genreHeaderPages.push(currentPage)
       }
     }
-    console.log(genreHeaderPages)
     const genreToggleButton = (
-      <IconButton key={'toggle'} onClick={() => this.toggleFilter('genres')}>
-        <FontIcon
+        <FontIcon key={'toggle'} onClick={() => this.toggleFilter('genres')}
           className='material-icons'>
           {genresToggleIcon}
         </FontIcon>
-      </IconButton>
     )
     genreInputs.push((
       <Card key='GenreCard'>
-        <CardTitle title='Genres' />
-        <CardHeader title='Active' avatar={ genreToggleButton }>
+        <CardHeader title='Genres' subtitle='Active'
+          showExpandableButton
+          closeIcon={ genreToggleButton }
+          openIcon={ genreToggleButton } >
           <Row>
             { genreHeaderPages.map((page, i) =>
               <Col key={`genre_header_page_${i}`} >
@@ -263,7 +262,7 @@ class FilterDialogContainer extends Component {
             )}
           </Row>
         </CardHeader>
-        { genresActive && <CardHeader title='Available' >
+        { genresActive && <CardHeader subtitle='Available' >
           <Row>
             { genreBodyPages.map((page, i) =>
               <Col key={`genre_body_page_${i}`}>
