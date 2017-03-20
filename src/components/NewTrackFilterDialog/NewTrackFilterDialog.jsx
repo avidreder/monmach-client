@@ -100,7 +100,7 @@ class NewTrackFilterDialogContainer extends Component {
 
   render() {
     const { filters, genreOpen, anchorEl } = this.state
-    const { filterDialogOpen, genres } = this.props
+    const { newTrackFilterDialogOpen, genres } = this.props
     const actions = [
       <FlatButton
         label="Apply"
@@ -188,7 +188,7 @@ class NewTrackFilterDialogContainer extends Component {
     )
     genreInputs.push((
       <Card key='GenreCard'>
-        <CardHeader title='Genres' subtitle='Active'
+        <CardHeader title='Genres' subtitle='Must contain the following genres:'
           showExpandableButton
           closeIcon={ genreToggleButton }
           openIcon={ genreToggleButton } >
@@ -200,7 +200,7 @@ class NewTrackFilterDialogContainer extends Component {
             )}
           </Row>
         </CardHeader>
-        { genresActive && <CardHeader subtitle='Available' >
+        { genresActive && <CardHeader subtitle='Available genres' >
           <Row>
             { genreBodyPages.map((page, i) =>
               <Col key={`genre_body_page_${i}`}>
@@ -213,7 +213,7 @@ class NewTrackFilterDialogContainer extends Component {
     ))
     return (
       <div>
-        <Dialog open={ filterDialogOpen }
+        <Dialog open={ newTrackFilterDialogOpen }
           actions={ actions }
           autoScrollBodyContent={true}
           contentStyle={ customContentStyle }
@@ -238,9 +238,9 @@ class NewTrackFilterDialogContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    filterDialogOpen: state.core.get('newTrackFilterDialogOpen'),
+    newTrackFilterDialogOpen: state.core.get('newTrackFilterDialogOpen'),
     filters: state.core.get('newTrackFilters').toJS(),
-    genres: state.core.get('customGenreGenreList').toJS(),
+    genres: state.core.get('spotifyGenres').toJS(),
   }
 }
 

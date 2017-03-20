@@ -147,10 +147,12 @@ class GenreFilterDialogContainer extends Component {
     )
     return (
       <Card key='RatingCard'>
-        <CardHeader title='Rating'
+        <CardHeader title='Rating' subtitle='Must have a rating of at least:'
           showExpandableButton
           closeIcon={ starToggleButton }
           openIcon={ starToggleButton }>
+        </CardHeader>
+        <CardHeader>
           { starInputs }
         </CardHeader>
       </Card>
@@ -159,7 +161,7 @@ class GenreFilterDialogContainer extends Component {
 
   render() {
     const { filters, genreOpen, anchorEl } = this.state
-    const { filterDialogOpen, genres } = this.props
+    const { genreFilterDialogOpen, genres } = this.props
     const actions = [
       <FlatButton
         label="Apply"
@@ -250,7 +252,7 @@ class GenreFilterDialogContainer extends Component {
     )
     genreInputs.push((
       <Card key='GenreCard'>
-        <CardHeader title='Genres' subtitle='Active'
+        <CardHeader title='Genres' subtitle='Must contain one of the following genres'
           showExpandableButton
           closeIcon={ genreToggleButton }
           openIcon={ genreToggleButton } >
@@ -262,7 +264,7 @@ class GenreFilterDialogContainer extends Component {
             )}
           </Row>
         </CardHeader>
-        { genresActive && <CardHeader subtitle='Available' >
+        { genresActive && <CardHeader subtitle='Available genres' >
           <Row>
             { genreBodyPages.map((page, i) =>
               <Col key={`genre_body_page_${i}`}>
@@ -275,7 +277,7 @@ class GenreFilterDialogContainer extends Component {
     ))
     return (
       <div>
-        <Dialog open={ filterDialogOpen }
+        <Dialog open={ genreFilterDialogOpen }
           actions={ actions }
           autoScrollBodyContent={true}
           contentStyle={ customContentStyle }
@@ -303,9 +305,9 @@ class GenreFilterDialogContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    filterDialogOpen: state.core.get('genreFilterDialogOpen'),
+    genreFilterDialogOpen: state.core.get('genreFilterDialogOpen'),
     filters: state.core.get('genreTrackFilters').toJS(),
-    genres: state.core.get('spotifyGenres').toJS(),
+    genres: state.core.get('customGenreGenreList').toJS(),
   }
 }
 

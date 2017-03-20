@@ -20,10 +20,19 @@ const fontIconStyles = {
   cursor: 'pointer',
 }
 
+const filterTracks = (tracks, filters) => {
+  console.log(filters)
+  let filteredTracks = _.includes(filters.active, 'rating') ?
+    _.filter(tracks, (track) => track.Rating >= filters.rating) : tracks
+  console.log(filteredTracks)
+  filteredTracks = _.includes(filters.active, 'genres') ?
+    _.filter(tracks, (track) => _.intersection(track.Genres, filters.genres).length > 0) : filteredTracks
+  console.log(filteredTracks)
+  return filteredTracks
+}
+
 export const CurrentQueue = (props) => {
-  const filteredTracks = _.includes(props.activeFilters, 'rating') ?
-    _.filter(props.queueTracks, (track) => track.Rating >= props.filters.rating || track.Rating == 0) :
-    props.queueTracks
+  const filteredTracks = filterTracks(props.queueTracks, props.filters)
   return (
     <Card>
       <CardTitle title={ props.title }>
