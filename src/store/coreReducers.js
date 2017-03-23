@@ -1,4 +1,4 @@
-import { fromJS, Map } from 'immutable'
+import { fromJS, Map, List } from 'immutable'
 import * as _ from 'lodash'
 import testState from './testState.js'
 
@@ -35,7 +35,8 @@ export function addToGenre(state, itemType, item) {
   const newState = state.setIn(['currentCustomGenre', itemType], fromJS(currentItems))
   const currentTracks = newState.getIn(['currentCustomGenre', 'TrackList']).toJS()
   const newGenres = _.uniq(_.filter(_.flatten(_.map(currentTracks, 'Genres')), null))
-  return newState.set('customGenreGenreList', fromJS(newGenres))
+  const newArtists = _.uniq(_.map(_.flatten(_.map(currentTracks, 'SpotifyTrack.artists')),'name'))
+  return newState.set('customGenreGenreList', fromJS(newGenres)).set('customGenreArtistList', fromJS(newArtists))
 }
 
 export function removeFromGenre(state, itemType, item){
@@ -45,7 +46,8 @@ export function removeFromGenre(state, itemType, item){
   const newState = state.setIn(['currentCustomGenre', itemType], fromJS(newItems))
   const currentTracks = newState.getIn(['currentCustomGenre', 'TrackList']).toJS()
   const newGenres = _.uniq(_.filter(_.flatten(_.map(currentTracks, 'Genres')), null))
-  return newState.set('customGenreGenreList', fromJS(newGenres))
+  const newArtists = _.uniq(_.map(_.flatten(_.map(currentTracks, 'SpotifyTrack.artists')),'name'))
+  return newState.set('customGenreGenreList', fromJS(newGenres)).set('customGenreArtistList', fromJS(newArtists))
 }
 
 export function addToRecommended(state, itemType, item) {
@@ -73,7 +75,8 @@ export function setCurrentCustomGenre(state, genre){
   }))
   const currentTracks = newState.getIn(['currentCustomGenre', 'TrackList']).toJS()
   const newGenres = _.uniq(_.filter(_.flatten(_.map(currentTracks, 'Genres')), null))
-  return newState.set('customGenreGenreList', fromJS(newGenres))
+  const newArtists = _.uniq(_.map(_.flatten(_.map(currentTracks, 'SpotifyTrack.artists')),'name'))
+  return newState.set('customGenreGenreList', fromJS(newGenres)).set('customGenreArtistList', fromJS(newArtists))
 }
 
 export function removeFromQueue(state, track){
@@ -205,9 +208,11 @@ export function unSetError(state, endpoint) {
 export function receiveQueueSuccess(state, response) {
   const queue = fromJS(response.data)
   const spotifyGenres = _.uniq(_.filter(_.flatten(_.map(queue.toJS().TrackQueue, 'Genres')), null))
+  const currentQueueArtistList = _.uniq(_.map(_.flatten(_.map(queue.toJS().TrackQueue, 'SpotifyTrack.artists')),'name'))
   const newState = fromJS(Object.assign({}, state.toJS(), {
     queue,
     spotifyGenres,
+    currentQueueArtistList,
   }))
   return unSetLoading(setResponse(newState, 'queue', fromJS(response)), 'queue')
 }
@@ -224,9 +229,15 @@ export function receiveGenresSuccess(state, response) {
     genres: genres.toJS(),
     currentCustomGenre: genres.toJS().length > 0 ? genres.toJS()[0] : currentGenre,
   }))
-  const currentTracks = newState.getIn(['currentCustomGenre', 'TrackList']).toJS()
-  const newGenres = _.uniq(_.filter(_.flatten(_.map(currentTracks, 'Genres')), null))
-  const finalState = newState.set('customGenreGenreList', fromJS(newGenres))
+  const currentTracks = newState.getIn(['currentCustomGenre', 'TrackList']) || List()
+  console.log('current: ', currentTracks)
+  const newGenres = _.uniq(_.filter(_.flatten(_.map(currentTracks.toJS(), 'Genres')), null))
+  const newArtists = _.uniq(_.map(_.flatten(_.map(currentTracks.toJS(), 'SpotifyTrack.artists')),'name'))
+  console.log(newGenres)
+  const finalState = fromJS(Object.assign({}, newState.toJS(), {
+    customGenreGenreList: newGenres,
+    customGenreArtistList: newArtists,
+  }))
   return unSetLoading(setResponse(finalState, 'genres', fromJS(response)), 'genres')
 }
 
@@ -260,9 +271,11 @@ export function receiveTracksFromPlaylistSuccess(state, response) {
   const trackQueue = state.getIn(['queue','TrackQueue']).toJS()
   newQueue.TrackQueue = trackQueue.concat(tracks.toJS())
   const spotifyGenres = _.uniq(_.filter(_.flatten(_.map(newQueue.TrackQueue, 'Genres')), null))
+  const newArtists = _.uniq(_.map(_.flatten(_.map(newQueue.TrackQueue, 'SpotifyTrack.artists')),'name'))
   const newState = fromJS(Object.assign({}, state.toJS(), {
     queue: newQueue,
     spotifyGenres,
+    currentQueueArtistList: newArtists,
   }))
   return unSetLoading(setResponse(newState, 'tracks', fromJS(response)), 'tracks')
 }
@@ -283,9 +296,11 @@ export function getRecommendedTracksSuccess(state, response) {
   const trackQueue = state.getIn(['queue','TrackQueue']).toJS()
   newQueue.TrackQueue = trackQueue.concat(tracks.toJS())
   const spotifyGenres = _.uniq(_.filter(_.flatten(_.map(newQueue.TrackQueue, 'Genres')), null))
+  const newArtists = _.uniq(_.map(_.flatten(_.map(newQueue.TrackQueue, 'SpotifyTrack.artists')),'name'))
   const newState = fromJS(Object.assign({}, state.toJS(), {
     queue: newQueue,
     spotifyGenres,
+    currentQueueArtistList: newArtists
   }))
   return unSetLoading(setResponse(newState, 'tracks', fromJS(response)), 'tracks')
 }

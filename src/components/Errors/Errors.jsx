@@ -31,10 +31,17 @@ class ErrorsContainer extends Component {
     _.forOwn(data, (value, key) => {
       let errorObject = {};
       if (value.error) {
-        errorObject.name = key
-        errorObject.statusCode = value.error.response.status
-        errorObject.statusText = value.error.response.statusText
-        errorObject.message = value.error.response.data
+        if (value.error.response) {
+          errorObject.name = key
+          errorObject.statusCode = value.error.response.status
+          errorObject.statusText = value.error.response.statusText
+          errorObject.message = value.error.response.data
+        } else {
+          errorObject.name = key
+          errorObject.statusCode = 'Unknown Error'
+          errorObject.statusText = 'Unknown Error'
+          errorObject.message = value.error.toString()
+        }
         messages.push(errorObject)
       }
     })
@@ -85,8 +92,8 @@ class ErrorsContainer extends Component {
           onActionTouchTap={this.handleActionTouchTap}
           onRequestClose={this.handleRequestClose} >
           <div>
-          { message && message.map((item) => (
-            <ul key={ item }>
+          { message && message.map((item, i) => (
+            <ul key={ `${item}_${i}` }>
               <li>{ item.name }</li>
               <li>{ item.statusCode }</li>
               <li>{ item.statusText }</li>

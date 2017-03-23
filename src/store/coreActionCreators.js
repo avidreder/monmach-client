@@ -423,9 +423,11 @@ export function fetchGenres() {
     };
     axios.get(`${serverAddress}/api/getData`, options)
       .then(function(body){
+        console.log('no error: ', body)
         dispatch(receiveGenresSuccess(body))
       })
       .catch(function(error){
+        console.log('error: ', error)
         dispatch(receiveGenresError(error))
       })
   }

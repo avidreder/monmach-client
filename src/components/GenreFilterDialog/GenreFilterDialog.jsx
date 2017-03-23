@@ -82,6 +82,26 @@ class GenreFilterDialogContainer extends Component {
     })
   }
 
+  addArtist = (artist) => {
+    const { filters } = this.state
+    if (filters.artists.indexOf(artist) == -1) {
+      filters.artists.push(artist)
+    }
+    this.setState({
+      filters,
+    })
+  }
+
+  removeArtist = (artist) => {
+    const { filters } = this.state
+    if (filters.artists.indexOf(artist) != -1) {
+      filters.artists = _.without(filters.artists, artist)
+    }
+    this.setState({
+      filters,
+    })
+  }
+
   handleGenreTouchTap = (event) => {
     // This prevents ghost click.
     event.preventDefault();
@@ -159,23 +179,13 @@ class GenreFilterDialogContainer extends Component {
     )
   }
 
-  render() {
-    const { filters, genreOpen, anchorEl } = this.state
-    const { genreFilterDialogOpen, genres } = this.props
-    const actions = [
-      <FlatButton
-        label="Apply"
-        primary={true}
-        onTouchTap={this.handleRequestClose}
-      />,
-    ];
-    const customContentStyle = {
-      width: '100%',
-      maxWidth: 'none',
-    }
-    const ratingActive = filters.active.indexOf('rating') > -1
-    const ratingToggleIcon = ratingActive ? 'cancel' : 'check_circle'
-    const starInputs = this.buildStarInputs()
+  buildGenreInputs() {
+    const {
+      genres,
+    } = this.props
+    const {
+      filters,
+    } = this.state
     const genreInputs = []
     const genreHeaderInputs = []
     const genreHeaderPages = []
@@ -275,6 +285,137 @@ class GenreFilterDialogContainer extends Component {
         </CardHeader> }
       </Card>
     ))
+    return genreInputs
+  }
+
+  buildArtistInputs() {
+    const {
+      artists,
+    } = this.props
+    const {
+      filters,
+    } = this.state
+    const artistInputs = []
+    const artistHeaderInputs = []
+    const artistHeaderPages = []
+    const artistBodyPages = []
+    const artistBodyInputs = []
+    const artistsActive = filters.active.indexOf('artists') > -1
+    const artistsToggleIcon = artistsActive ? 'cancel' : 'check_circle'
+    const artistsPerCol = 5
+    if (artistsActive) {
+      let currentPage = []
+      artists.map(artist => {
+        if (!_.includes(filters.artists, artist)){
+          currentPage.push((
+            <Checkbox
+              key={ `${artist}_actions_pop` }
+              label={ artist }
+              checked={ false }
+              onCheck={ () => this.addArtist(artist) }
+            />
+          ))
+          if (currentPage.length == artistsPerCol) {
+            artistBodyPages.push(currentPage)
+            currentPage = []
+          }
+        }
+      })
+      if (currentPage.length > 0){
+        artistBodyPages.push(currentPage)
+      }
+      currentPage = []
+      artists.map(artist => {
+        if (_.includes(filters.artists, artist)) {
+          currentPage.push((
+            <Checkbox key={ `${artist}_actions` }
+              label={ artist }
+              checked
+              onCheck={ () => this.removeArtist(artist) }
+            />
+          ))
+          if (currentPage.length == artistsPerCol) {
+            artistHeaderPages.push(currentPage)
+            currentPage = []
+          }
+        }
+      })
+      if (currentPage.length > 0){
+        artistHeaderPages.push(currentPage)
+      }
+    } else {
+      let currentPage = []
+      artists.map(artist => {
+        if (_.includes(filters.artists, artist)) {
+          if (currentPage.length == artistsPerCol) {
+            artistHeaderPages.push(currentPage)
+            currentPage = []
+          }
+          currentPage.push((
+            <Checkbox key={ `${artist}_actions_disabled` }
+              label={ artist }
+              checked
+              disabled />
+          ))
+        }
+      })
+      if (currentPage.length > 0){
+        artistHeaderPages.push(currentPage)
+      }
+    }
+    const artistToggleButton = (
+        <FontIcon key={'toggle'} onClick={() => this.toggleFilter('artists')}
+          className='material-icons'>
+          {artistsToggleIcon}
+        </FontIcon>
+    )
+    artistInputs.push((
+      <Card key='ArtistCard'>
+        <CardHeader title='Artists' subtitle='Must contain one of the following artists'
+          showExpandableButton
+          closeIcon={ artistToggleButton }
+          openIcon={ artistToggleButton } >
+          <Row>
+            { artistHeaderPages.map((page, i) =>
+              <Col key={`artist_header_page_${i}`} >
+                { page }
+              </Col>
+            )}
+          </Row>
+        </CardHeader>
+        { artistsActive && <CardHeader subtitle='Available artists' >
+          <Row>
+            { artistBodyPages.map((page, i) =>
+              <Col key={`artist_body_page_${i}`}>
+                { page }
+              </Col>
+            )}
+          </Row>
+        </CardHeader> }
+      </Card>
+    ))
+    return artistInputs
+  }
+
+  render() {
+    const { filters, genreOpen, anchorEl } = this.state
+    const { genreFilterDialogOpen, genres } = this.props
+    const actions = [
+      <FlatButton
+        label="Apply"
+        primary={true}
+        onTouchTap={this.handleRequestClose}
+      />,
+    ];
+    const customContentStyle = {
+      width: '100%',
+      maxWidth: 'none',
+    }
+    const ratingActive = filters.active.indexOf('rating') > -1
+    const ratingToggleIcon = ratingActive ? 'cancel' : 'check_circle'
+    const starInputs = this.buildStarInputs()
+    const genreInputs = this.buildGenreInputs()
+    const artistInputs = this.buildArtistInputs()
     return (
       <div>
         <Dialog open={ genreFilterDialogOpen }
@@ -287,11 +428,14 @@ class GenreFilterDialogContainer extends Component {
             <Row>
               <Col md={12} sm={12} lg={12} xs={12}>
                 <Row>
-                  <Col md={6} sm={6} lg={6} xs={6}>
+                  <Col md={6} sm={6} lg={6} xs={12}>
                     { starInputs }
                   </Col>
-                  <Col md={6} sm={6} lg={6} xs={6}>
+                  <Col md={6} sm={6} lg={6} xs={12}>
                     { genreInputs }
+                  </Col>
+                  <Col md={6} sm={6} lg={6} xs={12}>
+                    { artistInputs }
                   </Col>
                 </Row>
               </Col>
@@ -308,6 +452,7 @@ const mapStateToProps = (state) => {
     genreFilterDialogOpen: state.core.get('genreFilterDialogOpen'),
     filters: state.core.get('genreTrackFilters').toJS(),
     genres: state.core.get('customGenreGenreList').toJS(),
+    artists: state.core.get('customGenreArtistList').toJS(),
   }
 }
 

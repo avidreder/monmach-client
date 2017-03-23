@@ -7,6 +7,8 @@ const testState = fromJS({
     spotifyId: '',
   },
   customGenreGenreList: [],
+  customGenreArtistList: [],
+  currentQueueArtistList: [],
   newGenreFormOpen: false,
   genreFilterDialogOpen: false,
   newTrackFilterDialogOpen: false,
@@ -15,10 +17,13 @@ const testState = fromJS({
     rating: 3,
     genres: [],
     active: [],
+    artists: [],
+    showListened: true,
   },
   newTrackFilters: {
     genres: [],
     active: [],
+    artists: [],
   },
   recommendationSeeds: {
     artists: [],

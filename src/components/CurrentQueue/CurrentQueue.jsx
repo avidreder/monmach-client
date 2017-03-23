@@ -28,6 +28,8 @@ const filterTracks = (tracks, filters) => {
   filteredTracks = _.includes(filters.active, 'genres') ?
     _.filter(tracks, (track) => _.intersection(track.Genres, filters.genres).length > 0) : filteredTracks
   console.log(filteredTracks)
+  filteredTracks = _.includes(filters.active, 'artists') ?
+    _.filter(tracks, (track) => _.intersection(_.map(track.SpotifyTrack.artists, 'name'), filters.artists).length > 0) : filteredTracks
   return filteredTracks
 }
 
