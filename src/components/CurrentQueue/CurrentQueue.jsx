@@ -20,10 +20,13 @@ const fontIconStyles = {
   cursor: 'pointer',
 }
 
-const filterTracks = (tracks, filters) => {
+const filterTracks = (tracks, listenedTracks, filters) => {
+  const listenedIds = _.map(listenedTracks, 'SpotifyID')
+  let filteredTracks = _.includes(filters.active, 'newTracks') ?
+    _.filter(tracks, (track) => !_.includes(listenedIds, track.SpotifyID)) : tracks
   console.log(filters)
-  let filteredTracks = _.includes(filters.active, 'rating') ?
-    _.filter(tracks, (track) => track.Rating >= filters.rating) : tracks
+  filteredTracks = _.includes(filters.active, 'rating') ?
+    _.filter(tracks, (track) => track.Rating >= filters.rating) : filteredTracks
   console.log(filteredTracks)
   filteredTracks = _.includes(filters.active, 'genres') ?
     _.filter(tracks, (track) => _.intersection(track.Genres, filters.genres).length > 0) : filteredTracks
@@ -34,7 +37,7 @@ const filterTracks = (tracks, filters) => {
 }
 
 export const CurrentQueue = (props) => {
-  const filteredTracks = filterTracks(props.queueTracks, props.filters)
+  const filteredTracks = filterTracks(props.queueTracks, props.currentCustomGenre.ListenedTracks, props.filters)
   return (
     <Card>
       <CardTitle title={ props.title }>

@@ -18,7 +18,6 @@ const testState = fromJS({
     genres: [],
     active: [],
     artists: [],
-    showListened: true,
   },
   newTrackFilters: {
     genres: [],

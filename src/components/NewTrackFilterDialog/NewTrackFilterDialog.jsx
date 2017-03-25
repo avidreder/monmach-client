@@ -352,7 +352,23 @@ class NewTrackFilterDialogContainer extends Component {
     }
     const genreInputs = this.buildGenreInputs()
     const artistInputs = this.buildArtistInputs()
-
+    const newTracksActive = filters.active.indexOf('newTracks') > -1
+    const newTracksToggleIcon = newTracksActive ? 'cancel' : 'check_circle'
+    const newTracksToggleButton = (
+        <FontIcon key={'toggle'} onClick={() => this.toggleFilter('newTracks')}
+          className='material-icons'>
+          {newTracksToggleIcon}
+        </FontIcon>
+    )
+    const newTracksInput = (
+      <Card key='NewTracksCard'>
+        <CardHeader title='New tracks' subtitle='Tracks must be new for the genre'
+          showExpandableButton
+          closeIcon={ newTracksToggleButton }
+          openIcon={ newTracksToggleButton } >
+        </CardHeader>
+      </Card>
+    )
     return (
       <div>
         <Dialog open={ newTrackFilterDialogOpen }
@@ -365,6 +381,9 @@ class NewTrackFilterDialogContainer extends Component {
             <Row>
               <Col md={12} sm={12} lg={12} xs={12}>
                 <Row>
+                  <Col md={6} sm={6} lg={6} xs={6}>
+                    { newTracksInput }
+                  </Col>
                   <Col md={6} sm={6} lg={6} xs={6}>
                     { genreInputs }
                   </Col>
