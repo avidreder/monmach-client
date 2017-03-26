@@ -5,8 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 export const Queue = (props) => (
   <div>
-    {props.queue.map(track =>
-      <QueueItem key={track.SpotifyID}
+    {props.queue.map((track, i) =>
+      <QueueItem key={`${track.SpotifyID}_${i}`}
         removeFromQueue={props.removeFromQueue}
         setTrack={props.setTrack}
         addGenre={props.addGenre}

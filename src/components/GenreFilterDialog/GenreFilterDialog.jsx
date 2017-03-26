@@ -118,6 +118,60 @@ class GenreFilterDialogContainer extends Component {
     });
   };
 
+  selectAllArtists = () => {
+    const {
+      filters,
+    } = this.state
+    const {
+      artists,
+    } = this.props
+    artists.map((artist) => {
+      if (filters.artists.indexOf(artist) == -1) {
+        filters.artists.push(artist)
+      }
+    })
+    this.setState({
+      filters,
+    })
+  }
+
+  removeAllArtists = () => {
+    const {
+      filters,
+    } = this.state
+    filters.artists = []
+    this.setState({
+      filters,
+    })
+  }
+
+  selectAllGenres = () => {
+    const {
+      filters,
+    } = this.state
+    const {
+      genres,
+    } = this.props
+    genres.map((genre) => {
+      if (filters.genres.indexOf(genre) == -1) {
+        filters.genres.push(genre)
+      }
+    })
+    this.setState({
+      filters,
+    })
+  }
+
+  removeAllGenres = () => {
+    const {
+      filters,
+    } = this.state
+    filters.genres = []
+    this.setState({
+      filters,
+    })
+  }
+
   buildStarInputs = () => {
     const { filters } = this.state
     const ratingActive = filters.active.indexOf('rating') > -1
@@ -260,12 +314,30 @@ class GenreFilterDialogContainer extends Component {
           {genresToggleIcon}
         </FontIcon>
     )
+    const selectAllGenresButton = (
+      <FlatButton key={'genre_select_all'} onClick={() => this.selectAllGenres()} >
+        Select all
+      </FlatButton>
+    )
+    const deselectAllGenresButton = (
+      <FlatButton key={'genre_deselect_all'} onClick={() => this.removeAllGenres()} >
+        Remove all
+      </FlatButton>
+    )
     genreInputs.push((
       <Card key='GenreCard'>
         <CardHeader title='Genres' subtitle='Must contain one of the following genres'
           showExpandableButton
           closeIcon={ genreToggleButton }
           openIcon={ genreToggleButton } >
+          { genresActive && <Row>
+            <Col>
+              { selectAllGenresButton }
+            </Col>
+            <Col>
+              { deselectAllGenresButton }
+            </Col>
+          </Row> }
           <Row>
             { genreHeaderPages.map((page, i) =>
               <Col key={`genre_header_page_${i}`} >
@@ -369,12 +441,30 @@ class GenreFilterDialogContainer extends Component {
           {artistsToggleIcon}
         </FontIcon>
     )
+    const selectAllArtistsButton = (
+      <FlatButton key={'artist_select_all'} onClick={() => this.selectAllArtists()} >
+        Select all
+      </FlatButton>
+    )
+    const deselectAllArtistsButton = (
+      <FlatButton key={'artist_deselect_all'} onClick={() => this.removeAllArtists()} >
+        Remove all
+      </FlatButton>
+    )
     artistInputs.push((
       <Card key='ArtistCard'>
         <CardHeader title='Artists' subtitle='Must contain one of the following artists'
           showExpandableButton
           closeIcon={ artistToggleButton }
           openIcon={ artistToggleButton } >
+          { artistsActive && <Row>
+            <Col>
+              { selectAllArtistsButton }
+            </Col>
+            <Col>
+              { deselectAllArtistsButton }
+            </Col>
+          </Row> }
           <Row>
             { artistHeaderPages.map((page, i) =>
               <Col key={`artist_header_page_${i}`} >
