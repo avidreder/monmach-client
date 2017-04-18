@@ -12,10 +12,6 @@ export const Footer = () => (
           href='https://github.com/avidreder'>
           <img src={GithubLogo} width='40' />
         </a>
-        <a target='_blank'
-          href='https://www.linkedin.com/pub/andrew-reder/62/59b/b81/en'>
-          <img src={LinkedInLogo} width='40' />
-        </a>
       </div>
     </div>
   </div>
