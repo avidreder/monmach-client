@@ -18,4 +18,4 @@ Feel free to use it at https://monmach.com, though it is under active developmen
 ### Get recommended tracks from seeds
 [[https://github.com/avidreder/monmach-client/blob/master/demo/GetRecommended.gif|alt=GetRecommended]]
 ### Use filters
-[Use Filters](https://raw.github.com/avidreder/monmach-client/blob/master/demo/UseFilters.gif)
+[Use Filters](https://raw.github.com/avidreder/monmach-client/master/demo/UseFilters.gif)
