@@ -4,6 +4,8 @@ Monster machine is a tool that leverages the Spotify Web API to help you quickly
 
 Feel free to use it at https://monmach.com, though it is under active development, so beware, there be bugs.
 
+The web client contained here is built in [React](https://facebook.github.io/react/) with [Redux](http://redux.js.org/) for state management, [Webpack](https://webpack.github.io/) for code bundling and consumes it's own [API](https://github.com/avidreder/monmach-api). The UI is composed of components from the [Material UI](http://www.material-ui.com/#/) library, and it uses [Ansible](https://www.ansible.com/) for deployment.
+
 ### Create a new genre
 ![Use Filters](demo/NewGenre.gif)
 ### Add tracks to your queue
