@@ -8,14 +8,14 @@ Feel free to use it at https://monmach.com, though it is under active developmen
 ![Use Filters](demo/NewGenre.gif)
 ### Add tracks to your queue
 #### Use existing Spotify playlist as a starting point
-![AddTracksFromPlaylist](demo/AddTracksFromPlaylist.gif)
+![AddTracks](demo/addTracks.gif)
 ### Listen and rate tracks
 #### Save them to the genre, or discard them
-[[https://github.com/avidreder/monmach-client/blob/master/demo/AddTracksFromPlaylist.gif|alt=AddTracksFromPlaylist]]
+![ListenAndRate](demo/ListenAndRate.gif)
 ### Add a track or artist to genre "seeds"
 #### If you want to be get recommendations from this
-[[https://github.com/avidreder/monmach-client/blob/master/demo/ListenAndRate.gif|alt=ListenAndRate]]
+![AddSeeds](demo/AddSeeds.gif)
 ### Get recommended tracks from seeds
-[[https://github.com/avidreder/monmach-client/blob/master/demo/GetRecommended.gif|alt=GetRecommended]]
+![GetRecommended](demo/GetRecommended.gif)
 ### Use filters
-[Use Filters](https://cloud.githubusercontent.com/assets/4186882/25140599/c052d9f0-2415-11e7-9f5a-7ce5af6a6f28.gif)
+![Use Filters](demo/UseFilters.gif)
