@@ -5,10 +5,10 @@ Monster machine is a tool that leverages the Spotify Web API to help you quickly
 Feel free to use it at https://monmach.com, though it is under active development, so beware, there be bugs.
 
 ### Create a new genre
-[Use Filters](demo/NewGenre.gif)
+![Use Filters](demo/NewGenre.gif)
 ### Add tracks to your queue
 #### Use existing Spotify playlist as a starting point
-[[https://github.com/avidreder/monmach-client/blob/master/demo/AddTracksFromPlaylist.gif|alt=AddTracksFromPlaylist]]
+![AddTracksFromPlaylist](demo/AddTracksFromPlaylist.gif)
 ### Listen and rate tracks
 #### Save them to the genre, or discard them
 [[https://github.com/avidreder/monmach-client/blob/master/demo/AddTracksFromPlaylist.gif|alt=AddTracksFromPlaylist]]
