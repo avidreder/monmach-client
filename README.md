@@ -8,7 +8,7 @@ Feel free to use it at https://monmach.com, though it is under active developmen
 ![Use Filters](demo/NewGenre.gif)
 ### Add tracks to your queue
 #### Use existing Spotify playlist as a starting point
-![AddTracks](demo/addTracks.gif)
+![AddTracks](demo/AddTracks.gif)
 ### Listen and rate tracks
 #### Save them to the genre, or discard them
 ![ListenAndRate](demo/ListenAndRate.gif)
