@@ -10,6 +10,7 @@ import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import IconButton from 'material-ui/IconButton'
 import Checkbox from 'material-ui/Checkbox'
+import Toggle from 'material-ui/Toggle'
 import { amber500 } from 'material-ui/styles/colors'
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
 import _ from 'lodash'
@@ -185,7 +186,6 @@ class NewTrackFilterDialogContainer extends Component {
     const genreBodyPages = []
     const genreBodyInputs = []
     const genresActive = filters.active.indexOf('genres') > -1
-    const genresToggleIcon = genresActive ? 'cancel' : 'check_circle'
     const genresPerCol = 5
     if (genresActive) {
       let currentPage = []
@@ -248,10 +248,7 @@ class NewTrackFilterDialogContainer extends Component {
       }
     }
     const genreToggleButton = (
-        <FontIcon key={'toggle'} onClick={() => this.toggleFilter('genres')}
-          className='material-icons'>
-          {genresToggleIcon}
-        </FontIcon>
+      <Toggle labelPosition='right' toggled={ genresActive } key={'toggle'} onClick={() => this.toggleFilter('genres')} />
     )
     const selectAllGenresButton = (
       <FlatButton key={'genre_select_all'} onClick={() => this.selectAllGenres()} >
@@ -312,7 +309,6 @@ class NewTrackFilterDialogContainer extends Component {
     const artistBodyPages = []
     const artistBodyInputs = []
     const artistsActive = filters.active.indexOf('artists') > -1
-    const artistsToggleIcon = artistsActive ? 'cancel' : 'check_circle'
     const artistsPerCol = 5
     if (artistsActive) {
       let currentPage = []
@@ -375,10 +371,7 @@ class NewTrackFilterDialogContainer extends Component {
       }
     }
     const artistToggleButton = (
-        <FontIcon key={'toggle'} onClick={() => this.toggleFilter('artists')}
-          className='material-icons'>
-          {artistsToggleIcon}
-        </FontIcon>
+        <Toggle labelPosition='right' toggled={ artistsActive } key={'toggle'} onClick={() => this.toggleFilter('artists')} />
     )
     const selectAllArtistsButton = (
       <FlatButton key={'artist_select_all'} onClick={() => this.selectAllArtists()} >
@@ -443,12 +436,8 @@ class NewTrackFilterDialogContainer extends Component {
     const genreInputs = this.buildGenreInputs()
     const artistInputs = this.buildArtistInputs()
     const newTracksActive = filters.active.indexOf('newTracks') > -1
-    const newTracksToggleIcon = newTracksActive ? 'cancel' : 'check_circle'
     const newTracksToggleButton = (
-      <FontIcon key={'toggle'} onClick={() => this.toggleFilter('newTracks')}
-        className='material-icons'>
-        {newTracksToggleIcon}
-      </FontIcon>
+      <Toggle labelPosition='right' toggled={ newTracksActive } key={'toggle'} onClick={() => this.toggleFilter('newTracks')} />
     )
     const newTracksInput = (
       <Card key='NewTracksCard'>

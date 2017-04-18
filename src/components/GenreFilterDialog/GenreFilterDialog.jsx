@@ -9,6 +9,7 @@ import Popover from 'material-ui/Popover'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import IconButton from 'material-ui/IconButton'
+import Toggle from 'material-ui/Toggle'
 import Checkbox from 'material-ui/Checkbox'
 import { amber500 } from 'material-ui/styles/colors'
 import { Grid, Row, Col } from 'react-flexbox-grid/lib'
@@ -175,7 +176,6 @@ class GenreFilterDialogContainer extends Component {
   buildStarInputs = () => {
     const { filters } = this.state
     const ratingActive = filters.active.indexOf('rating') > -1
-    const ratingToggleIcon = ratingActive ? 'cancel' : 'check_circle'
     const starInputs = []
     if (ratingActive) {
       _.range(1, filters.rating + 1).map((value) => {
@@ -214,10 +214,7 @@ class GenreFilterDialogContainer extends Component {
       })
     }
     const starToggleButton = (
-      <FontIcon key={'toggle'} onClick={() => this.toggleFilter('rating')}
-        className='material-icons'>
-        {ratingToggleIcon}
-      </FontIcon>
+      <Toggle labelPosition='right' toggled={ ratingActive } key={'toggle'} onClick={() => this.toggleFilter('rating')} />
     )
     return (
       <Card key='RatingCard'>
@@ -246,7 +243,6 @@ class GenreFilterDialogContainer extends Component {
     const genreBodyPages = []
     const genreBodyInputs = []
     const genresActive = filters.active.indexOf('genres') > -1
-    const genresToggleIcon = genresActive ? 'cancel' : 'check_circle'
     const genresPerCol = 5
     if (genresActive) {
       let currentPage = []
@@ -309,10 +305,7 @@ class GenreFilterDialogContainer extends Component {
       }
     }
     const genreToggleButton = (
-        <FontIcon key={'toggle'} onClick={() => this.toggleFilter('genres')}
-          className='material-icons'>
-          {genresToggleIcon}
-        </FontIcon>
+        <Toggle labelPosition='right' toggled={ genresActive } key={'toggle'} onClick={() => this.toggleFilter('genres')} />
     )
     const selectAllGenresButton = (
       <FlatButton key={'genre_select_all'} onClick={() => this.selectAllGenres()} >
@@ -373,7 +366,6 @@ class GenreFilterDialogContainer extends Component {
     const artistBodyPages = []
     const artistBodyInputs = []
     const artistsActive = filters.active.indexOf('artists') > -1
-    const artistsToggleIcon = artistsActive ? 'cancel' : 'check_circle'
     const artistsPerCol = 5
     if (artistsActive) {
       let currentPage = []
@@ -436,10 +428,7 @@ class GenreFilterDialogContainer extends Component {
       }
     }
     const artistToggleButton = (
-        <FontIcon key={'toggle'} onClick={() => this.toggleFilter('artists')}
-          className='material-icons'>
-          {artistsToggleIcon}
-        </FontIcon>
+        <Toggle labelPosition='right' toggled={ artistsActive } key={'toggle'} onClick={() => this.toggleFilter('artists')} />
     )
     const selectAllArtistsButton = (
       <FlatButton key={'artist_select_all'} onClick={() => this.selectAllArtists()} >
@@ -502,7 +491,6 @@ class GenreFilterDialogContainer extends Component {
       maxWidth: 'none',
     }
     const ratingActive = filters.active.indexOf('rating') > -1
-    const ratingToggleIcon = ratingActive ? 'cancel' : 'check_circle'
     const starInputs = this.buildStarInputs()
     const genreInputs = this.buildGenreInputs()
     const artistInputs = this.buildArtistInputs()
